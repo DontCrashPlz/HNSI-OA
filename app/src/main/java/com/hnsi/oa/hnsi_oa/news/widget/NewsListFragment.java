@@ -18,7 +18,6 @@ import com.hnsi.oa.hnsi_oa.news.presenter.NewsListPresenter;
 import com.hnsi.oa.hnsi_oa.news.view.INewsListView;
 import com.hnsi.oa.hnsi_oa.utils.DensityUtil;
 import com.hnsi.oa.hnsi_oa.widgets.LazyLoadFragment;
-import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemAdapter;
 import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemDecoration;
 import com.hnsi.oa.hnsi_oa.widgets.MyNewsListAdapter;
 
@@ -90,8 +89,8 @@ public class NewsListFragment extends LazyLoadFragment implements
         mRecyclerView= (RecyclerView) mView.findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter= new MyNewsListAdapter(R.layout.layout_news);
+        mAdapter.setOnLoadMoreListener(this,mRecyclerView);
         mDecoration= new MyNewsItemDecoration(DensityUtil.dp2px(getContext(),14));
-
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(mDecoration);
 
@@ -103,7 +102,6 @@ public class NewsListFragment extends LazyLoadFragment implements
     public void lazyLoad() {
         if (isLoadedOnce || !isPrepared || !isVisible)
             return;
-
 
         mPresenter.initData();
     }
@@ -135,11 +133,13 @@ public class NewsListFragment extends LazyLoadFragment implements
     @Override
     public void showEmptyTip() {
         mEmptyTip.setVisibility(View.VISIBLE);
+        mRefreshLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void dismissEmptyTip() {
         mEmptyTip.setVisibility(View.GONE);
+        mRefreshLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -150,6 +150,14 @@ public class NewsListFragment extends LazyLoadFragment implements
     @Override
     public void dataLoaded() {
         isLoadedOnce= true;
+    }
+
+    @Override
+    public void refreshGone() {
+        if (mRefreshLayout.isRefreshing()){
+            mRefreshLayout.setRefreshing(false);
+            mRefreshLayout.setEnabled(true);
+        }
     }
 
 
@@ -166,7 +174,7 @@ public class NewsListFragment extends LazyLoadFragment implements
     /**---------------------------OnRefreshListener Interface-----------------------------*/
     @Override
     public void onRefresh() {
-        mRefreshLayout.setRefreshing(false);
+        mRefreshLayout.setEnabled(false);
         mPageIndex= 1;
         mPresenter.initData();
     }

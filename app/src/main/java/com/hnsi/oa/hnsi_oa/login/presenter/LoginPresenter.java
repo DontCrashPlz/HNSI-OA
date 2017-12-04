@@ -1,6 +1,7 @@
 package com.hnsi.oa.hnsi_oa.login.presenter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -8,6 +9,8 @@ import com.hnsi.oa.hnsi_oa.interfaces.OnLoginListener;
 import com.hnsi.oa.hnsi_oa.login.model.ILoginModel;
 import com.hnsi.oa.hnsi_oa.login.model.ILoginModelImpl;
 import com.hnsi.oa.hnsi_oa.login.view.ILoginView;
+import com.hnsi.oa.hnsi_oa.login.widget.LoginActivity;
+import com.hnsi.oa.hnsi_oa.utils.SharedPrefUtils;
 
 /**
  * Created by Zheng on 2017/10/23.
@@ -45,6 +48,23 @@ public class LoginPresenter {
 
             @Override
             public void onSuccessed() {
+
+                SharedPrefUtils.put((Activity)mView, LoginActivity.USERNAME, mView.getUserName());
+
+                if (mView.getRememberState()){
+                    SharedPrefUtils.put((Activity)mView, LoginActivity.IS_REMEMBER_USER, true);
+                    SharedPrefUtils.put((Activity)mView, LoginActivity.PASSWORD, mView.getPassword());
+                }else {
+                    SharedPrefUtils.put((Activity)mView, LoginActivity.IS_REMEMBER_USER, false);
+                    SharedPrefUtils.put((Activity)mView, LoginActivity.PASSWORD, "");
+                }
+
+                if (mView.getAutoState()){
+                    SharedPrefUtils.put((Activity)mView, LoginActivity.IS_AUTO_LOGIN, true);
+                }else {
+                    SharedPrefUtils.put((Activity)mView, LoginActivity.IS_AUTO_LOGIN, false);
+                }
+
                 mView.dismissProgressDialog();
                 mView.intoHome();
             }
@@ -56,6 +76,6 @@ public class LoginPresenter {
             }
 
         });
-
     }
+
 }

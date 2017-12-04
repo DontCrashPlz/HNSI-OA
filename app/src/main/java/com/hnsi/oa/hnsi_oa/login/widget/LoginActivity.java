@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -27,13 +29,22 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
     public static final String IS_REMEMBER_USER= "IS_REMEMBER_USER";
     public static final String IS_AUTO_LOGIN= "IS_AUTO_LOGIN";
 
+    public static final String USERNAME= "USERNAME";
+    public static final String PASSWORD= "PASSWORD";
+
     private Button mLoginBtn;
     private ImageButton mSettingBtn;
 
     private EditText mUserNameEt;
     private EditText mPasswordEt;
 
+    private CheckBox mRememberCb;
+    private CheckBox mAutoLoginCb;
+
     private LoginPresenter mPresenter;
+
+    private boolean isRemember;
+    private boolean isAutoLogin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,9 +57,15 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
         if (BuildConfig.DEBUG)
             Log.e("UPDATE_CODE",""+intent.getIntExtra(SplashActivity.UPDATE_CODE,0));
 
+        isRemember= (boolean) SharedPrefUtils.get(this, IS_REMEMBER_USER, false);
+        isAutoLogin= (boolean) SharedPrefUtils.get(this, IS_AUTO_LOGIN, false);
+
         findViews();
 
         mPresenter= new LoginPresenter(this);
+
+        if (isAutoLogin) mPresenter.loginApp();
+
     }
 
     private void findViews() {
@@ -58,7 +75,16 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
         mSettingBtn.setOnClickListener(this);
 
         mUserNameEt= (EditText) findViewById(R.id.login_et_username);
+        mUserNameEt.setText((String) SharedPrefUtils.get(this, USERNAME, ""));
+
         mPasswordEt= (EditText) findViewById(R.id.login_et_password);
+        if (isRemember) mPasswordEt.setText((String) SharedPrefUtils.get(this, PASSWORD, ""));
+
+        mRememberCb= (CheckBox) findViewById(R.id.login_cb_remeber_password);
+        if (isRemember) mRememberCb.setChecked(true);
+        mAutoLoginCb= (CheckBox) findViewById(R.id.login_cb_automatic);
+        if (isAutoLogin) mAutoLoginCb.setChecked(true);
+
     }
 
     @Override
@@ -73,12 +99,12 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
 
     @Override
     public boolean getRememberState() {
-        return (boolean) SharedPrefUtils.get(this,IS_REMEMBER_USER,false);
+        return mRememberCb.isChecked();
     }
 
     @Override
     public boolean getAutoState() {
-        return (boolean) SharedPrefUtils.get(this,IS_AUTO_LOGIN,false);
+        return mAutoLoginCb.isChecked();
     }
 
     @Override
@@ -103,12 +129,14 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
 
     @Override
     public void setUserName() {
-
+        String userName= (String) SharedPrefUtils.get(this, USERNAME, "");
+        mUserNameEt.setText(userName);
     }
 
     @Override
     public void setPassword() {
-
+        String passWord= (String) SharedPrefUtils.get(this, PASSWORD, "");
+        mPasswordEt.setText(passWord);
     }
 
     @Override

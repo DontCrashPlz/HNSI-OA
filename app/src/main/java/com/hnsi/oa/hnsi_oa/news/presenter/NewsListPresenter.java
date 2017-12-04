@@ -63,14 +63,23 @@ public class NewsListPresenter {
         mModel.requestData(1, classId, type, new OnRequestDataListener<List<NewsEntity>>() {
             @Override
             public void onSuccessed(List<NewsEntity> newsEntities) {
-                Log.e("news",newsEntities.toString());
-                mView.refreshData(newsEntities);
-                mView.dismissProgressBar();
+
+                mView.refreshGone();
+
+                if (newsEntities.size()== 0){
+                    mView.showEmptyTip();
+                }else {
+                    Log.e("news",newsEntities.toString());
+                    mView.dismissEmptyTip();
+                    mView.refreshData(newsEntities);
+                    mView.dismissProgressBar();
+                }
                 mView.dataLoaded();
             }
 
             @Override
             public void onFailed(String throwable) {
+                mView.refreshGone();
                 Toast.makeText(((Fragment)mView).getActivity(), throwable, Toast.LENGTH_SHORT).show();
             }
         });

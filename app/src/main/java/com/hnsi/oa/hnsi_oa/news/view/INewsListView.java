@@ -17,4 +17,5 @@ public interface INewsListView {
     void dismissEmptyTip();
     int getFragmentTag();
     void dataLoaded();
+    void refreshGone();
 }
