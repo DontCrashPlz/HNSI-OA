@@ -2,6 +2,7 @@ package com.hnsi.oa.hnsi_oa.news.model;
 
 import com.hnsi.oa.hnsi_oa.app.MyApplication;
 import com.hnsi.oa.hnsi_oa.beans.NewsEntity;
+import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataAndNumListener;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class INewsListModelImpl implements INewsListModel {
     @Override
-    public void requestData(int pageIndex, int classId, int type, OnRequestDataListener<List<NewsEntity>> listener) {
+    public void requestData(int pageIndex, int classId, int type, OnRequestDataAndNumListener<List<NewsEntity>> listener) {
         MyApplication.getInstance().getNewsList(pageIndex, classId, type, listener);
     }
 }

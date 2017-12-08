@@ -20,6 +20,7 @@ import com.hnsi.oa.hnsi_oa.http.NovateCookieManger;
 import com.hnsi.oa.hnsi_oa.http.ReadCookiesInterceptor;
 import com.hnsi.oa.hnsi_oa.http.SaveCookiesInterceptor;
 import com.hnsi.oa.hnsi_oa.interfaces.OnLoginListener;
+import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataAndNumListener;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
 import com.hnsi.oa.hnsi_oa.utils.SharedPrefUtils;
 
@@ -230,7 +231,7 @@ public class MyApplication extends Application implements User {
 
     }
 
-    public void getNewsList(int pageIndex, int classId, int type, final OnRequestDataListener<List<NewsEntity>> listener){
+    public void getNewsList(int pageIndex, int classId, int type, final OnRequestDataAndNumListener<List<NewsEntity>> listener){
         Call<NewsListEntity> newsCall= apiService.getNewsList(pageIndex,classId,type);
         newsCall.enqueue(new Callback<NewsListEntity>() {
             @Override
@@ -243,7 +244,31 @@ public class MyApplication extends Application implements User {
                 }else if (! response.body().isSuccess()){
                     listener.onFailed(response.body().getMsg());
                 }else{
-                    listener.onSuccessed(response.body().getList());
+                    listener.onSuccessed(response.body().getList(), response.body().getTotalPage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NewsListEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
+    }
+
+    public void getNewsListAndPageNum(int pageIndex, int classId, int type, final OnRequestDataAndNumListener<List<NewsEntity>> listener){
+        Call<NewsListEntity> newsCall= apiService.getNewsList(pageIndex,classId,type);
+        newsCall.enqueue(new Callback<NewsListEntity>() {
+            @Override
+            public void onResponse(Call<NewsListEntity> call, Response<NewsListEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("NewsListEntity",response.toString());
+
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body().getList(), response.body().getTotalPage());
                 }
             }
 

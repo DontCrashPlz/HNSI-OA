@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.beans.NewsEntity;
+import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataAndNumListener;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
 import com.hnsi.oa.hnsi_oa.news.model.INewsListModel;
 import com.hnsi.oa.hnsi_oa.news.model.INewsListModelImpl;
@@ -60,7 +61,7 @@ public class NewsListPresenter {
 
     public void initData(){
         mView.showProgressBar();
-        mModel.requestData(1, classId, type, new OnRequestDataListener<List<NewsEntity>>() {
+        mModel.requestData(1, classId, type, new OnRequestDataAndNumListener<List<NewsEntity>>() {
             @Override
             public void onSuccessed(List<NewsEntity> newsEntities) {
 
