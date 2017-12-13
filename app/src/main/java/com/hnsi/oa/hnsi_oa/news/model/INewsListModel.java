@@ -11,5 +11,13 @@ import java.util.List;
  */
 
 public interface INewsListModel {
-    void requestData(int pageIndex, int classId, int type, OnRequestDataAndNumListener<List<NewsEntity>> listener);
+    void requestDataAndNum(int pageIndex,
+                           int classId,
+                           int type,
+                           OnRequestDataAndNumListener<List<NewsEntity>> listener);
+
+    void requestData(int pageIndex,
+                     int classId,
+                     int type,
+                     OnRequestDataListener<List<NewsEntity>> listener);
 }

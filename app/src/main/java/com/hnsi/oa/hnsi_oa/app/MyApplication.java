@@ -231,7 +231,7 @@ public class MyApplication extends Application implements User {
 
     }
 
-    public void getNewsList(int pageIndex, int classId, int type, final OnRequestDataAndNumListener<List<NewsEntity>> listener){
+    public void getNewsList(int pageIndex, int classId, int type, final OnRequestDataListener<List<NewsEntity>> listener){
         Call<NewsListEntity> newsCall= apiService.getNewsList(pageIndex,classId,type);
         newsCall.enqueue(new Callback<NewsListEntity>() {
             @Override
@@ -244,7 +244,7 @@ public class MyApplication extends Application implements User {
                 }else if (! response.body().isSuccess()){
                     listener.onFailed(response.body().getMsg());
                 }else{
-                    listener.onSuccessed(response.body().getList(), response.body().getTotalPage());
+                    listener.onSuccessed(response.body().getList());
                 }
             }
 

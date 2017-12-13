@@ -59,7 +59,7 @@ public class MessageFragment extends LazyLoadFragment implements IMessageView {
 
         isPrepared= true;
 
-        lazyLoad();
+        if (isVisible) lazyLoad();
 
         return mView;
     }

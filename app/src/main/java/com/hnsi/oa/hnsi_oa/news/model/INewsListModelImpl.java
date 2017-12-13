@@ -13,7 +13,12 @@ import java.util.List;
 
 public class INewsListModelImpl implements INewsListModel {
     @Override
-    public void requestData(int pageIndex, int classId, int type, OnRequestDataAndNumListener<List<NewsEntity>> listener) {
+    public void requestDataAndNum(int pageIndex, int classId, int type, OnRequestDataAndNumListener<List<NewsEntity>> listener) {
+        MyApplication.getInstance().getNewsListAndPageNum(pageIndex, classId, type, listener);
+    }
+
+    @Override
+    public void requestData(int pageIndex, int classId, int type, OnRequestDataListener<List<NewsEntity>> listener) {
         MyApplication.getInstance().getNewsList(pageIndex, classId, type, listener);
     }
 }

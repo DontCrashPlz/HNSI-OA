@@ -11,9 +11,8 @@ import java.util.List;
 public interface INewsListView {
     void showProgressBar();
     void dismissProgressBar();
-    void refreshData(List<NewsEntity> newsEntities);
+    void refreshData(List<NewsEntity> newsEntities, int pageNum);
     void loadMoreData(List<NewsEntity> newsEntities);
-    void showEmptyTip();
     void dismissEmptyTip();
     int getFragmentTag();
     void dataLoaded();

@@ -37,12 +37,12 @@ public class NewsListFragment extends LazyLoadFragment implements
     private boolean isPrepared;
     private boolean isLoadedOnce;
 
-    public static final int FRAGMENT_ALL_NEWS=0;
-    public static final int FRAGMENT_INSIDE_NEWS=1;
-    public static final int FRAGMENT_OUTSIDE_NEWS=2;
-    public static final int FRAGMENT_ALL_NOTICE=3;
-    public static final int FRAGMENT_CONPANY_NOTICE=4;
-    public static final int FRAGMENT_DEPARTMENT_NOTICE=5;
+//    public static final int FRAGMENT_ALL_NEWS=0;
+//    public static final int FRAGMENT_INSIDE_NEWS=1;
+//    public static final int FRAGMENT_OUTSIDE_NEWS=2;
+//    public static final int FRAGMENT_ALL_NOTICE=3;
+//    public static final int FRAGMENT_CONPANY_NOTICE=4;
+//    public static final int FRAGMENT_DEPARTMENT_NOTICE=5;
 
     private SwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -55,6 +55,7 @@ public class NewsListFragment extends LazyLoadFragment implements
     private MyNewsItemDecoration mDecoration;
 
     private int mPageIndex;
+    private int mMaxPageIndex;
 
     public static NewsListFragment getInstance(int tag){
         Bundle arg= new Bundle();
@@ -75,7 +76,7 @@ public class NewsListFragment extends LazyLoadFragment implements
 
         isPrepared= true;
 
-        lazyLoad();
+        if (isVisible) lazyLoad();
 
         return mView;
     }
@@ -96,6 +97,8 @@ public class NewsListFragment extends LazyLoadFragment implements
 
         mProgressBar= (ProgressBar) mView.findViewById(R.id.progressBar);
         mEmptyTip= (TextView) mView.findViewById(R.id.empty_tip);
+
+        showProgressBar();
     }
 
     @Override
@@ -118,9 +121,9 @@ public class NewsListFragment extends LazyLoadFragment implements
     }
 
     @Override
-    public void refreshData(List<NewsEntity> newsEntities) {
-        mAdapter.getData().clear();
-        mAdapter.addData(newsEntities);
+    public void refreshData(List<NewsEntity> newsEntities, int pageNum) {
+        mAdapter.setNewData(newsEntities);
+        mMaxPageIndex= pageNum;
     }
 
     @Override
@@ -128,12 +131,6 @@ public class NewsListFragment extends LazyLoadFragment implements
         mAdapter.addData(newsEntities);
         mAdapter.loadMoreComplete();
         mRefreshLayout.setEnabled(true);
-    }
-
-    @Override
-    public void showEmptyTip() {
-        mEmptyTip.setVisibility(View.VISIBLE);
-        mRefreshLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -154,6 +151,8 @@ public class NewsListFragment extends LazyLoadFragment implements
 
     @Override
     public void refreshGone() {
+        if (mProgressBar.getVisibility()== View.VISIBLE) dismissProgressBar();
+
         if (mRefreshLayout.isRefreshing()){
             mRefreshLayout.setRefreshing(false);
             mRefreshLayout.setEnabled(true);
@@ -164,17 +163,21 @@ public class NewsListFragment extends LazyLoadFragment implements
     /**---------------------------RequestLoadMoreListener Interface-----------------------------*/
     @Override
     public void onLoadMoreRequested() {
-        mRefreshLayout.setEnabled(false);
-        mAdapter.setEnableLoadMore(true);
         mPageIndex+= 1;
-        mPresenter.loadMoreData(mPageIndex);
-
+        if (mPageIndex> mMaxPageIndex){
+            mAdapter.loadMoreEnd();
+        }else{
+            mRefreshLayout.setEnabled(false);
+            mAdapter.setEnableLoadMore(true);
+            mPresenter.loadMoreData(mPageIndex);
+        }
     }
 
     /**---------------------------OnRefreshListener Interface-----------------------------*/
     @Override
     public void onRefresh() {
         mRefreshLayout.setEnabled(false);
+        mAdapter.setEnableLoadMore(true);
         mPageIndex= 1;
         mPresenter.initData();
     }
