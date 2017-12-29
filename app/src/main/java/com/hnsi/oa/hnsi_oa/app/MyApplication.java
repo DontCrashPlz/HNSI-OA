@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.hnsi.oa.hnsi_oa.BuildConfig;
+import com.hnsi.oa.hnsi_oa.beans.ContactEntity;
 import com.hnsi.oa.hnsi_oa.beans.LoginEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
@@ -223,8 +224,25 @@ public class MyApplication extends Application implements User {
 
     /**----------------------Common Http Request---------------------*/
 
-    public void getContacts(){
+    public void getContacts(final OnRequestDataListener<ContactEntity> listener){
+        Call<ContactEntity> contactCall= apiService.getContacts();
+        contactCall.enqueue(new Callback<ContactEntity>() {
+            @Override
+            public void onResponse(Call<ContactEntity> call, Response<ContactEntity> response) {
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ContactEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
     public void searchContact(){

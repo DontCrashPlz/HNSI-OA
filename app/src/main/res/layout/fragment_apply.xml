@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundGrey">
 
@@ -540,174 +542,49 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:padding="14dp"
-                android:visibility="gone">
+                android:background="@android:color/white">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                <com.hnsi.oa.hnsi_oa.widgets.IconImageView
+                    android:id="@+id/iiv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <RelativeLayout
-                        android:id="@+id/apply_btn_note"
-                        android:clickable="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/apply_icon_note"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_note"
-                            android:layout_centerHorizontal="true"
-                            android:paddingRight="6dp"
-                            android:paddingTop="4dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="备忘录"
-                            android:textSize="13dp"
-                            android:textColor="@color/gray"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/apply_icon_note"/>
-                        <TextView
-                            android:id="@+id/apply_tv_num_note"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:background="@drawable/circle_background_red"
-                            android:text="99+"
-                            android:textSize="10dp"
-                            android:textColor="@android:color/white"
-                            android:layout_alignRight="@+id/apply_icon_note"
-                            android:visibility="invisible"/>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    app:icon_image="@mipmap/apply_business"
+                    app:text="审批"
+                    app:textSize="13dp"
+                    app:textColor="@color/gray"/>
+                <com.hnsi.oa.hnsi_oa.widgets.IconImageView
+                    android:id="@+id/iiv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <RelativeLayout
-                        android:id="@+id/apply_btn_vote"
-                        android:clickable="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/apply_icon_vote"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_vote"
-                            android:layout_centerHorizontal="true"
-                            android:paddingRight="6dp"
-                            android:paddingTop="4dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="投票"
-                            android:textSize="13dp"
-                            android:textColor="@color/gray"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/apply_icon_vote"/>
-                        <TextView
-                            android:id="@+id/apply_tv_num_vote"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:background="@drawable/circle_background_red"
-                            android:text="99+"
-                            android:textSize="10dp"
-                            android:textColor="@android:color/white"
-                            android:layout_alignRight="@+id/apply_icon_vote"
-                            android:visibility="invisible"/>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    app:icon_image="@mipmap/apply_business"
+                    app:text="审批"
+                    app:textSize="13dp"
+                    app:textColor="@android:color/black"/>
+                <com.hnsi.oa.hnsi_oa.widgets.IconImageView
+                    android:id="@+id/iiv3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <RelativeLayout
-                        android:id="@+id/apply_btn_decision"
-                        android:clickable="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/apply_icon_decision"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_decision"
-                            android:layout_centerHorizontal="true"
-                            android:paddingRight="6dp"
-                            android:paddingTop="4dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="决策"
-                            android:textSize="13dp"
-                            android:textColor="@color/gray"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/apply_icon_decision"/>
-                        <TextView
-                            android:id="@+id/apply_tv_num_decision"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:background="@drawable/circle_background_red"
-                            android:text="99+"
-                            android:textSize="10dp"
-                            android:textColor="@android:color/white"
-                            android:layout_alignRight="@+id/apply_icon_decision"
-                            android:visibility="invisible"/>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    app:icon_image="@mipmap/apply_business"
+                    app:text="审批"
+                    app:textSize="13dp"
+                    app:textColor="@color/gray"/>
+                <com.hnsi.oa.hnsi_oa.widgets.IconImageView
+                    android:id="@+id/iiv4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <RelativeLayout
-                        android:id="@+id/apply_btn_weather"
-                        android:clickable="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:visibility="invisible">
-                        <ImageView
-                            android:id="@+id/apply_icon_weather"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_weather"
-                            android:layout_centerHorizontal="true"
-                            android:paddingRight="6dp"
-                            android:paddingTop="4dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="天气"
-                            android:textSize="13dp"
-                            android:textColor="@android:color/black"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/apply_icon_weather"/>
-                        <TextView
-                            android:id="@+id/apply_tv_num_weather"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:background="@drawable/circle_background_red"
-                            android:text="99+"
-                            android:textSize="10dp"
-                            android:textColor="@android:color/white"
-                            android:layout_alignRight="@+id/apply_icon_weather"
-                            android:visibility="invisible"/>
-                    </RelativeLayout>
-                </LinearLayout>
+                    android:gravity="center_horizontal"
+                    app:icon_image="@mipmap/apply_business"
+                    app:text="审批"
+                    app:textSize="13dp"
+                    app:textColor="@color/gray"/>
 
             </LinearLayout>
 

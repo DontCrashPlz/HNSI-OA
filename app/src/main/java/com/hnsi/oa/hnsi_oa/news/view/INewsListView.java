@@ -13,8 +13,7 @@ public interface INewsListView {
     void dismissProgressBar();
     void refreshData(List<NewsEntity> newsEntities, int pageNum);
     void loadMoreData(List<NewsEntity> newsEntities);
+    void dataLoadFailed(String msg);
     void dismissEmptyTip();
     int getFragmentTag();
-    void dataLoaded();
-    void refreshGone();
 }

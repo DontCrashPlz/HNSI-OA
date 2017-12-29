@@ -7,15 +7,15 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
+    <com.hnsi.oa.hnsi_oa.widgets.CustomTabLayout.ViewPagerTitle
+        android:id="@+id/viewpagertitle"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabIndicatorHeight="1dp"
-        app:tabIndicatorColor="@color/colorPrimary"
-        app:tabTextColor="@android:color/black"/>
+        android:layout_height="40dp"
+        app:defaultTextViewSize="8dp"
+        app:selectedTextViewSize="16dp"
+        app:line_start_color="?attr/colorPrimary"
+        app:line_end_color="?attr/colorPrimary"
+        app:line_height="5"/>
 
     <View
         android:layout_width="match_parent"
@@ -25,6 +25,6 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

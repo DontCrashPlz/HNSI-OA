@@ -2,7 +2,6 @@ package com.hnsi.oa.hnsi_oa.news.widget;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,6 +10,7 @@ import android.view.MenuItem;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.widgets.CustomTabLayout.ViewPagerTitle;
 
 /**
  * Created by Zheng on 2017/11/13.
@@ -18,7 +18,7 @@ import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
 
 public class NewsActivity extends BaseActivity {
 
-    private TabLayout mTabLayout;
+    private ViewPagerTitle mViewPagerTitle;
     private ViewPager mViewPager;
 
     @Override
@@ -31,9 +31,10 @@ public class NewsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("新闻");
 
-        mTabLayout= (TabLayout) findViewById(R.id.tablayout);
+        mViewPagerTitle= (ViewPagerTitle) findViewById(R.id.viewpagertitle);
         mViewPager= (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setOffscreenPageLimit(2);
+        mViewPagerTitle.initData(new String[]{"全部新闻", "内部新闻", "他山之石"}, mViewPager, 0);
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

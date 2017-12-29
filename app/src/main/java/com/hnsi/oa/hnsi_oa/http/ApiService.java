@@ -1,5 +1,6 @@
 package com.hnsi.oa.hnsi_oa.http;
 
+import com.hnsi.oa.hnsi_oa.beans.ContactEntity;
 import com.hnsi.oa.hnsi_oa.beans.LoginEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
@@ -32,7 +33,7 @@ public interface ApiService {
      * @return
      */
     @GET("/default/mobile/user/com.hnsi.erp.mobile.user.AddressListManager.list.biz.ext")
-    Call getContacts();
+    Call<ContactEntity> getContacts();
 
     /**
      * 通讯录查询

@@ -36,7 +36,6 @@ public class MyNewsItemDecoration extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);
         int childCount= parent.getChildCount();
-        Log.e("childCount",String.valueOf(childCount));
         for (int i= 0; i< childCount; i++){
             View view= parent.getChildAt(i);
             int position= parent.getChildAdapterPosition(view);

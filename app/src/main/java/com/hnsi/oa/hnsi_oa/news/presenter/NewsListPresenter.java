@@ -62,34 +62,26 @@ public class NewsListPresenter {
         mModel.requestDataAndNum(1, classId, type, new OnRequestDataAndNumListener<List<NewsEntity>>() {
             @Override
             public void onSuccessed(List<NewsEntity> newsEntities , int pageNum) {
-
-                mView.refreshGone();
-
                 mView.refreshData(newsEntities, pageNum);
-
-                mView.dataLoaded();
             }
 
             @Override
             public void onFailed(String throwable) {
-                mView.refreshGone();
-                Toast.makeText(((NewsListFragment)mView).getActivity(), throwable, Toast.LENGTH_SHORT).show();
+                mView.dataLoadFailed(throwable);
             }
         });
     }
 
     public void loadMoreData(int pageIndex){
-        mView.showProgressBar();
         mModel.requestData(pageIndex, classId, type, new OnRequestDataListener<List<NewsEntity>>() {
             @Override
             public void onSuccessed(List<NewsEntity> newsEntities) {
                 mView.loadMoreData(newsEntities);
-                mView.dismissProgressBar();
             }
 
             @Override
             public void onFailed(String throwable) {
-                Toast.makeText((Context) mView, throwable, Toast.LENGTH_SHORT).show();
+                mView.dataLoadFailed(throwable);
             }
         });
     }

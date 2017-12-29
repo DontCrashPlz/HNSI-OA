@@ -1,7 +1,5 @@
 package com.hnsi.oa.hnsi_oa.beans;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 
 /**

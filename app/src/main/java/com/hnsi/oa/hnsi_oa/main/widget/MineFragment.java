@@ -1,11 +1,13 @@
 package com.hnsi.oa.hnsi_oa.main.widget;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.widgets.LazyLoadFragment;
@@ -14,8 +16,10 @@ import com.hnsi.oa.hnsi_oa.widgets.LazyLoadFragment;
  * Created by Zheng on 2017/10/24.
  */
 
-public class MineFragment extends LazyLoadFragment {
+public class MineFragment extends LazyLoadFragment implements View.OnClickListener {
     private View mView;
+
+    private RelativeLayout mChangePasswordBtn;
 
     private boolean isLoadedOnce;
 
@@ -25,9 +29,16 @@ public class MineFragment extends LazyLoadFragment {
 
         mView= inflater.inflate(R.layout.fragment_mine,container,false);
 
+        findViews(mView);
+
         lazyLoad();
 
         return mView;
+    }
+
+    private void findViews(View mView) {
+        mChangePasswordBtn= (RelativeLayout) mView.findViewById(R.id.mine_rly_change_password);
+        mChangePasswordBtn.setOnClickListener(this);
     }
 
     @Override
@@ -43,5 +54,15 @@ public class MineFragment extends LazyLoadFragment {
 //                isLoadedOnce= true;
 //            }
 //        },1000);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int vId= v.getId();
+        switch (vId){
+            case R.id.mine_rly_change_password:
+                startActivity(new Intent(getContext(),ChangePasswordActivity.class));
+                break;
+        }
     }
 }

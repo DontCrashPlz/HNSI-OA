@@ -5,11 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hnsi.oa.hnsi_oa.R;
@@ -106,7 +108,7 @@ public class NewsListFragment extends LazyLoadFragment implements
         if (isLoadedOnce || !isPrepared || !isVisible)
             return;
 
-        mPresenter.initData();
+        onRefresh();
     }
 
     /**---------------------------INewsListView Interface-----------------------------*/
@@ -122,15 +124,43 @@ public class NewsListFragment extends LazyLoadFragment implements
 
     @Override
     public void refreshData(List<NewsEntity> newsEntities, int pageNum) {
-        mAdapter.setNewData(newsEntities);
-        mMaxPageIndex= pageNum;
+
+        if (mProgressBar.getVisibility()== View.VISIBLE) dismissProgressBar();
+
+        if (mRefreshLayout.isRefreshing()){
+            mRefreshLayout.setRefreshing(false);
+        }
+
+        mRefreshLayout.setEnabled(true);
+        mAdapter.setEnableLoadMore(true);
+
+        if (newsEntities.size()== 0){
+            mAdapter.setEmptyView(R.layout.layout_empty);
+        }else {
+            mAdapter.setNewData(newsEntities);
+            mMaxPageIndex= pageNum;
+
+            Log.e("mMaxPageIndex",""+mMaxPageIndex);
+        }
+
+        isLoadedOnce= true;
     }
 
     @Override
     public void loadMoreData(List<NewsEntity> newsEntities) {
+
+        mRefreshLayout.setEnabled(true);
+        mAdapter.setEnableLoadMore(true);
+
         mAdapter.addData(newsEntities);
         mAdapter.loadMoreComplete();
+    }
+
+    @Override
+    public void dataLoadFailed(String msg) {
         mRefreshLayout.setEnabled(true);
+        mAdapter.setEnableLoadMore(true);
+        Toast.makeText( this.getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -144,31 +174,17 @@ public class NewsListFragment extends LazyLoadFragment implements
         return getArguments().getInt(FRAGMENT_TAG);
     }
 
-    @Override
-    public void dataLoaded() {
-        isLoadedOnce= true;
-    }
-
-    @Override
-    public void refreshGone() {
-        if (mProgressBar.getVisibility()== View.VISIBLE) dismissProgressBar();
-
-        if (mRefreshLayout.isRefreshing()){
-            mRefreshLayout.setRefreshing(false);
-            mRefreshLayout.setEnabled(true);
-        }
-    }
-
 
     /**---------------------------RequestLoadMoreListener Interface-----------------------------*/
     @Override
     public void onLoadMoreRequested() {
         mPageIndex+= 1;
+        Log.e("tag",""+mPageIndex);
         if (mPageIndex> mMaxPageIndex){
             mAdapter.loadMoreEnd();
         }else{
             mRefreshLayout.setEnabled(false);
-            mAdapter.setEnableLoadMore(true);
+            mAdapter.setEnableLoadMore(false);
             mPresenter.loadMoreData(mPageIndex);
         }
     }
@@ -177,7 +193,7 @@ public class NewsListFragment extends LazyLoadFragment implements
     @Override
     public void onRefresh() {
         mRefreshLayout.setEnabled(false);
-        mAdapter.setEnableLoadMore(true);
+        mAdapter.setEnableLoadMore(false);
         mPageIndex= 1;
         mPresenter.initData();
     }
