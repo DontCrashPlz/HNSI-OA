@@ -1,9 +1,9 @@
 package com.hnsi.oa.hnsi_oa.main.widget;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +11,21 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.beans.RealDepartmentEntity;
+import com.hnsi.oa.hnsi_oa.database.DepartmentInfoTableHelper;
 import com.hnsi.oa.hnsi_oa.main.presenter.ContactPresenter;
 import com.hnsi.oa.hnsi_oa.main.view.IContactView;
 import com.hnsi.oa.hnsi_oa.widgets.LazyLoadFragment;
+import com.hnsi.oa.hnsi_oa.widgets.MyDepartmentsAdapter;
+import com.hnsi.oa.hnsi_oa.widgets.MyDepartmentsDecoration;
+
+import java.util.ArrayList;
 
 /**
  * Created by Zheng on 2017/10/24.
  */
 
-public class ContactsFragment extends LazyLoadFragment implements IContactView {
+public class ContactsFragment extends LazyLoadFragment implements IContactView, SwipeRefreshLayout.OnRefreshListener {
 
     private View mView;
 
@@ -32,6 +38,8 @@ public class ContactsFragment extends LazyLoadFragment implements IContactView {
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
 
+    private DepartmentInfoTableHelper mHelper;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,7 +47,13 @@ public class ContactsFragment extends LazyLoadFragment implements IContactView {
         mView= inflater.inflate(R.layout.fragment_contact,container,false);
 
         mRefreshLayout= (SwipeRefreshLayout) mView.findViewById(R.id.refreshLayout);
+        mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),
+                getResources().getColor(R.color.colorPrimary));
+        mRefreshLayout.setOnRefreshListener(this);
+
         mRecyclerView= (RecyclerView) mView.findViewById(R.id.recyclerview);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         mProgressBar= (ProgressBar) mView.findViewById(R.id.progressBar);
 
         mPresenter= new ContactPresenter(this);
@@ -57,16 +71,8 @@ public class ContactsFragment extends LazyLoadFragment implements IContactView {
         if (!isPrepared || !isVisible || isLoadedOnce)
             return;
 
-        //尝试加载数据库中数据
+       initData();
 
-
-        mView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mView.setBackgroundColor(Color.YELLOW);
-                isLoadedOnce= true;
-            }
-        },1000);
     }
 
     @Override
@@ -74,8 +80,32 @@ public class ContactsFragment extends LazyLoadFragment implements IContactView {
 
     }
 
+    /**
+     * 初始化数据
+     */
     @Override
     public void initData() {
+
+        //读取数据库中的数据
+        mHelper= new DepartmentInfoTableHelper(getContext());
+        ArrayList<RealDepartmentEntity> departmentList= mHelper.queryAllDepaetment();
+
+        //如果读取到0条数据，请求网络数据
+        if (departmentList== null || departmentList.size()== 0) {
+            mPresenter.loadData();
+            return;
+        }
+
+        mRecyclerView.setAdapter(new MyDepartmentsAdapter(getContext(), departmentList));
+        mRecyclerView.addItemDecoration(new MyDepartmentsDecoration(10, departmentList));
+        mProgressBar.setVisibility(View.GONE);
+
+        isLoadedOnce= true;
+
+    }
+
+    @Override
+    public void onRefresh() {
 
     }
 }

@@ -3,4 +3,7 @@
 
     <string name="num_of_read">阅读（%1$s）</string>
     <string name="num_of_comment">评论（%1$s）</string>
+
+    <string name="num_of_department">%1$s人</string>
+
 </resources>

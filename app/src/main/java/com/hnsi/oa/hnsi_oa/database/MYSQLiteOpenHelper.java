@@ -160,6 +160,10 @@ public class MYSQLiteOpenHelper extends SQLiteOpenHelper{
          */
         String PARENTORGID = "_parentorgid";
         /**
+         * 部门类型（0=一级部门， 1=二级部门）
+         */
+        String TYPE="_type";
+        /**
          * 部门人数
          */
         String CHILDRENNUM = "_childrennum";
@@ -172,6 +176,7 @@ public class MYSQLiteOpenHelper extends SQLiteOpenHelper{
                     + TableDepartmentInfo.ID + "' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '"
                     + TableDepartmentInfo.ORGID + "' INTEGER  NOT NULL, '"
                     + TableDepartmentInfo.ORGNAME + "' TEXT  NOT NULL, '"
+                    + TableDepartmentInfo.TYPE + "' INTEGER  NOT NULL, '"
                     + TableDepartmentInfo.CHILDRENNUM + "' INTEGER  NOT NULL, '"
                     + TableDepartmentInfo.PARENTORGID + "' INTEGER  NOT NULL);";
 

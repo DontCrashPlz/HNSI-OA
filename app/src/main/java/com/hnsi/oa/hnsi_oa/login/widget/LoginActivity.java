@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
 
         mPresenter= new LoginPresenter(this);
 
-        if (isAutoLogin) mPresenter.loginApp();
+//        if (isAutoLogin) mPresenter.loginApp();
 
     }
 

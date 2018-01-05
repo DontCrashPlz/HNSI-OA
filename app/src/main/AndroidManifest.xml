@@ -53,6 +53,10 @@
 
         </activity>
 
+        <activity android:name=".main.widget.DepartmentActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

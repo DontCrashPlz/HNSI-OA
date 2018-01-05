@@ -5,6 +5,7 @@ import com.hnsi.oa.hnsi_oa.beans.LoginEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsListEntity;
+import com.hnsi.oa.hnsi_oa.beans.UnFinishEntity;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -112,7 +113,7 @@ public interface ApiService {
      * @return
      */
     @GET("/default/mobile/oa/com.hnsi.erp.mobile.oa.TaskAuditSearch.pendingList.biz.ext")
-    Call getPendingList(@Query("pageIndex")String pageIndex);
+    Call<UnFinishEntity> getPendingList(@Query("pageIndex")String pageIndex);
 
     /**
      * 获取已办列表

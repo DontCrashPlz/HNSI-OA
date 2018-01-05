@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.login.widget.LoginActivity;
 import com.hnsi.oa.hnsi_oa.widgets.LazyLoadFragment;
 
 /**
@@ -20,6 +21,8 @@ public class MineFragment extends LazyLoadFragment implements View.OnClickListen
     private View mView;
 
     private RelativeLayout mChangePasswordBtn;
+
+    private RelativeLayout mLogoutBtn;
 
     private boolean isLoadedOnce;
 
@@ -39,6 +42,9 @@ public class MineFragment extends LazyLoadFragment implements View.OnClickListen
     private void findViews(View mView) {
         mChangePasswordBtn= (RelativeLayout) mView.findViewById(R.id.mine_rly_change_password);
         mChangePasswordBtn.setOnClickListener(this);
+
+        mLogoutBtn= (RelativeLayout) mView.findViewById(R.id.mine_rly_logout);
+        mLogoutBtn.setOnClickListener(this);
     }
 
     @Override
@@ -62,6 +68,10 @@ public class MineFragment extends LazyLoadFragment implements View.OnClickListen
         switch (vId){
             case R.id.mine_rly_change_password:
                 startActivity(new Intent(getContext(),ChangePasswordActivity.class));
+                break;
+            case R.id.mine_rly_logout:
+                startActivity(new Intent(getContext(),LoginActivity.class));
+                getActivity().finish();
                 break;
         }
     }

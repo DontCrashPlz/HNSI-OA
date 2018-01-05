@@ -15,6 +15,7 @@ import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsListEntity;
+import com.hnsi.oa.hnsi_oa.beans.UnFinishEntity;
 import com.hnsi.oa.hnsi_oa.beans.UserInfo;
 import com.hnsi.oa.hnsi_oa.http.ApiService;
 import com.hnsi.oa.hnsi_oa.http.NovateCookieManger;
@@ -177,8 +178,25 @@ public class MyApplication extends Application implements User {
     }
 
     @Override
-    public void getPendingList() {
+    public void getPendingList(int page , final OnRequestDataListener<UnFinishEntity> listener) {
+        Call<UnFinishEntity> pendingListCall= apiService.getPendingList(String.valueOf(page));
+        pendingListCall.enqueue(new Callback<UnFinishEntity>() {
+            @Override
+            public void onResponse(Call<UnFinishEntity> call, Response<UnFinishEntity> response) {
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UnFinishEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
     @Override

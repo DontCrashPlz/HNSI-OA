@@ -156,7 +156,7 @@ public class ConstactsInfoTableHelper {
      * @param cursor
      * @return
      */
-    public PersonEntity createDepartmentDetailEntity(Cursor cursor){
+    protected PersonEntity createDepartmentDetailEntity(Cursor cursor){
         PersonEntity entity = null;
         if (cursor != null){
             entity = new PersonEntity();
