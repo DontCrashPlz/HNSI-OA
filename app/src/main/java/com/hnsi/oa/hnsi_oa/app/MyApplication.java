@@ -10,6 +10,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.hnsi.oa.hnsi_oa.BuildConfig;
 import com.hnsi.oa.hnsi_oa.beans.ContactEntity;
+import com.hnsi.oa.hnsi_oa.beans.FinishEntity;
+import com.hnsi.oa.hnsi_oa.beans.FlowNameEntity;
+import com.hnsi.oa.hnsi_oa.beans.FlowNameResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.LoginEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
@@ -105,9 +108,9 @@ public class MyApplication extends Application implements User {
 
         mOkHttpClient= new OkHttpClient.Builder()
                 .cookieJar(new NovateCookieManger(getApplicationContext()))
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .writeTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(5,TimeUnit.SECONDS)
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(15,TimeUnit.SECONDS)
                 .build();
 //        mOkHttpClient= new OkHttpClient.Builder()
 //                .addInterceptor(new SaveCookiesInterceptor())
@@ -183,6 +186,9 @@ public class MyApplication extends Application implements User {
         pendingListCall.enqueue(new Callback<UnFinishEntity>() {
             @Override
             public void onResponse(Call<UnFinishEntity> call, Response<UnFinishEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("UnFinishEntity",response.toString());
+
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
                 }else if (! response.body().isSuccess()){
@@ -200,8 +206,53 @@ public class MyApplication extends Application implements User {
     }
 
     @Override
-    public void getFinishedList() {
+    public void getPendingFlowList(int page, String processDefnames, final OnRequestDataListener<UnFinishEntity> listener) {
+        Call<UnFinishEntity> pendingFlowListCall= apiService.getPendingFlowList(String.valueOf(page), processDefnames);
+        pendingFlowListCall.enqueue(new Callback<UnFinishEntity>() {
+            @Override
+            public void onResponse(Call<UnFinishEntity> call, Response<UnFinishEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("UnFinishEntity",response.toString());
 
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UnFinishEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
+    }
+
+    @Override
+    public void getFinishedList(int page , final OnRequestDataListener<FinishEntity> listener) {
+        Call<FinishEntity> finishedListCall= apiService.getFinishedList(String.valueOf(page));
+        finishedListCall.enqueue(new Callback<FinishEntity>() {
+            @Override
+            public void onResponse(Call<FinishEntity> call, Response<FinishEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("FinishEntity",response.toString());
+
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FinishEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
     @Override
@@ -237,6 +288,26 @@ public class MyApplication extends Application implements User {
     @Override
     public void uploadHeadImg() {
 
+    }
+
+    @Override
+    public void getFlowNames(final OnRequestDataListener<FlowNameResponseEntity> listener) {
+        Call<FlowNameResponseEntity> flowNameCall= apiService.getFlowNameList();
+        flowNameCall.enqueue(new Callback<FlowNameResponseEntity>() {
+            @Override
+            public void onResponse(Call<FlowNameResponseEntity> call, Response<FlowNameResponseEntity> response) {
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else {
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FlowNameResponseEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
 

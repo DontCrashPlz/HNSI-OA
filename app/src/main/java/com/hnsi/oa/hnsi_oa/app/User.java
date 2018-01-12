@@ -1,5 +1,7 @@
 package com.hnsi.oa.hnsi_oa.app;
 
+import com.hnsi.oa.hnsi_oa.beans.FinishEntity;
+import com.hnsi.oa.hnsi_oa.beans.FlowNameResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.UnFinishEntity;
 import com.hnsi.oa.hnsi_oa.interfaces.OnLoginListener;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
@@ -13,7 +15,8 @@ public interface User {
     void userLogout();
     void changePassword(String newPassword, String oldPassword);
     void getPendingList(int page, OnRequestDataListener<UnFinishEntity> listener);
-    void getFinishedList();
+    void getPendingFlowList(int page, String processDefnames, OnRequestDataListener<UnFinishEntity> listener);
+    void getFinishedList(int page, OnRequestDataListener<FinishEntity> listener);
     void getApprovalDetail();
     void getApprovalHistory();
     void getMatterCount();
@@ -21,4 +24,5 @@ public interface User {
     void getMessageList();
     void getMessageDetail();
     void uploadHeadImg();
+    void getFlowNames(OnRequestDataListener<FlowNameResponseEntity> listener);
 }

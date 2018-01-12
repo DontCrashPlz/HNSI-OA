@@ -4,7 +4,7 @@ package com.hnsi.oa.hnsi_oa.beans;
  * 待办事项的数据实体
  * Created by Zheng on 2016/6/20.
  */
-public class UnFinishedFlowEntity {
+public class FlowEntity {
     /** 分类名称 */
     private String processChName="";
     /** 标题名称 */
@@ -78,7 +78,7 @@ public class UnFinishedFlowEntity {
 
     @Override
     public String toString() {
-        return "UnFinishedFlowEntity{" +
+        return "FlowEntity{" +
                 "processChName='" + processChName + '\'' +
                 ", processInstName='" + processInstName + '\'' +
                 ", createTime='" + startTime + '\'' +

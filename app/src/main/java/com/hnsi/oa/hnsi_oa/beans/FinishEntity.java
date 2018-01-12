@@ -4,24 +4,15 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * Created by Zheng on 2018/1/5.
+ * Created by Zheng on 2018/1/8.
  */
 
-public class UnFinishEntity {
-    private ArrayList<FlowClassifyEntity> MenuItem;
+public class FinishEntity {
     private String msg="";
     private boolean success;
-    private ArrayList<FlowEntity> taskList;
+    private ArrayList<FlowEntity> list;
     private int totalPage;
     private Map<String, String> urlMap;
-
-    public ArrayList<FlowClassifyEntity> getMenuItem() {
-        return MenuItem;
-    }
-
-    public void setMenuItem(ArrayList<FlowClassifyEntity> menuItem) {
-        MenuItem = menuItem;
-    }
 
     public String getMsg() {
         return msg;
@@ -39,12 +30,12 @@ public class UnFinishEntity {
         this.success = success;
     }
 
-    public ArrayList<FlowEntity> getTaskList() {
-        return taskList;
+    public ArrayList<FlowEntity> getList() {
+        return list;
     }
 
-    public void setTaskList(ArrayList<FlowEntity> taskList) {
-        this.taskList = taskList;
+    public void setList(ArrayList<FlowEntity> list) {
+        this.list = list;
     }
 
     public int getTotalPage() {
@@ -65,11 +56,10 @@ public class UnFinishEntity {
 
     @Override
     public String toString() {
-        return "UnFinishEntity{" +
-                "MenuItem=" + MenuItem +
-                ", msg='" + msg + '\'' +
+        return "FinishEntity{" +
+                "msg='" + msg + '\'' +
                 ", success=" + success +
-                ", taskList=" + taskList +
+                ", list=" + list +
                 ", totalPage=" + totalPage +
                 ", urlMap=" + urlMap +
                 '}';

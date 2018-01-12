@@ -1,6 +1,9 @@
 package com.hnsi.oa.hnsi_oa.http;
 
 import com.hnsi.oa.hnsi_oa.beans.ContactEntity;
+import com.hnsi.oa.hnsi_oa.beans.FinishEntity;
+import com.hnsi.oa.hnsi_oa.beans.FlowNameEntity;
+import com.hnsi.oa.hnsi_oa.beans.FlowNameResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.LoginEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
@@ -116,12 +119,28 @@ public interface ApiService {
     Call<UnFinishEntity> getPendingList(@Query("pageIndex")String pageIndex);
 
     /**
+     * 获取待办列表
+     * @param pageIndex
+     * @return
+     */
+    @GET("/default/com.hnsi.erp.mobile.oa.TaskAuditSearch.pendingListByDef.biz.ext")
+    Call<UnFinishEntity> getPendingFlowList(@Query("pageIndex")String pageIndex,
+                                            @Query("processDefnames")String processDefnames);
+
+    /**
+     * 获取流程类别列表
+     * @return
+     */
+    @GET("/default/mobile/oa/com.hnsi.erp.mobile.oa.TaskAuditSearch.countAllFlow.biz.ext")
+    Call<FlowNameResponseEntity> getFlowNameList();
+
+    /**
      * 获取已办列表
      * @param pageIndex
      * @return
      */
     @GET("/default/mobile/oa/com.hnsi.erp.mobile.oa.TaskAuditSearch.finishedList.biz.ext")
-    Call getFinishedList(@Query("pageIndex")String pageIndex);
+    Call<FinishEntity> getFinishedList(@Query("pageIndex")String pageIndex);
 
     @GET
     Call getApprovalDetail(@Url String url,

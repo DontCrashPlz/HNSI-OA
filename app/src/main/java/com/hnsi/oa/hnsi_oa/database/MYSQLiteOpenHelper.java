@@ -15,6 +15,7 @@ public class MYSQLiteOpenHelper extends SQLiteOpenHelper{
     // 数据库版本为1
     private static final int DB_VERSION = 1;
 
+/********************************************联系人表***************************************************/
     /**
      * 数据库表名,联系人信息表
      */
@@ -133,7 +134,7 @@ public class MYSQLiteOpenHelper extends SQLiteOpenHelper{
 //                    + TableFilesInfo.FILESIZE + "' TEXT NOT NULL, '"
 //                    + TableFilesInfo.FILEID + "' TEXT NOT NULL);";
 
-
+/********************************************部门表***************************************************/
     /**
      * 数据库表名,部门信息表
      */
@@ -180,6 +181,37 @@ public class MYSQLiteOpenHelper extends SQLiteOpenHelper{
                     + TableDepartmentInfo.CHILDRENNUM + "' INTEGER  NOT NULL, '"
                     + TableDepartmentInfo.PARENTORGID + "' INTEGER  NOT NULL);";
 
+/********************************************流程分类表***************************************************/
+    /**
+     * 数据库表名,流程分类表
+     */
+    public static final String DB_TABLE_FLOW_LIST = "t_flow_list";
+
+    /**
+     * 部门信息表结构
+     */
+    public interface TableFlowList {
+        /**
+         * 部门主键
+         */
+        String ID = "_id";
+        /**
+         * 部门ID
+         */
+        String TITLE = "_title";
+        /**
+         * 部门名称
+         */
+        String LABEL = "_label";
+    }
+
+    // 创建联系人信息表SQL语句
+    private static final String SQL_CREATE_TABLE_FLOW_LIST =
+            "CREATE TABLE '" + DB_TABLE_FLOW_LIST + "' ( '"
+                    + TableFlowList.ID + "' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '"
+                    + TableFlowList.TITLE + "' TEXT  NOT NULL, '"
+                    + TableFlowList.LABEL + "' TEXT  NOT NULL);";
+
 
     public MYSQLiteOpenHelper(Context context){
         this(context, DB_NAME, null, DB_VERSION);
@@ -201,6 +233,8 @@ public class MYSQLiteOpenHelper extends SQLiteOpenHelper{
 //        db.execSQL(SQL_CREATE_TABLE_FILES_INFO);
         // 创建部门信息表
         db.execSQL(SQL_CREATE_TABLE_DEPARTMENT_INFO);
+        // 创建流程分类表
+        db.execSQL(SQL_CREATE_TABLE_FLOW_LIST);
     }
 
     /**

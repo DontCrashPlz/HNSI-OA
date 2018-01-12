@@ -1,5 +1,6 @@
 package com.hnsi.oa.hnsi_oa.approval.widget;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,15 +8,31 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.approval.presenter.FinishPresenter;
+import com.hnsi.oa.hnsi_oa.approval.presenter.UnFinishFlowPresenter;
+import com.hnsi.oa.hnsi_oa.approval.presenter.UnFinishPresenter;
+import com.hnsi.oa.hnsi_oa.beans.FlowClassifyEntity;
+import com.hnsi.oa.hnsi_oa.database.FlowListTableHelper;
 import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
 import com.hnsi.oa.hnsi_oa.widgets.CustomTabLayout.ViewPagerTitle;
+import com.hnsi.oa.hnsi_oa.widgets.MyFinishedFlowAdapter;
+import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemDecoration;
+import com.hnsi.oa.hnsi_oa.widgets.MyPenddingFlowAdapter;
+import com.hnsi.oa.hnsi_oa.widgets.RecyclerFragment.BaseRecyclerFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created by Zheng on 2017/11/13.
@@ -29,8 +46,12 @@ public class ApprovalActivity extends BaseActivity {
 
     private ListView mListView;
 
-    private UnFinishedFragment fragment1= new UnFinishedFragment();
-    private UnFinishedFragment fragment2= new UnFinishedFragment();
+    private UnFinishedFragment fragment1;
+    private BaseRecyclerFragment fragment2;
+
+    private MyPenddingFlowAdapter pAdapter;
+    private MyFinishedFlowAdapter fAdapter;
+    private MyNewsItemDecoration mItemDecoration;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +62,16 @@ public class ApprovalActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("新闻");
+
+        pAdapter= new MyPenddingFlowAdapter();
+        fAdapter= new MyFinishedFlowAdapter();
+        mItemDecoration= new MyNewsItemDecoration(14);
+
+        fragment1= new UnFinishedFragment(pAdapter, mItemDecoration);
+        fragment1.setPresenter(new UnFinishPresenter(fragment1));
+
+        fragment2= new BaseRecyclerFragment(fAdapter, mItemDecoration);
+        fragment2.setPresenter(new FinishPresenter(fragment2));
 
         mViewPagerTitle= (ViewPagerTitle) findViewById(R.id.viewpagertitle);
         mViewPager= (ViewPager) findViewById(R.id.viewpager);
@@ -76,15 +107,61 @@ public class ApprovalActivity extends BaseActivity {
         return true;
     }
 
-    public void initListView(final String[] strs){
-        mListView.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,strs));
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                fragment1.setTextViewText(strs[position]);
-                drawerLayout.closeDrawers();
-            }
-        });
+    public void initListView(ArrayList<FlowClassifyEntity> flows){
+        mListView.setAdapter(new MyFlowNumAdapter(this, flows));
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+////                fragment1.setTextViewText(strs[position]);
+//                fragment1.setNewPresenter(new UnFinishFlowPresenter(fragment1, ));
+//                drawerLayout.closeDrawers();
+//            }
+//        });
+    }
+
+    class MyFlowNumAdapter extends BaseAdapter{
+
+        private Context mContext;
+        private ArrayList<FlowClassifyEntity> datas;
+        private FlowListTableHelper helper;
+
+        public MyFlowNumAdapter(Context context, ArrayList<FlowClassifyEntity> flows){
+            mContext= context;
+            datas= flows;
+            helper= new FlowListTableHelper(context);
+        }
+
+        @Override
+        public int getCount() {
+            return datas.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            View mView= LayoutInflater.from(mContext).inflate(R.layout.item_flow_num, parent, false);
+            TextView mTextView= (TextView) mView.findViewById(R.id.flow_name);
+            mTextView.setText(helper.getFlowName(datas.get(position).getLabel())+ "     " + datas.get(position).getNum());
+
+            FrameLayout mPanel= (FrameLayout) mView.findViewById(R.id.flow_panel);
+            mPanel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fragment1.setNewPresenter(new UnFinishFlowPresenter(fragment1, datas.get(position).getLabel()));
+                    drawerLayout.closeDrawers();
+                }
+            });
+            return mView;
+        }
     }
 
 }

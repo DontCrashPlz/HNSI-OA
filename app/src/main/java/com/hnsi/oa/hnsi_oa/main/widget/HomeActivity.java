@@ -8,8 +8,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.app.MyApplication;
+import com.hnsi.oa.hnsi_oa.beans.FlowNameResponseEntity;
+import com.hnsi.oa.hnsi_oa.database.FlowListTableHelper;
+import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
 import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
 import com.hnsi.oa.hnsi_oa.main.view.IHomeView;
 
@@ -40,6 +45,19 @@ public class HomeActivity extends BaseActivity implements IHomeView,View.OnClick
         findViews();
 
         onClick(mMsgBtn);
+
+        MyApplication.getInstance().getFlowNames(new OnRequestDataListener<FlowNameResponseEntity>() {
+            @Override
+            public void onSuccessed(FlowNameResponseEntity flowNameResponseEntity) {
+                FlowListTableHelper helper= new FlowListTableHelper(HomeActivity.this);
+                helper.insertAll(flowNameResponseEntity.getProcess());
+            }
+
+            @Override
+            public void onFailed(String throwable) {
+                Toast.makeText(HomeActivity.this, throwable, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void findViews() {
