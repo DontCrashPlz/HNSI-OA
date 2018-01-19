@@ -57,6 +57,14 @@
 
         </activity>
 
+        <activity android:name=".main.widget.SearchContactActivity">
+
+        </activity>
+
+        <activity android:name=".approval.widget.ApprovalDetailActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

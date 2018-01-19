@@ -177,33 +177,60 @@ public class ConstactsInfoTableHelper {
         return entity;
     }
 
-//    /**
-//     * 获取ItemData实例
-//     * @param cursor
-//     * @return
-//     */
-//    public ItemData createItemData(Cursor cursor){
-//        ItemData entity=null;
-//        if (cursor != null){
-//            entity = new ItemData();
-//            try {
-//                entity.setType(ItemData.ITEM_TYPE_CHILD);
-//                entity.setText(cursor.getString(cursor.getColumnIndex(MYSQLiteOpenHelper.TableContactsInfo.EMPNAME)));
-//                entity.setText2(cursor.getString(cursor.getColumnIndex(MYSQLiteOpenHelper.TableContactsInfo.POSINAME)));
-//                entity.setSex(cursor.getString(cursor.getColumnIndex(MYSQLiteOpenHelper.TableContactsInfo.SEX)));
-//                entity.setIconUrl(cursor.getString(cursor.getColumnIndex(MYSQLiteOpenHelper.TableContactsInfo.HEADIMG)));
-//                entity.setEmpid(cursor.getInt(cursor.getColumnIndex(MYSQLiteOpenHelper.TableContactsInfo.EMPID)));
-//            } catch (Exception e) {
-//            }
-//        }
-//        return entity;
-//    }
+    /**
+     * 判断数据库是否有效
+     * @return
+     */
+    public boolean isDatabaseValid(){
+        SQLiteDatabase readableDB = mySQLiteOpenHelper.getReadableDatabase();
+        Cursor cursor = readableDB.rawQuery("select * from " + MYSQLiteOpenHelper.DB_TABLE_CONTACTS_INFO + " where _empid > " + 0, null);
+
+        boolean result= false;
+
+        if (cursor.moveToFirst()){
+            result= true;
+        }
+
+        cursor.close();
+        readableDB.close();
+        return result;
+    }
+
+    /**
+     * 根据名字模糊搜索联系人
+     * @param name
+     * @return 联系人列表
+     */
+    public ArrayList<PersonEntity> searchByName(String name){
+
+        ArrayList<PersonEntity> resultList=new ArrayList<>();
+
+        SQLiteDatabase readableDB = mySQLiteOpenHelper.getReadableDatabase();
+
+        Cursor cursor=readableDB.rawQuery("select * from " + MYSQLiteOpenHelper.DB_TABLE_CONTACTS_INFO + " where _empname like '%" + name + "%'", null);
+
+        if (cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                final PersonEntity entity = createDepartmentDetailEntity(cursor);
+                if (entity != null){
+                    resultList.add(entity);
+                }
+                cursor.moveToNext();
+            }
+        }
+
+        cursor.close();
+        readableDB.close();
+
+        return resultList;
+    }
 
     /**
      * 根据号码搜索联系人
      * @param tel
      * @return 联系人列表
      */
+    @Deprecated
     public List<PersonEntity> searchByTel(String tel){
 
         List<PersonEntity> resultList=new ArrayList<>();
@@ -234,6 +261,7 @@ public class ConstactsInfoTableHelper {
      * @param empid
      * @return
      */
+    @Deprecated
     public PersonEntity searchByEmpid(int empid){
 
         SQLiteDatabase readableDB = mySQLiteOpenHelper.getReadableDatabase();

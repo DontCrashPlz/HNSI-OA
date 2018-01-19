@@ -28,7 +28,7 @@ public class UnFinishFlowPresenter implements BasePresenter {
             @Override
             public void onSuccessed(UnFinishEntity unFinishEntity) {
                 mView.refreshData(unFinishEntity.getTaskList(), unFinishEntity.getTotalPage());
-                ((UnFinishedFragment)mView).setFlowNumList(unFinishEntity.getMenuItem());
+//                ((UnFinishedFragment)mView).setFlowNumList(unFinishEntity.getMenuItem());
             }
 
             @Override

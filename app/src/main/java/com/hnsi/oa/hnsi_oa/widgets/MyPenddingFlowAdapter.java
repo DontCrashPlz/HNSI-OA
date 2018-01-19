@@ -1,12 +1,16 @@
 package com.hnsi.oa.hnsi_oa.widgets;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.app.MyApplication;
+import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity;
 import com.hnsi.oa.hnsi_oa.beans.FlowEntity;
 
 /**
@@ -15,8 +19,10 @@ import com.hnsi.oa.hnsi_oa.beans.FlowEntity;
 
 public class MyPenddingFlowAdapter extends BaseQuickAdapter<FlowEntity, MyPenddingFlowAdapter.MyFlowViewHolder> {
 
-    public static final int FLOW_PENDDING= 0;
-    public static final int FLOW_FINISHED= 1;
+    public static final String DETAIL_PARAM_URL= "url";
+    public static final String DETAIL_PARAM_WORKITEMID= "workItemId";
+    public static final String DETAIL_PARAM_ACTIVITYDEFID= "activityDefId";
+    public static final String DETAIL_PARAM_PROCESSINSTID= "processInstId";
 
     public MyPenddingFlowAdapter() {
         super(R.layout.item_approval_no_complete_matter);
@@ -29,14 +35,20 @@ public class MyPenddingFlowAdapter extends BaseQuickAdapter<FlowEntity, MyPenddi
     }
 
     @Override
-    protected void convert(MyFlowViewHolder helper, FlowEntity item) {
+    protected void convert(MyFlowViewHolder helper, final FlowEntity item) {
         helper.mTitleTv.setText(item.getProcessInstName());
         helper.mClassTv.setText(item.getProcessChName());
         helper.mDateTv.setText(item.getStartTime());
         helper.mPanelRly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent= new Intent(mContext, ApprovalDetailActivity.class);
+                intent.putExtra(DETAIL_PARAM_URL, item.getFlowUrl());
+                intent.putExtra(DETAIL_PARAM_WORKITEMID, item.getWorkItemID());
+                intent.putExtra(DETAIL_PARAM_ACTIVITYDEFID, item.getActivityDefID());
+                intent.putExtra(DETAIL_PARAM_PROCESSINSTID, item.getProcessInstID());
+                mContext.startActivity(intent);
+                Toast.makeText(mContext, item.getFlowUrl() +"--"+item.getWorkItemID() +"--"+ item.getActivityDefID() +"--"+ item.getProcessInstID(), Toast.LENGTH_LONG).show();
             }
         });
     }

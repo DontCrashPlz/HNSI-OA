@@ -1,5 +1,6 @@
 package com.hnsi.oa.hnsi_oa.widgets;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -49,10 +50,10 @@ public class MyFinishedFlowAdapter extends BaseQuickAdapter<FlowEntity, MyFinish
 
         public MyFlowViewHolder(View view) {
             super(view);
-            mPanelRly= (RelativeLayout) view.findViewById(R.id.item_unfinished_panel);
-            mClassTv= (TextView) view.findViewById(R.id.item_unfinished_tv_class);
-            mTitleTv= (TextView) view.findViewById(R.id.item_unfinished_tv_title);
-            mDateTv= (TextView) view.findViewById(R.id.item_unfinished_tv_starttime);
+            mPanelRly= (RelativeLayout) view.findViewById(R.id.item_finished_panel);
+            mClassTv= (TextView) view.findViewById(R.id.item_finished_tv_class);
+            mTitleTv= (TextView) view.findViewById(R.id.item_finished_tv_title);
+            mDateTv= (TextView) view.findViewById(R.id.item_finished_tv_starttime);
         }
     }
 

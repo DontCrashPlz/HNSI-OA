@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.utils.DensityUtil;
 import com.hnsi.oa.hnsi_oa.widgets.CustomTabLayout.Tool;
 
 /**
@@ -25,7 +26,7 @@ public class IconImageView extends View {
 
     private String text;
     private int textColor;
-    private int textSize;
+    private float textSize;
     private Bitmap iconImg;
 
     private int num;
@@ -53,7 +54,7 @@ public class IconImageView extends View {
 //        int n= array.getIndexCount();
         text= array.getString(R.styleable.IconImageView_text);
         textColor= array.getColor(R.styleable.IconImageView_textColor, Color.BLACK);
-        textSize= array.getDimensionPixelSize(R.styleable.IconImageView_textSize, 13);
+        textSize= array.getDimension(R.styleable.IconImageView_textSize, DensityUtil.sp2px(getContext(), 13));
         iconImg= BitmapFactory.decodeResource(getResources(), array.getResourceId(R.styleable.IconImageView_icon_image, 0));
 
         array.recycle();
@@ -106,6 +107,7 @@ public class IconImageView extends View {
 
         //绘制文字
         mPaint.setColor(textColor);
+        mPaint.setTextSize(textSize);
         canvas.drawText(
                 text,
                 getWidth()/2- mTextRect.width()/2,
@@ -116,8 +118,8 @@ public class IconImageView extends View {
         if (num> 0){
             mPaint.setColor(Color.RED);
             canvas.drawCircle(
-                    getWidth()/2+ iconImg.getWidth()/2,
-                    dp_px_10,
+                    getWidth()/2+ iconImg.getWidth()/2- dp_px_2,
+                    dp_px_10+ dp_px_2,
                     dp_px_10,
                     mPaint);
         }
@@ -132,8 +134,8 @@ public class IconImageView extends View {
             mPaint.getTextBounds(mNum, 0, mNum.length(), rect);
             canvas.drawText(
                     mNum,
-                    getWidth()/2+ iconImg.getWidth()/2- rect.width()/2,
-                    dp_px_10+ rect.height()/2,
+                    getWidth()/2+ iconImg.getWidth()/2- rect.width()/2- dp_px_2,
+                    dp_px_10+ rect.height()/2+ dp_px_2,
                     mPaint);
         }
     }

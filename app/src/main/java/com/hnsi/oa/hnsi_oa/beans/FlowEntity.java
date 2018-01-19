@@ -19,6 +19,16 @@ public class FlowEntity {
     private int processInstID;
     /** urlMap中对应的url项的key */
     private String processDefName="";
+    /** 根据key从urlMap中取出value */
+    private String flowUrl="";
+
+    public String getFlowUrl() {
+        return flowUrl;
+    }
+
+    public void setFlowUrl(String flowUrl) {
+        this.flowUrl = flowUrl;
+    }
 
     public String getProcessChName() {
         return processChName;
@@ -81,11 +91,12 @@ public class FlowEntity {
         return "FlowEntity{" +
                 "processChName='" + processChName + '\'' +
                 ", processInstName='" + processInstName + '\'' +
-                ", createTime='" + startTime + '\'' +
+                ", startTime='" + startTime + '\'' +
                 ", workItemID=" + workItemID +
                 ", activityDefID='" + activityDefID + '\'' +
                 ", processInstID=" + processInstID +
                 ", processDefName='" + processDefName + '\'' +
+                ", flowUrl='" + flowUrl + '\'' +
                 '}';
     }
 }

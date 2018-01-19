@@ -102,6 +102,7 @@ public class ContactPresenter {
 
                 //通知通讯录界面加载数据
                 Log.e("contact" , "successed");
+                mView.initData();
             }
 
             @Override

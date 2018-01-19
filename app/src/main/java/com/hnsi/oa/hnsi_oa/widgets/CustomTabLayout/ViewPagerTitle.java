@@ -6,16 +6,17 @@ import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.utils.DensityUtil;
 
 import java.util.ArrayList;
 
@@ -93,8 +94,10 @@ public class ViewPagerTitle extends HorizontalScrollView {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerTitle);
         defaultTextColor = array.getColor(R.styleable.ViewPagerTitle_defaultTextViewColor, Color.GRAY);
         selectedTextColor = array.getColor(R.styleable.ViewPagerTitle_selectedTextViewColor, Color.BLACK);
-        defaultTextSize = array.getDimension(R.styleable.ViewPagerTitle_defaultTextViewSize, 18);
-        selectedTextSize = array.getDimension(R.styleable.ViewPagerTitle_defaultTextViewSize, 22);
+        //此处获取到的单位是px，xml中的sp和dp已经被换算为px
+        defaultTextSize = array.getDimension(R.styleable.ViewPagerTitle_defaultTextViewSize, DensityUtil.sp2px(getContext(), 14));
+        selectedTextSize = array.getDimension(R.styleable.ViewPagerTitle_defaultTextViewSize, DensityUtil.sp2px(getContext(), 16));
+
         backgroundColor = array.getColor(R.styleable.ViewPagerTitle_background_content_color, Color.WHITE);
         itemMargins = array.getDimension(R.styleable.ViewPagerTitle_item_margins, 30);
 
@@ -140,6 +143,10 @@ public class ViewPagerTitle extends HorizontalScrollView {
         return textViews;
     }
 
+    /**
+     * 添加TextView
+     * @param titles
+     */
     private void createTextViews(String[] titles) {
         FrameLayout contentView = new FrameLayout(getContext());
         contentView.setBackgroundColor(backgroundColor);
@@ -172,7 +179,9 @@ public class ViewPagerTitle extends HorizontalScrollView {
             TextView textView = new TextView(getContext());
             textView.setText(titles[i]);
             textView.setTextColor(Color.GRAY);
-            textView.setTextSize(defaultTextSize);
+//            float size= DensityUtil.px2sp(getContext(), defaultTextSize);
+            //setTextSize默认的单位为sp
+            textView.setTextSize(DensityUtil.px2sp(getContext(), defaultTextSize));
             textView.setLayoutParams(textViewParams);
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
             textView.setOnClickListener(onClickListener);
@@ -186,7 +195,7 @@ public class ViewPagerTitle extends HorizontalScrollView {
     private int getTextViewMargins(String[] titles) {
         float countLength = 0;
         TextView textView = new TextView(getContext());
-        textView.setTextSize(defaultTextSize);
+        textView.setTextSize(DensityUtil.px2sp(getContext(), defaultTextSize));
         TextPaint paint = textView.getPaint();
 
 
@@ -225,10 +234,10 @@ public class ViewPagerTitle extends HorizontalScrollView {
         for (int i = 0; i < textViews.size(); i++) {
             if (i == index) {
                 textViews.get(i).setTextColor(selectedTextColor);
-                textViews.get(i).setTextSize(selectedTextSize);
+                textViews.get(i).setTextSize(DensityUtil.px2sp(getContext(), selectedTextSize));
             } else {
                 textViews.get(i).setTextColor(defaultTextColor);
-                textViews.get(i).setTextSize(defaultTextSize);
+                textViews.get(i).setTextSize(DensityUtil.px2sp(getContext(), defaultTextSize));
             }
         }
     }

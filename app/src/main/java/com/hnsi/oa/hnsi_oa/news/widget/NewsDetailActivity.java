@@ -124,15 +124,23 @@ public class NewsDetailActivity extends BaseActivity implements INewsView {
 //        String fortSizeStr= "font-size: "+mTextSize+"px;";
 //        Log.e("fortSizeStr",fortSizeStr);
 
+//        String mHtmlStr= entity.getContent()
+//                .replaceAll("img src=\"", "img style=\" width:100%; height:auto;\" src=\"")
+////                .replaceAll("img src=\"", "img style=\" width:100%; height:auto;\" src=\"" + MyApplication.getInstance().getBaseUrl())
+////                .replaceAll("href=\"","href=\""+ MyApplication.getInstance().getBaseUrl())
+//                .replaceAll("line-height:(.*?);", "line-height: 180%;")
+//                .replaceAll("text-indent:(.*?);", "text-indent: 2em;")
+//                .replaceAll("font-size:(.*?);", "font-size:16px;");
+
         String mHtmlStr= entity.getContent()
-                .replaceAll("img src=\"", "img style=\" width:100%; height:auto;\" src=\"")
-//                .replaceAll("img src=\"", "img style=\" width:100%; height:auto;\" src=\"" + MyApplication.getInstance().getBaseUrl())
-//                .replaceAll("href=\"","href=\""+ MyApplication.getInstance().getBaseUrl())
+                .replaceAll("img src=\"", "img style=\" width:100%; height:auto;\" src=\"" + "http://192.168.1.68:80/")
+                .replaceAll("href=\"","href=\"" + "http://192.168.1.68:80/")
                 .replaceAll("line-height:(.*?);", "line-height: 180%;")
                 .replaceAll("text-indent:(.*?);", "text-indent: 2em;")
-                .replaceAll("font-size:(.*?);", "font-size:16px;");
+                .replaceAll("font-size:(.*?);", "font-size: 16px;");
 
-        mContentWv.loadDataWithBaseURL(MyApplication.getInstance().getBaseUrl(), mHtmlStr, "text/html", "UTF-8",null);
+//        mContentWv.loadDataWithBaseURL(MyApplication.getInstance().getBaseUrl(), mHtmlStr, "text/html", "UTF-8",null);
+        mContentWv.loadDataWithBaseURL("", mHtmlStr, "text/html", "UTF-8",null);
 //        mContentWv.loadData(mHtmlStr, "text/html", "UTF-8");
     }
 }

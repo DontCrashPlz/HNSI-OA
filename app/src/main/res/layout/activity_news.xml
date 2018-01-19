@@ -11,8 +11,8 @@
         android:id="@+id/viewpagertitle"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        app:defaultTextViewSize="8dp"
-        app:selectedTextViewSize="16dp"
+        app:defaultTextViewSize="16sp"
+        app:selectedTextViewSize="16sp"
         app:line_start_color="?attr/colorPrimary"
         app:line_end_color="?attr/colorPrimary"
         app:line_height="5"/>

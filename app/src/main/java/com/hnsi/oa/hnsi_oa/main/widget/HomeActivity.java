@@ -1,11 +1,14 @@
 package com.hnsi.oa.hnsi_oa.main.widget;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -111,6 +114,7 @@ public class HomeActivity extends BaseActivity implements IHomeView,View.OnClick
                     default:
                         throw new NullPointerException("ViewPager index Exception!");
                 }
+                invalidateOptionsMenu();
             }
 
             @Override
@@ -153,5 +157,29 @@ public class HomeActivity extends BaseActivity implements IHomeView,View.OnClick
                     mContentVp.setCurrentItem(3,false);
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_toolbar_meun, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (mContentVp.getCurrentItem()== 1){
+            menu.findItem(R.id.search_button).setVisible(true);
+        }else {
+            menu.findItem(R.id.search_button).setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()== R.id.search_button){
+            startActivity(new Intent(this, SearchContactActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

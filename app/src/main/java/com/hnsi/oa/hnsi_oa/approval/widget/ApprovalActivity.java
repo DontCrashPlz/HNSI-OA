@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.approval.presenter.FinishPresenter;
@@ -156,8 +157,14 @@ public class ApprovalActivity extends BaseActivity {
             mPanel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fragment1.setNewPresenter(new UnFinishFlowPresenter(fragment1, datas.get(position).getLabel()));
-                    drawerLayout.closeDrawers();
+                    if (fragment1.isVisible){
+                        fragment1.setNewPresenter(new UnFinishFlowPresenter(fragment1, datas.get(position).getLabel()));
+                        fragment1.onRefresh();
+                        drawerLayout.closeDrawers();
+                    }else{
+                        Toast.makeText(ApprovalActivity.this, "流程分类仅支持待办事项", Toast.LENGTH_SHORT).show();
+                        drawerLayout.closeDrawers();
+                    }
                 }
             });
             return mView;

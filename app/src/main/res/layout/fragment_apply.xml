@@ -553,7 +553,7 @@
                     android:gravity="center_horizontal"
                     app:icon_image="@mipmap/apply_business"
                     app:text="审批"
-                    app:textSize="13dp"
+                    app:textSize="13sp"
                     app:textColor="@color/gray"/>
                 <com.hnsi.oa.hnsi_oa.widgets.IconImageView
                     android:id="@+id/iiv2"
@@ -563,7 +563,7 @@
                     android:gravity="center_horizontal"
                     app:icon_image="@mipmap/apply_business"
                     app:text="审批"
-                    app:textSize="13dp"
+                    app:textSize="13sp"
                     app:textColor="@android:color/black"/>
                 <com.hnsi.oa.hnsi_oa.widgets.IconImageView
                     android:id="@+id/iiv3"
@@ -573,7 +573,7 @@
                     android:gravity="center_horizontal"
                     app:icon_image="@mipmap/apply_business"
                     app:text="审批"
-                    app:textSize="13dp"
+                    app:textSize="13sp"
                     app:textColor="@color/gray"/>
                 <com.hnsi.oa.hnsi_oa.widgets.IconImageView
                     android:id="@+id/iiv4"
@@ -583,7 +583,7 @@
                     android:gravity="center_horizontal"
                     app:icon_image="@mipmap/apply_business"
                     app:text="审批"
-                    app:textSize="13dp"
+                    app:textSize="13sp"
                     app:textColor="@color/gray"/>
 
             </LinearLayout>

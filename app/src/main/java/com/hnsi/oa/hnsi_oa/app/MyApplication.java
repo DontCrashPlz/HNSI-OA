@@ -5,15 +5,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.hnsi.oa.hnsi_oa.BuildConfig;
+import com.hnsi.oa.hnsi_oa.beans.ApprovalEntity;
+import com.hnsi.oa.hnsi_oa.beans.ChangePasswordEntity;
 import com.hnsi.oa.hnsi_oa.beans.ContactEntity;
 import com.hnsi.oa.hnsi_oa.beans.FinishEntity;
-import com.hnsi.oa.hnsi_oa.beans.FlowNameEntity;
 import com.hnsi.oa.hnsi_oa.beans.FlowNameResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.LoginEntity;
+import com.hnsi.oa.hnsi_oa.beans.LogoutEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsEntity;
@@ -22,15 +21,11 @@ import com.hnsi.oa.hnsi_oa.beans.UnFinishEntity;
 import com.hnsi.oa.hnsi_oa.beans.UserInfo;
 import com.hnsi.oa.hnsi_oa.http.ApiService;
 import com.hnsi.oa.hnsi_oa.http.NovateCookieManger;
-import com.hnsi.oa.hnsi_oa.http.ReadCookiesInterceptor;
-import com.hnsi.oa.hnsi_oa.http.SaveCookiesInterceptor;
 import com.hnsi.oa.hnsi_oa.interfaces.OnLoginListener;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataAndNumListener;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
 import com.hnsi.oa.hnsi_oa.utils.SharedPrefUtils;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -62,6 +57,11 @@ public class MyApplication extends Application implements User {
     public void onCreate() {
         super.onCreate();
         mSingleInstance= this;
+
+        if (!BuildConfig.DEBUG){
+            MyUncatchExceptionHandler myUncatchExceptionHandler= MyUncatchExceptionHandler.getInstance();
+            myUncatchExceptionHandler.init(this);
+        }
 
         initHttpInstance();
     }
@@ -171,13 +171,53 @@ public class MyApplication extends Application implements User {
     }
 
     @Override
-    public void userLogout() {
-        apiService.doLogout();
+    public void userLogout(final OnLoginListener listener) {
+        Call<LogoutEntity> logoutCall= apiService.doLogout();
+        logoutCall.enqueue(new Callback<LogoutEntity>() {
+            @Override
+            public void onResponse(Call<LogoutEntity> call, Response<LogoutEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("LoginEntity",response.toString());
+
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed("注销失败");
+                }else{
+                    listener.onSuccessed();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LogoutEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
     @Override
-    public void changePassword(String newPassword, String oldPassword) {
+    public void changePassword(String newPassword, String oldPassword, final OnRequestDataListener<ChangePasswordEntity> listener) {
+        Call<ChangePasswordEntity> changePasswordCall= apiService.changePassword(newPassword, oldPassword);
+        changePasswordCall.enqueue(new Callback<ChangePasswordEntity>() {
+            @Override
+            public void onResponse(Call<ChangePasswordEntity> call, Response<ChangePasswordEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("UnFinishEntity",response.toString());
 
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChangePasswordEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
     @Override
@@ -256,8 +296,33 @@ public class MyApplication extends Application implements User {
     }
 
     @Override
-    public void getApprovalDetail() {
+    public void getApprovalDetail(
+            String url,
+            String workItemID,
+            String activityDefID,
+            String processInstID,
+            final OnRequestDataListener<ApprovalEntity> listener ) {
+        Call<ApprovalEntity> approvalCall= apiService.getApprovalDetail(url, workItemID, activityDefID, processInstID);
+        approvalCall.enqueue(new Callback<ApprovalEntity>() {
+            @Override
+            public void onResponse(Call<ApprovalEntity> call, Response<ApprovalEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("FinishEntity",response.toString());
 
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApprovalEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
     @Override

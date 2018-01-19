@@ -1,10 +1,13 @@
 package com.hnsi.oa.hnsi_oa.http;
 
+import com.hnsi.oa.hnsi_oa.beans.ApprovalEntity;
+import com.hnsi.oa.hnsi_oa.beans.ChangePasswordEntity;
 import com.hnsi.oa.hnsi_oa.beans.ContactEntity;
 import com.hnsi.oa.hnsi_oa.beans.FinishEntity;
 import com.hnsi.oa.hnsi_oa.beans.FlowNameEntity;
 import com.hnsi.oa.hnsi_oa.beans.FlowNameResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.LoginEntity;
+import com.hnsi.oa.hnsi_oa.beans.LogoutEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsListEntity;
@@ -52,7 +55,7 @@ public interface ApiService {
      * @return
      */
     @GET("/default/mobile/user/com.hnsi.erp.mobile.user.LoginManager.logout.biz.ext")
-    Call doLogout();
+    Call<LogoutEntity> doLogout();
 
     /**
      * 更改密码
@@ -61,8 +64,8 @@ public interface ApiService {
      * @return
      */
     @GET("/default/mobile/user/com.hnsi.erp.mobile.user.LoginManager.updatePassword.biz.ext")
-    Call changePassword(@Query("newPassword")String newPassword,
-                        @Query("oldPassword")String oldPassword);
+    Call<ChangePasswordEntity> changePassword(@Query("newPassword")String newPassword,
+                                              @Query("oldPassword")String oldPassword);
 
     /**
      * 获取新闻列表
@@ -119,7 +122,7 @@ public interface ApiService {
     Call<UnFinishEntity> getPendingList(@Query("pageIndex")String pageIndex);
 
     /**
-     * 获取待办列表
+     * 获取指定流程的待办列表
      * @param pageIndex
      * @return
      */
@@ -142,11 +145,19 @@ public interface ApiService {
     @GET("/default/mobile/oa/com.hnsi.erp.mobile.oa.TaskAuditSearch.finishedList.biz.ext")
     Call<FinishEntity> getFinishedList(@Query("pageIndex")String pageIndex);
 
+    /**
+     * 获取审批详情
+     * @param url
+     * @param workItemID
+     * @param activityDefID
+     * @param processInstID
+     * @return
+     */
     @GET
-    Call getApprovalDetail(@Url String url,
-                           @Query("")String param1,
-                           @Query("")String param2,
-                           @Query("")String param3);
+    Call<ApprovalEntity> getApprovalDetail(@Url String url,
+                                           @Query("workItemID")String workItemID,
+                                           @Query("activityDefID")String activityDefID,
+                                           @Query("processInstID")String processInstID);
 
     /**
      * 查询审批记录
