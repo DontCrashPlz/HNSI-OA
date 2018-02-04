@@ -1,6 +1,6 @@
 package com.hnsi.oa.hnsi_oa.widgets;
 
-import android.util.Log;
+import android.content.Intent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity;
 import com.hnsi.oa.hnsi_oa.beans.FlowEntity;
 
 /**
@@ -16,28 +17,23 @@ import com.hnsi.oa.hnsi_oa.beans.FlowEntity;
 
 public class MyFinishedFlowAdapter extends BaseQuickAdapter<FlowEntity, MyFinishedFlowAdapter.MyFlowViewHolder> {
 
-    public static final int FLOW_PENDDING= 0;
-    public static final int FLOW_FINISHED= 1;
-
     public MyFinishedFlowAdapter() {
         super(R.layout.item_approval_complete_matter);
-//        int layoutRes;
-//        if (tag== FLOW_PENDDING){
-//            layoutRes= R.layout.item_approval_no_complete_matter;
-//        } else if (tag== FLOW_FINISHED){
-//            layoutRes= R.layout.item_approval_complete_matter;
-//        }
     }
 
     @Override
-    protected void convert(MyFlowViewHolder helper, FlowEntity item) {
+    protected void convert(MyFlowViewHolder helper, final FlowEntity item) {
         helper.mTitleTv.setText(item.getProcessInstName());
         helper.mClassTv.setText(item.getProcessChName());
         helper.mDateTv.setText(item.getStartTime());
         helper.mPanelRly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent= new Intent(mContext, ApprovalDetailActivity.class);
+                intent.putExtra(MyPenddingFlowAdapter.DETAIL_PARAM_URL, item.getFlowUrl());
+                intent.putExtra(MyPenddingFlowAdapter.DETAIL_PARAM_PROCESSINSTID, item.getProcessInstID());
+                intent.putExtra(MyPenddingFlowAdapter.TYPE_TAG, MyPenddingFlowAdapter.TYPE_FINISHED);
+                mContext.startActivity(intent);
             }
         });
     }

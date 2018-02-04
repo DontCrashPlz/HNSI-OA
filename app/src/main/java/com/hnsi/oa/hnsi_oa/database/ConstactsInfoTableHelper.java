@@ -261,7 +261,6 @@ public class ConstactsInfoTableHelper {
      * @param empid
      * @return
      */
-    @Deprecated
     public PersonEntity searchByEmpid(int empid){
 
         SQLiteDatabase readableDB = mySQLiteOpenHelper.getReadableDatabase();

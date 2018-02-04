@@ -1,5 +1,7 @@
 package com.hnsi.oa.hnsi_oa.beans;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 待办事项的数据实体
  * Created by Zheng on 2016/6/20.
@@ -16,6 +18,7 @@ public class FlowEntity {
     /** 参数二 */
     private String activityDefID="";
     /** 参数三 */
+    @SerializedName(value = "processInstID", alternate = {"processInstId"})
     private int processInstID;
     /** urlMap中对应的url项的key */
     private String processDefName="";

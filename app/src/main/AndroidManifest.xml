@@ -1,10 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hnsi.oa.hnsi_oa">
 
+    <!-- 拨打电话的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 访问网络的权限 -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- 写入扩展存储，向扩展卡写入数据 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!-- 往SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".app.MyApplication"
@@ -57,11 +61,35 @@
 
         </activity>
 
+        <activity android:name=".main.widget.PersonDetailActivity">
+
+        </activity>
+
         <activity android:name=".main.widget.SearchContactActivity">
 
         </activity>
 
         <activity android:name=".approval.widget.ApprovalDetailActivity">
+
+        </activity>
+
+        <activity android:name=".approval.widget.ApprovalDetailActivity2">
+
+        </activity>
+
+        <activity android:name=".news.widget.MessageActivity">
+
+        </activity>
+
+        <activity android:name=".news.widget.MessageDetailActivity">
+
+        </activity>
+
+        <activity android:name=".news.widget.RulesActivity">
+
+        </activity>
+
+        <activity android:name=".news.widget.RulesDetailActivity">
 
         </activity>
 

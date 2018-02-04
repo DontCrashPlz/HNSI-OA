@@ -18,46 +18,58 @@ import android.widget.ToggleButton;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity;
+import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity2;
+import com.hnsi.oa.hnsi_oa.beans.ApprovalGroupEntity;
+import com.hnsi.oa.hnsi_oa.beans.ApprovalHistoryEntity;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalWidgetEntity;
 import com.hnsi.oa.hnsi_oa.beans.ListDataBean;
 
 import java.util.ArrayList;
 
-import static android.R.attr.key;
-import static android.R.attr.value;
-
 /**
  * Created by Zheng on 2018/1/19.
  */
 
-public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDetailAdapter.ApprovalDetailViewHolder> {
+public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDetailAdapter2.ApprovalDetailViewHolder> {
 
     /** 简单的key-value展示 */
-    private static final int ITEM_TEXT= 0;
+    private static final int ITEM_TEXT= 0x00;
     /** 意见输入框 */
-    private static final int ITEM_EDIT_TEXT= 1;
+    private static final int ITEM_EDIT_TEXT= 0x01;
     /** tableView附表列表 */
-    private static final int ITEM_TABLE_VIEW_LIST= 2;
+    private static final int ITEM_TABLE_VIEW_LIST= 0x02;
     /** 包含一段html内容 */
-    private static final int ITEM_HTML= 3;
+    private static final int ITEM_HTML= 0x03;
     /** 点击按钮从listData中选取一个值 */
-    private static final int ITEM_LIST_AUDIT= 4;
+    private static final int ITEM_LIST_AUDIT= 0x04;
     /** 根据value从listData中选取一个值 */
-    private static final int ITEM_LIST_ELSE= 5;
+    private static final int ITEM_LIST_ELSE= 0x05;
     /** 从所有联系人中选取一个值 */
-    private static final int ITEM_ALLLIST= 6;
+    private static final int ITEM_ALLLIST= 0x06;
     /** switch开关 */
-    private static final int ITEM_SWITCH= 7;
+    private static final int ITEM_SWITCH= 0x07;
     /** switch互斥开关 */
-    private static final int ITEM_SWITCH_MUTEX= 8;
+    private static final int ITEM_SWITCH_MUTEX= 0x08;
     /** 打开附件界面 */
-    private static final int ITEM_TABLE_FILES= 9;
+    private static final int ITEM_TABLE_FILES= 0x09;
+
+    /** 分组标题 */
+    private static final int ITEM_GROUP_TITLE= 0x10;
+    /** 审批记录 */
+    private static final int ITEM_HISTORY_0= 0x11;
+    /** 审批记录 */
+    private static final int ITEM_HISTORY_1= 0x12;
+    /** 审批记录 */
+    private static final int ITEM_HISTORY_2= 0x13;
+    /** 审批记录 */
+    private static final int ITEM_HISTORY_3= 0x14;
 
 
-    private ApprovalDetailActivity mContext;
-    private ArrayList<ApprovalWidgetEntity> mData;
 
-    public MyApprovalDetailAdapter(ApprovalDetailActivity context, ArrayList<ApprovalWidgetEntity> data){
+    private ApprovalDetailActivity2 mContext;
+    private ArrayList<Object> mData;
+
+    public MyApprovalDetailAdapter2(ApprovalDetailActivity2 context, ArrayList<Object> data){
         mContext= context;
         mData= data;
     }
@@ -96,27 +108,45 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
         }else if (viewType== ITEM_TABLE_FILES){
             mView= inflater.inflate(R.layout.item_base_tablefiles, parent, false);
             mView.setTag(ITEM_TABLE_FILES);
+        }else if (viewType== ITEM_GROUP_TITLE){
+            mView= inflater.inflate(R.layout.item_approval_group, parent, false);
+            mView.setTag(ITEM_GROUP_TITLE);
+        }else if (viewType== ITEM_HISTORY_0){
+            mView= inflater.inflate(R.layout.item_approval_history_decision0, parent, false);
+            mView.setTag(ITEM_HISTORY_0);
+        }else if (viewType== ITEM_HISTORY_1){
+            mView= inflater.inflate(R.layout.item_approval_history_decision1, parent, false);
+            mView.setTag(ITEM_HISTORY_1);
+        }else if (viewType== ITEM_HISTORY_2){
+            mView= inflater.inflate(R.layout.item_approval_history_decision2, parent, false);
+            mView.setTag(ITEM_HISTORY_2);
+        }else if (viewType== ITEM_HISTORY_3){
+            mView= inflater.inflate(R.layout.item_approval_history_decision3, parent, false);
+            mView.setTag(ITEM_HISTORY_3);
         }
         return new ApprovalDetailViewHolder(mView);
     }
 
     @Override
     public void onBindViewHolder(ApprovalDetailViewHolder holder, int position) {
-        final ApprovalWidgetEntity entity= mData.get(position);
+        Object object= mData.get(position);
+        Log.e(""+position, object.toString());
         switch (getItemViewType(position)){
             case ITEM_TEXT:
-                holder.mTextNameTv.setText(entity.getLabel());
-                if("null".equals(entity.getValue())){
+                ApprovalWidgetEntity entity0= (ApprovalWidgetEntity) object;
+                holder.mTextNameTv.setText(entity0.getLabel());
+                if("null".equals(entity0.getValue())){
                     holder.mTextValueTv.setText("无");
                 }else{
-                    holder.mTextValueTv.setText(entity.getValue());
+                    holder.mTextValueTv.setText(entity0.getValue());
                 }
-                if (entity.isRequired()){
-                    mContext.getmCommitParamMap().put(entity.getKey(), entity.getValue());
+                if (entity0.isRequired()){
+                    mContext.getmCommitParamMap().put(entity0.getKey(), entity0.getValue());
                 }
                 break;
             case ITEM_EDIT_TEXT:
-                if("wfParam/content".equals(entity.getKey())){
+                final ApprovalWidgetEntity entity1= (ApprovalWidgetEntity) object;
+                if("wfParam/content".equals(entity1.getKey())){
                     String content="" + mContext.getmCommitParamMap().get("wfParam/content");
                     if("pend".equals(content)||"null".equals(content)){
                         holder.mSuggestEt.setText("");
@@ -138,38 +168,41 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
                     @Override
                     public void afterTextChanged(Editable s) {
                         if("".equals(s.toString())){
-                            mContext.getmCommitParamMap().put(entity.getKey(), "pend");
+                            mContext.getmCommitParamMap().put(entity1.getKey(), "pend");
                         }else{
-                            mContext.getmCommitParamMap().put(entity.getKey(), s.toString());
+                            mContext.getmCommitParamMap().put(entity1.getKey(), s.toString());
                         }
                     }
                 });
                 break;
             case ITEM_TABLE_VIEW_LIST:
+                ApprovalWidgetEntity entity2= (ApprovalWidgetEntity) object;
                 break;
             case ITEM_HTML:
+                ApprovalWidgetEntity entity3= (ApprovalWidgetEntity) object;
                 holder.mHtmlPanelRly.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(mContext, "Html", Toast.LENGTH_SHORT).show();
                     }
                 });
-                holder.mHtmlNameTv.setText(entity.getLabel());
+                holder.mHtmlNameTv.setText(entity3.getLabel());
 
-                if (entity.isRequired()){
-                    mContext.getmCommitParamMap().put(entity.getKey(), entity.getValue());
+                if (entity3.isRequired()){
+                    mContext.getmCommitParamMap().put(entity3.getKey(), entity3.getValue());
                 }
 
                 break;
             case ITEM_LIST_AUDIT:
-                holder.mButtonNameTv.setText(entity.getLabel());
+                final ApprovalWidgetEntity entity4= (ApprovalWidgetEntity) object;
+                holder.mButtonNameTv.setText(entity4.getLabel());
 
                 //查找提交参数中是否已存有数据
-                String finishValue= mContext.getmCommitParamMap().get(entity.getKey());
+                String finishValue= mContext.getmCommitParamMap().get(entity4.getKey());
                 if (finishValue== null || "pend".equals(finishValue) || "null".equals(finishValue)){//如果没有已存数据
                     holder.mButtonButtonTv.setText("请点击选择");
                 }else {//如果已存有数据,把已存数据录入界面
-                    for (ListDataBean bean : entity.getListData()){
+                    for (ListDataBean bean : entity4.getListData()){
                         if (finishValue.equals(bean.getValue())){
                             holder.mButtonButtonTv.setText(bean.getLabel());
                             break;//退出循环
@@ -177,7 +210,7 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
                     }
                 }
 
-                final ArrayList<ListDataBean> listData= entity.getListData();
+                final ArrayList<ListDataBean> listData= entity4.getListData();
 
                 final int dataSize= listData.size();
                 final CharSequence[] mLables = new CharSequence[dataSize];
@@ -200,18 +233,18 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
                         }
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
-                                .setTitle(entity.getLabel())
+                                .setTitle(entity4.getLabel())
                                 .setItems(mLables, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         //如果点的这一项对应的value不等于null，把这个value值放入参数集合中
                                         if (!"null".equals(mValues[which])) {
-                                            mContext.getmCommitParamMap().put(entity.getKey(), ""+mValues[which]);
+                                            mContext.getmCommitParamMap().put(entity4.getKey(), ""+mValues[which]);
                                         }
 
                                         //如果这一项是常用，把选择的这一项的lable设置为content的值
-                                        if("wfParam/changyong".equals(entity.getKey())){
+                                        if("wfParam/changyong".equals(entity4.getKey())){
                                             mContext.getmCommitParamMap().put("wfParam/content", ""+mLables[which]);
                                         }
 
@@ -225,9 +258,10 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
 
                 break;
             case ITEM_LIST_ELSE:
-                holder.mTextNameTv.setText(entity.getLabel());
-                ArrayList<ListDataBean> listDatas= entity.getListData();
-                String value= entity.getValue();
+                ApprovalWidgetEntity entity5= (ApprovalWidgetEntity) object;
+                holder.mTextNameTv.setText(entity5.getLabel());
+                ArrayList<ListDataBean> listDatas= entity5.getListData();
+                String value= entity5.getValue();
                 String label = "无";
                 if("null".equals(value)){
                     holder.mTextValueTv.setText("无");
@@ -239,12 +273,13 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
                     }
                     holder.mTextValueTv.setText(label);
                 }
-                if (entity.isRequired()){
-                    mContext.getmCommitParamMap().put(entity.getKey(), entity.getValue());
+                if (entity5.isRequired()){
+                    mContext.getmCommitParamMap().put(entity5.getKey(), entity5.getValue());
                 }
                 break;
             case ITEM_ALLLIST:
-                holder.mButtonNameTv.setText(entity.getLabel());
+                ApprovalWidgetEntity entity6= (ApprovalWidgetEntity) object;
+                holder.mButtonNameTv.setText(entity6.getLabel());
                 holder.mButtonButtonTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -253,23 +288,24 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
                 });
                 break;
             case ITEM_SWITCH:
-                holder.mSwitchNameTv.setText(entity.getLabel());
+                ApprovalWidgetEntity entity7= (ApprovalWidgetEntity) object;
+                holder.mSwitchNameTv.setText(entity7.getLabel());
 
                 //如果Activity中没有存放switch的value，把默认的value值存进去
                 if("".equals(mContext.getIsConnect()))
-                    mContext.setIsConnect(entity.getValue());
+                    mContext.setIsConnect(entity7.getValue());
 
                 //switch开关控制的控件的key
-                String connectKey=entity.getPrompt().replace(".","/");
+                String connectKey=entity7.getPrompt().replace(".","/");
                 mContext.setConnectKey(connectKey);
                 //Activity中存放的value值
                 String actValue= mContext.getIsConnect();
                 if("0".equals(actValue)){
                     holder.mSwitchTbtn.setChecked(false);
-                    mContext.getmCommitParamMap().put(entity.getKey(), actValue);
+                    mContext.getmCommitParamMap().put(entity7.getKey(), actValue);
                 }else if("1".equals(actValue)){
                     holder.mSwitchTbtn.setChecked(true);
-                    mContext.getmCommitParamMap().put(entity.getKey(), actValue);
+                    mContext.getmCommitParamMap().put(entity7.getKey(), actValue);
                 }
 
                 holder.mSwitchTbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -287,15 +323,16 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
                 });
                 break;
             case ITEM_SWITCH_MUTEX:
-                holder.mSwitchNameTv.setText(entity.getLabel());
+                ApprovalWidgetEntity entity8= (ApprovalWidgetEntity) object;
+                holder.mSwitchNameTv.setText(entity8.getLabel());
 
                 //如果Activity中没有纪录互斥开关的当前状态，放入默认值
                 if("".equals(mContext.getMutualStatus())){
-                    mContext.setMutualStatus(entity.getValue());
+                    mContext.setMutualStatus(entity8.getValue());
                 }
 
                 //互斥开关控制的两个控件的key
-                String mutexConnectKey= entity.getPrompt().replace(".","/");
+                String mutexConnectKey= entity8.getPrompt().replace(".","/");
                 //如果Activity中未存入互斥开关控制的两个控件的key值，就给它们传值
                 if("".equals(mContext.getFristMutualKey())
                         ||"".equals(mContext.getSecondMutualKey())){
@@ -309,10 +346,10 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
                 String mutexActValue= mContext.getMutualStatus();
                 if("0".equals(mutexActValue)){
                     holder.mSwitchTbtn.setChecked(false);
-                    mContext.getmCommitParamMap().put(entity.getKey(), "0");
+                    mContext.getmCommitParamMap().put(entity8.getKey(), "0");
                 }else if("1".equals(mutexActValue)){
                     holder.mSwitchTbtn.setChecked(true);
-                    mContext.getmCommitParamMap().put(entity.getKey(), "1");
+                    mContext.getmCommitParamMap().put(entity8.getKey(), "1");
                 }
 
                 holder.mSwitchTbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -330,13 +367,46 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
                 });
                 break;
             case ITEM_TABLE_FILES:
+                ApprovalWidgetEntity entity9= (ApprovalWidgetEntity) object;
                 holder.mFilesPanelRly.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(mContext, "Files", Toast.LENGTH_SHORT).show();
                     }
                 });
-                holder.mFilesNameTv.setText(entity.getLabel());
+                holder.mFilesNameTv.setText(entity9.getLabel());
+                break;
+            case ITEM_GROUP_TITLE:
+                ApprovalGroupEntity groupEntity= (ApprovalGroupEntity) object;
+                holder.mGroupTitleTv.setText(groupEntity.getLabel());
+                break;
+            case ITEM_HISTORY_0:
+                ApprovalHistoryEntity historyEntity0= (ApprovalHistoryEntity) object;
+                holder.mHistoryNameTv.setText(historyEntity0.getName());
+                holder.mHistoryTypeTv.setText(historyEntity0.getActivityName());
+                holder.mHistoryContentTv.setText(historyEntity0.getContent());
+                holder.mHistoryTimeTv.setText(historyEntity0.getEndTime().substring(0,19));
+                break;
+            case ITEM_HISTORY_1:
+                ApprovalHistoryEntity historyEntity1= (ApprovalHistoryEntity) object;
+                holder.mHistoryNameTv.setText(historyEntity1.getName());
+                holder.mHistoryTypeTv.setText(historyEntity1.getActivityName());
+                holder.mHistoryContentTv.setText(historyEntity1.getContent());
+                holder.mHistoryTimeTv.setText(historyEntity1.getEndTime().substring(0,19));
+                break;
+            case ITEM_HISTORY_2:
+                ApprovalHistoryEntity historyEntity2= (ApprovalHistoryEntity) object;
+                holder.mHistoryNameTv.setText(historyEntity2.getName());
+                holder.mHistoryTypeTv.setText(historyEntity2.getActivityName());
+                holder.mHistoryContentTv.setText(historyEntity2.getContent());
+                holder.mHistoryTimeTv.setText(historyEntity2.getEndTime().substring(0,19));
+                break;
+            case ITEM_HISTORY_3:
+                ApprovalHistoryEntity historyEntity3= (ApprovalHistoryEntity) object;
+                holder.mHistoryNameTv.setText(historyEntity3.getName());
+                holder.mHistoryTypeTv.setText(historyEntity3.getActivityName());
+                holder.mHistoryContentTv.setText(historyEntity3.getContent());
+                holder.mHistoryTimeTv.setText(historyEntity3.getEndTime().substring(0,19));
                 break;
         }
     }
@@ -349,8 +419,24 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
     @Override
     public int getItemViewType(int position) {
 
-        String widgetGroup= mData.get(position).getGroupKey();
-        String widgetType= mData.get(position).getType();
+        Object object= mData.get(position);
+        Log.e("obj", object.toString());
+
+        if (object instanceof ApprovalWidgetEntity){
+            discernWidget((ApprovalWidgetEntity) object);
+        }else if (object instanceof ApprovalGroupEntity){
+            return ITEM_GROUP_TITLE;
+        }else if (object instanceof ApprovalHistoryEntity){
+            Log.e("history", ""+discernHistory((ApprovalHistoryEntity) object));
+//            discernHistory((ApprovalHistoryEntity) object);
+        }
+
+        return super.getItemViewType(position);
+    }
+
+    private int discernWidget(ApprovalWidgetEntity entity){
+        String widgetGroup= entity.getGroupKey();
+        String widgetType= entity.getType();
 
         if ("text".equals(widgetType)
                 || "date".equals(widgetType)
@@ -374,8 +460,6 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
             }else{
                 return ITEM_LIST_ELSE;
             }
-//        }else if ("hidden".equals(widgetType)){
-
         }else if ("alllist".equals(widgetType)){
             return ITEM_ALLLIST;
         }else if ("switch".equals(widgetType)){
@@ -386,7 +470,23 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
             return ITEM_TABLE_FILES;
         }
 
-        return super.getItemViewType(position);
+        return ITEM_TEXT;
+    }
+
+    private int discernHistory(ApprovalHistoryEntity entity){
+        int decision= Integer.valueOf(entity.getDecision());
+        Log.e("history1", ""+decision);
+        switch (decision){
+            case 0:
+                return ITEM_HISTORY_0;
+            case 2:
+                return ITEM_HISTORY_2;
+            case 3:
+                return ITEM_HISTORY_3;
+            default:
+                return ITEM_HISTORY_1;
+        }
+
     }
 
     class ApprovalDetailViewHolder extends RecyclerView.ViewHolder{
@@ -407,6 +507,13 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
 
         private RelativeLayout mFilesPanelRly;
         private TextView mFilesNameTv;
+
+        private TextView mGroupTitleTv;
+
+        private TextView mHistoryNameTv;
+        private TextView mHistoryTypeTv;
+        private TextView mHistoryContentTv;
+        private TextView mHistoryTimeTv;
 
         public ApprovalDetailViewHolder(View itemView) {
             super(itemView);
@@ -449,7 +556,33 @@ public class MyApprovalDetailAdapter extends RecyclerView.Adapter<MyApprovalDeta
                     mFilesPanelRly= (RelativeLayout) itemView.findViewById(R.id.item_rly_html_panel);
                     mFilesNameTv= (TextView) itemView.findViewById(R.id.item_base_name);
                     break;
-
+                case ITEM_GROUP_TITLE:
+                    mGroupTitleTv= (TextView) itemView.findViewById(R.id.item_group_title);
+                    break;
+                case ITEM_HISTORY_0:
+                    mHistoryNameTv= (TextView) itemView.findViewById(R.id.item_history_name);
+                    mHistoryTypeTv= (TextView) itemView.findViewById(R.id.item_history_department);
+                    mHistoryContentTv= (TextView) itemView.findViewById(R.id.item_history_content);
+                    mHistoryTimeTv= (TextView) itemView.findViewById(R.id.item_history_starttime);
+                    break;
+                case ITEM_HISTORY_1:
+                    mHistoryNameTv= (TextView) itemView.findViewById(R.id.item_history_name);
+                    mHistoryTypeTv= (TextView) itemView.findViewById(R.id.item_history_department);
+                    mHistoryContentTv= (TextView) itemView.findViewById(R.id.item_history_content);
+                    mHistoryTimeTv= (TextView) itemView.findViewById(R.id.item_history_starttime);
+                    break;
+                case ITEM_HISTORY_2:
+                    mHistoryNameTv= (TextView) itemView.findViewById(R.id.item_history_name);
+                    mHistoryTypeTv= (TextView) itemView.findViewById(R.id.item_history_department);
+                    mHistoryContentTv= (TextView) itemView.findViewById(R.id.item_history_content);
+                    mHistoryTimeTv= (TextView) itemView.findViewById(R.id.item_history_starttime);
+                    break;
+                case ITEM_HISTORY_3:
+                    mHistoryNameTv= (TextView) itemView.findViewById(R.id.item_history_name);
+                    mHistoryTypeTv= (TextView) itemView.findViewById(R.id.item_history_department);
+                    mHistoryContentTv= (TextView) itemView.findViewById(R.id.item_history_content);
+                    mHistoryTimeTv= (TextView) itemView.findViewById(R.id.item_history_starttime);
+                    break;
             }
         }
     }

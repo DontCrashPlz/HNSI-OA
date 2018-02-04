@@ -39,7 +39,7 @@ public class ISplashModelImpl implements ISplashModel {
 
                     URL url= new URL(path);
                     HttpURLConnection connection= (HttpURLConnection) url.openConnection();
-                    connection.setConnectTimeout(5000);
+                    connection.setConnectTimeout(3000);
                     InputStream is= connection.getInputStream();
 
                     UpdateInfoEntity entity= UpdateInfoParser.getUpdataInfo(is);

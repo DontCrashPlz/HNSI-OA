@@ -10,8 +10,10 @@ import android.widget.RelativeLayout;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalActivity;
+import com.hnsi.oa.hnsi_oa.news.widget.MessageActivity;
 import com.hnsi.oa.hnsi_oa.news.widget.NewsActivity;
 import com.hnsi.oa.hnsi_oa.news.widget.NoticeActivity;
+import com.hnsi.oa.hnsi_oa.news.widget.RulesActivity;
 import com.hnsi.oa.hnsi_oa.widgets.IconImageView;
 import com.hnsi.oa.hnsi_oa.widgets.LazyLoadFragment;
 
@@ -24,6 +26,7 @@ public class ApplyFragment extends LazyLoadFragment implements View.OnClickListe
     private RelativeLayout mNewsBtn;
     private RelativeLayout mNoticeBtn;
     private RelativeLayout mMessageBtn;
+    private RelativeLayout mRuleBtn;
     private RelativeLayout mApprovalBtn;
 
     private IconImageView mIiv1;
@@ -53,6 +56,8 @@ public class ApplyFragment extends LazyLoadFragment implements View.OnClickListe
         mNoticeBtn.setOnClickListener(this);
         mMessageBtn= (RelativeLayout) mView.findViewById(R.id.apply_btn_msg);
         mMessageBtn.setOnClickListener(this);
+        mRuleBtn= (RelativeLayout) mView.findViewById(R.id.apply_btn_pass);
+        mRuleBtn.setOnClickListener(this);
         mApprovalBtn= (RelativeLayout) mView.findViewById(R.id.apply_btn_approval);
         mApprovalBtn.setOnClickListener(this);
 
@@ -85,7 +90,10 @@ public class ApplyFragment extends LazyLoadFragment implements View.OnClickListe
                 startActivity(new Intent(getContext(), NoticeActivity.class));
                 break;
             case R.id.apply_btn_msg:
-
+                startActivity(new Intent(getContext(), MessageActivity.class));
+                break;
+            case R.id.apply_btn_pass:
+                startActivity(new Intent(getContext(), RulesActivity.class));
                 break;
             case R.id.apply_btn_approval:
                 startActivity(new Intent(getContext(), ApprovalActivity.class));

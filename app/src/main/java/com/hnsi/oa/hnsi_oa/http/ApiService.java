@@ -1,6 +1,8 @@
 package com.hnsi.oa.hnsi_oa.http;
 
 import com.hnsi.oa.hnsi_oa.beans.ApprovalEntity;
+import com.hnsi.oa.hnsi_oa.beans.ApprovalHistoryResponseEntity;
+import com.hnsi.oa.hnsi_oa.beans.ApprovalResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.ChangePasswordEntity;
 import com.hnsi.oa.hnsi_oa.beans.ContactEntity;
 import com.hnsi.oa.hnsi_oa.beans.FinishEntity;
@@ -8,14 +10,22 @@ import com.hnsi.oa.hnsi_oa.beans.FlowNameEntity;
 import com.hnsi.oa.hnsi_oa.beans.FlowNameResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.LoginEntity;
 import com.hnsi.oa.hnsi_oa.beans.LogoutEntity;
+import com.hnsi.oa.hnsi_oa.beans.MessageDetailEntity;
+import com.hnsi.oa.hnsi_oa.beans.MessageListResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsListEntity;
+import com.hnsi.oa.hnsi_oa.beans.RuleDetailResponseEntity;
+import com.hnsi.oa.hnsi_oa.beans.RuleListResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.UnFinishEntity;
+
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 /**
@@ -47,8 +57,8 @@ public interface ApiService {
      * @param name
      * @return
      */
-    @GET("/default/mobile/user/com.hnsi.erp.mobile.user.AddressListManager.search.biz.ext")
-    Call searchContact(@Query("name")String name);
+//    @GET("/default/mobile/user/com.hnsi.erp.mobile.user.AddressListManager.search.biz.ext")
+//    Call searchContact(@Query("name")String name);
 
     /**
      * 注销
@@ -93,7 +103,7 @@ public interface ApiService {
      * @return
      */
     @GET("/default/mobile/oa/com.hnsi.erp.mobile.oa.RulesSearch.list.biz.ext")
-    Call getRuleList(@Query("pageIndex")String pageIndex);
+    Call<RuleListResponseEntity> getRuleList(@Query("pageIndex")String pageIndex);
 
     /**
      * 获取规章制度详情
@@ -101,7 +111,7 @@ public interface ApiService {
      * @return
      */
     @GET("/default/mobile/oa/com.hnsi.erp.mobile.oa.RulesSearch.detail.biz.ext")
-    Call getRuleDetail(@Query("id")String id);
+    Call<RuleDetailResponseEntity> getRuleDetail(@Query("id")String id);
 
     /**
      * 下载规章制度附件
@@ -165,7 +175,17 @@ public interface ApiService {
      * @return
      */
     @GET("/default/mobile/oa/com.hnsi.erp.mobile.oa.TaskAuditSearch.queryDisposeLog.biz.ext")
-    Call getApprovalHistory(@Query("processInstID")String processInstID);
+    Call<ApprovalHistoryResponseEntity> getApprovalHistory(@Query("processInstID")String processInstID);
+
+    /**
+     * 提交审批
+     * @param url
+     * @param params
+     * @return
+     */
+    @POST
+    Call<ApprovalResponseEntity> commitApproval(@Url String url,
+                                                @QueryMap Map<String, String> params);
 
     /**
      * 获取待办事项数量
@@ -187,7 +207,7 @@ public interface ApiService {
      * @return
      */
     @GET("/default/mobile/oa/com.hnsi.erp.mobile.oa.TaskSearch.msgList.biz.ext")
-    Call getMessageList(@Query("pageIndex")String pageIndex);
+    Call<MessageListResponseEntity> getMessageList(@Query("pageIndex")String pageIndex);
 
     /**
      * 获取系统消息详情
@@ -195,7 +215,7 @@ public interface ApiService {
      * @return
      */
     @GET("/default/mobile/oa/com.hnsi.erp.mobile.common.MsgManager.getData.biz.ext")
-    Call getMessageDetail(@Query("id")String id);
+    Call<MessageDetailEntity> getMessageDetail(@Query("id")String id);
 
     /**
      * 上传头像

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class UnFinishedFragment extends BaseRecyclerFragment {
 
     public UnFinishedFragment(BaseQuickAdapter adapter, RecyclerView.ItemDecoration itemDecoration) {
-        super(adapter, itemDecoration);
+        super(true, adapter, itemDecoration);
     }
 
     public void setFlowNumList(ArrayList<FlowClassifyEntity> list){

@@ -8,20 +8,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.hnsi.oa.hnsi_oa.R;
-import com.hnsi.oa.hnsi_oa.news.presenter.MessageListPresenter;
+import com.hnsi.oa.hnsi_oa.news.presenter.RuleListPresenter;
 import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
-import com.hnsi.oa.hnsi_oa.widgets.MyMessageListAdapter;
 import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemDecoration;
+import com.hnsi.oa.hnsi_oa.widgets.MyRuleListAdapter;
 import com.hnsi.oa.hnsi_oa.widgets.RecyclerFragment.BaseRecyclerFragment;
 
 /**
  * Created by Zheng on 2017/11/13.
  */
 
-public class MessageActivity extends BaseActivity {
+public class RulesActivity extends BaseActivity {
 
     private BaseRecyclerFragment mFragment;
-    private MyMessageListAdapter mAdapter;
+    private MyRuleListAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,13 +32,13 @@ public class MessageActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar()!= null){
-            getSupportActionBar().setTitle("系统消息");
+            getSupportActionBar().setTitle("规章制度");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mAdapter= new MyMessageListAdapter(R.layout.item_message);
+        mAdapter= new MyRuleListAdapter(R.layout.item_rule);
         mFragment= new BaseRecyclerFragment(mAdapter, new MyNewsItemDecoration(16));
-        mFragment.setPresenter(new MessageListPresenter(mFragment));
+        mFragment.setPresenter(new RuleListPresenter(mFragment));
 
         FragmentManager manager= getSupportFragmentManager();
         FragmentTransaction transaction= manager.beginTransaction();

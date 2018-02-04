@@ -1,5 +1,6 @@
 package com.hnsi.oa.hnsi_oa.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,20 +25,20 @@ public class ApprovalWidgetEntity {
      * value : 0
      */
 
-    private String eventId;
-    private String groupKey;
-    private String key;
-    private String label;
+    private String eventId= "";
+    private String groupKey= "";
+    private String key= "";
+    private String label= "";
     private boolean multiSelect;
-    private String prompt;
+    private String prompt= "";
     private boolean readonly;
     private boolean required;
-    private String selectorUrl;
-    private String type;
-    private String value;
-    private List<ListDataBean> listData;
-    private List<List<String>> tableData;
-    private List<String> tableTitle;
+    private String selectorUrl= "";
+    private String type= "";
+    private String value= "";
+    private ArrayList<ListDataBean> listData;
+    private ArrayList<List<String>> tableData;
+    private ArrayList<String> tableTitle;
 
     public String getEventId() {
         return eventId;
@@ -127,53 +128,49 @@ public class ApprovalWidgetEntity {
         this.value = value;
     }
 
-    public List<ListDataBean> getListData() {
+    public ArrayList<ListDataBean> getListData() {
         return listData;
     }
 
-    public void setListData(List<ListDataBean> listData) {
+    public void setListData(ArrayList<ListDataBean> listData) {
         this.listData = listData;
     }
 
-    public List<List<String>> getTableData() {
+    public ArrayList<List<String>> getTableData() {
         return tableData;
     }
 
-    public void setTableData(List<List<String>> tableData) {
+    public void setTableData(ArrayList<List<String>> tableData) {
         this.tableData = tableData;
     }
 
-    public List<String> getTableTitle() {
+    public ArrayList<String> getTableTitle() {
         return tableTitle;
     }
 
-    public void setTableTitle(List<String> tableTitle) {
+    public void setTableTitle(ArrayList<String> tableTitle) {
         this.tableTitle = tableTitle;
     }
 
-    class ListDataBean {
-        /**
-         * label : 是
-         * value : 1
-         */
-
-        private String label;
-        private String value;
-
-        public String getLabel() {
-            return label;
-        }
-
-        public void setLabel(String label) {
-            this.label = label;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
+    @Override
+    public String toString() {
+        return "ApprovalWidgetEntity{" +
+                "eventId='" + eventId + '\'' +
+                ", groupKey='" + groupKey + '\'' +
+                ", key='" + key + '\'' +
+                ", label='" + label + '\'' +
+                ", multiSelect=" + multiSelect +
+                ", prompt='" + prompt + '\'' +
+                ", readonly=" + readonly +
+                ", required=" + required +
+                ", selectorUrl='" + selectorUrl + '\'' +
+                ", type='" + type + '\'' +
+                ", value='" + value + '\'' +
+                ", listData=" + listData +
+                ", tableData=" + tableData +
+                ", tableTitle=" + tableTitle +
+                '}';
     }
+
+
 }

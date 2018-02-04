@@ -71,7 +71,7 @@ public class ApprovalActivity extends BaseActivity {
         fragment1= new UnFinishedFragment(pAdapter, mItemDecoration);
         fragment1.setPresenter(new UnFinishPresenter(fragment1));
 
-        fragment2= new BaseRecyclerFragment(fAdapter, mItemDecoration);
+        fragment2= new BaseRecyclerFragment(true, fAdapter, mItemDecoration);
         fragment2.setPresenter(new FinishPresenter(fragment2));
 
         mViewPagerTitle= (ViewPagerTitle) findViewById(R.id.viewpagertitle);

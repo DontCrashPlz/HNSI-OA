@@ -7,16 +7,23 @@ import android.util.Log;
 
 import com.hnsi.oa.hnsi_oa.BuildConfig;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalEntity;
+import com.hnsi.oa.hnsi_oa.beans.ApprovalHistoryResponseEntity;
+import com.hnsi.oa.hnsi_oa.beans.ApprovalResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.ChangePasswordEntity;
 import com.hnsi.oa.hnsi_oa.beans.ContactEntity;
 import com.hnsi.oa.hnsi_oa.beans.FinishEntity;
 import com.hnsi.oa.hnsi_oa.beans.FlowNameResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.LoginEntity;
 import com.hnsi.oa.hnsi_oa.beans.LogoutEntity;
+import com.hnsi.oa.hnsi_oa.beans.MessageDetailEntity;
+import com.hnsi.oa.hnsi_oa.beans.MessageListResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsEntity;
 import com.hnsi.oa.hnsi_oa.beans.NewsListEntity;
+import com.hnsi.oa.hnsi_oa.beans.RuleDetailEntity;
+import com.hnsi.oa.hnsi_oa.beans.RuleDetailResponseEntity;
+import com.hnsi.oa.hnsi_oa.beans.RuleListResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.UnFinishEntity;
 import com.hnsi.oa.hnsi_oa.beans.UserInfo;
 import com.hnsi.oa.hnsi_oa.http.ApiService;
@@ -27,6 +34,7 @@ import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
 import com.hnsi.oa.hnsi_oa.utils.SharedPrefUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -326,8 +334,56 @@ public class MyApplication extends Application implements User {
     }
 
     @Override
-    public void getApprovalHistory() {
+    public void getApprovalHistory(int processInstId, final OnRequestDataListener<ApprovalHistoryResponseEntity> listener) {
+        Call<ApprovalHistoryResponseEntity> historyCall= apiService.getApprovalHistory(String.valueOf(processInstId));
+        historyCall.enqueue(new Callback<ApprovalHistoryResponseEntity>() {
+            @Override
+            public void onResponse(Call<ApprovalHistoryResponseEntity> call, Response<ApprovalHistoryResponseEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("FinishEntity",response.toString());
 
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApprovalHistoryResponseEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
+    }
+
+    @Override
+    public void commitApproval(
+            String url,
+            Map<String, String> params,
+            final OnRequestDataListener<ApprovalResponseEntity> listener) {
+        Call<ApprovalResponseEntity> approvalCall= apiService.commitApproval(url, params);
+        approvalCall.enqueue(new Callback<ApprovalResponseEntity>() {
+            @Override
+            public void onResponse(Call<ApprovalResponseEntity> call, Response<ApprovalResponseEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("FinishEntity",response.toString());
+
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApprovalResponseEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
     @Override
@@ -341,13 +397,53 @@ public class MyApplication extends Application implements User {
     }
 
     @Override
-    public void getMessageList() {
+    public void getMessageList(int pageIndex, final OnRequestDataListener<MessageListResponseEntity> listener) {
+        Call<MessageListResponseEntity> messageListCall= apiService.getMessageList(String.valueOf(pageIndex));
+        messageListCall.enqueue(new Callback<MessageListResponseEntity>() {
+            @Override
+            public void onResponse(Call<MessageListResponseEntity> call, Response<MessageListResponseEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("FinishEntity",response.toString());
 
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessageListResponseEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
     @Override
-    public void getMessageDetail() {
+    public void getMessageDetail(int id, final OnRequestDataListener<MessageDetailEntity> listener) {
+        Call<MessageDetailEntity> messageCall= apiService.getMessageDetail(String.valueOf(id));
+        messageCall.enqueue(new Callback<MessageDetailEntity>() {
+            @Override
+            public void onResponse(Call<MessageDetailEntity> call, Response<MessageDetailEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("FinishEntity",response.toString());
 
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MessageDetailEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
     @Override
@@ -474,11 +570,50 @@ public class MyApplication extends Application implements User {
         });
     }
 
-    public void getRuleList(){
+    public void getRuleList(int pageIndex, final OnRequestDataListener<RuleListResponseEntity> listener){
+        Call<RuleListResponseEntity> ruleListCall= apiService.getRuleList(String.valueOf(pageIndex));
+        ruleListCall.enqueue(new Callback<RuleListResponseEntity>() {
+            @Override
+            public void onResponse(Call<RuleListResponseEntity> call, Response<RuleListResponseEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("FinishEntity",response.toString());
 
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else if (! response.body().isSuccess()){
+                    listener.onFailed(response.body().getMsg());
+                }else{
+                    listener.onSuccessed(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RuleListResponseEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
     }
 
-    public void getRuleDetail(){
+    public void getRuleDetail(int id, final OnRequestDataListener<RuleDetailEntity> listener){
+        Call<RuleDetailResponseEntity> ruleDetailCall= apiService.getRuleDetail(String.valueOf(id));
+        ruleDetailCall.enqueue(new Callback<RuleDetailResponseEntity>() {
+            @Override
+            public void onResponse(Call<RuleDetailResponseEntity> call, Response<RuleDetailResponseEntity> response) {
+                if (BuildConfig.DEBUG)
+                    Log.e("FinishEntity",response.toString());
+
+                if (response.code()!= 200){
+                    listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
+                }else{
+                    listener.onSuccessed(response.body().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RuleDetailResponseEntity> call, Throwable t) {
+                listener.onFailed(t.toString());
+            }
+        });
 
     }
 

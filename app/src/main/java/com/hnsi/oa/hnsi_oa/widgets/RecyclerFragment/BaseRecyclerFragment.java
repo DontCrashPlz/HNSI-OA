@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,26 @@ public class BaseRecyclerFragment<T> extends LazyLoadFragment implements
 
     protected BasePresenter mPresenter;
 
+    /** 是否需要懒加载 */
+    private boolean isLazyLoad;
+
+    /**
+     * 构造方法中传入adapter和分割线
+     * @param adapter 决定视图样式
+     * @param itemDecoration 决定列表分割线样式
+     */
     public BaseRecyclerFragment(BaseQuickAdapter adapter, RecyclerView.ItemDecoration itemDecoration){
+        this(false, adapter, itemDecoration);
+    }
+
+    /**
+     * 构造方法中传入adapter和分割线
+     * @param isLazyLoad 决定这个Fragment是否需要懒加载，默认不需要懒加载
+     * @param adapter 决定视图样式
+     * @param itemDecoration 决定列表分割线样式
+     */
+    public BaseRecyclerFragment(boolean isLazyLoad, BaseQuickAdapter adapter, RecyclerView.ItemDecoration itemDecoration){
+        this.isLazyLoad= isLazyLoad;
         mAdapter= adapter;
         mItemDecoration= itemDecoration;
     }
@@ -57,9 +77,7 @@ public class BaseRecyclerFragment<T> extends LazyLoadFragment implements
 
         mRecyclerView= (RecyclerView) mView.findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         mAdapter.setOnLoadMoreListener(this,mRecyclerView);
-
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(mItemDecoration);
 
@@ -68,7 +86,11 @@ public class BaseRecyclerFragment<T> extends LazyLoadFragment implements
 
         isPrepared= true;
 
-        if (isVisible) lazyLoad();
+        if (isLazyLoad){//如果这是个懒加载Fragment，在当前可视的情况下调用lazyLoad方法
+            if (isVisible) lazyLoad();
+        }else {//如果这不是一个懒加载Fragment，直接调用onRefresh方法
+            onRefresh();
+        }
 
 
         return mView;
@@ -76,6 +98,12 @@ public class BaseRecyclerFragment<T> extends LazyLoadFragment implements
 
     @Override
     public void lazyLoad() {
+
+        Log.e("test", "run");
+        Log.e("isLoadedOnce", ""+isLoadedOnce);
+        Log.e("isPrepared", ""+isPrepared);
+        Log.e("isVisible", ""+isVisible);
+
         if (isLoadedOnce || !isPrepared || !isVisible)
             return;
 

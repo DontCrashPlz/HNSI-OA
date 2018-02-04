@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.app.MyApplication;
 import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity;
+import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity2;
 import com.hnsi.oa.hnsi_oa.beans.FlowEntity;
 
 /**
@@ -24,14 +25,12 @@ public class MyPenddingFlowAdapter extends BaseQuickAdapter<FlowEntity, MyPenddi
     public static final String DETAIL_PARAM_ACTIVITYDEFID= "activityDefId";
     public static final String DETAIL_PARAM_PROCESSINSTID= "processInstId";
 
+    public static final String TYPE_TAG= "type_tag";
+    public static final int TYPE_PENDDING= 1;
+    public static final int TYPE_FINISHED= 2;
+
     public MyPenddingFlowAdapter() {
         super(R.layout.item_approval_no_complete_matter);
-//        int layoutRes;
-//        if (tag== FLOW_PENDDING){
-//            layoutRes= R.layout.item_approval_no_complete_matter;
-//        } else if (tag== FLOW_FINISHED){
-//            layoutRes= R.layout.item_approval_complete_matter;
-//        }
     }
 
     @Override
@@ -42,11 +41,12 @@ public class MyPenddingFlowAdapter extends BaseQuickAdapter<FlowEntity, MyPenddi
         helper.mPanelRly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(mContext, ApprovalDetailActivity.class);
+                Intent intent= new Intent(mContext, ApprovalDetailActivity2.class);
                 intent.putExtra(DETAIL_PARAM_URL, item.getFlowUrl());
                 intent.putExtra(DETAIL_PARAM_WORKITEMID, item.getWorkItemID());
                 intent.putExtra(DETAIL_PARAM_ACTIVITYDEFID, item.getActivityDefID());
                 intent.putExtra(DETAIL_PARAM_PROCESSINSTID, item.getProcessInstID());
+                intent.putExtra(TYPE_TAG, TYPE_PENDDING);
                 mContext.startActivity(intent);
                 Toast.makeText(mContext, item.getFlowUrl() +"--"+item.getWorkItemID() +"--"+ item.getActivityDefID() +"--"+ item.getProcessInstID(), Toast.LENGTH_LONG).show();
             }
