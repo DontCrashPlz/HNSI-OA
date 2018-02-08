@@ -23,16 +23,11 @@ import com.hnsi.oa.hnsi_oa.widgets.LazyLoadFragment;
 
 public class ApplyFragment extends LazyLoadFragment implements View.OnClickListener {
 
-    private RelativeLayout mNewsBtn;
-    private RelativeLayout mNoticeBtn;
-    private RelativeLayout mMessageBtn;
-    private RelativeLayout mRuleBtn;
-    private RelativeLayout mApprovalBtn;
-
-    private IconImageView mIiv1;
-    private IconImageView mIiv2;
-    private IconImageView mIiv3;
-    private IconImageView mIiv4;
+    private IconImageView mNewsBtn;
+    private IconImageView mNoticeBtn;
+    private IconImageView mMessageBtn;
+    private IconImageView mRuleBtn;
+    private IconImageView mApprovalBtn;
 
     private boolean isLoadedOnce;
 
@@ -50,21 +45,17 @@ public class ApplyFragment extends LazyLoadFragment implements View.OnClickListe
     }
 
     private void findViews(View mView) {
-        mNewsBtn= (RelativeLayout) mView.findViewById(R.id.apply_btn_new);
+        mNewsBtn= (IconImageView) mView.findViewById(R.id.apply_btn_new);
         mNewsBtn.setOnClickListener(this);
-        mNoticeBtn= (RelativeLayout) mView.findViewById(R.id.apply_btn_notice);
+        mNoticeBtn= (IconImageView) mView.findViewById(R.id.apply_btn_notice);
         mNoticeBtn.setOnClickListener(this);
-        mMessageBtn= (RelativeLayout) mView.findViewById(R.id.apply_btn_msg);
+        mMessageBtn= (IconImageView) mView.findViewById(R.id.apply_btn_msg);
         mMessageBtn.setOnClickListener(this);
-        mRuleBtn= (RelativeLayout) mView.findViewById(R.id.apply_btn_pass);
+        mRuleBtn= (IconImageView) mView.findViewById(R.id.apply_btn_pass);
         mRuleBtn.setOnClickListener(this);
-        mApprovalBtn= (RelativeLayout) mView.findViewById(R.id.apply_btn_approval);
+        mApprovalBtn= (IconImageView) mView.findViewById(R.id.apply_btn_approval);
         mApprovalBtn.setOnClickListener(this);
 
-        mIiv1= (IconImageView) mView.findViewById(R.id.iiv1);
-        mIiv2= (IconImageView) mView.findViewById(R.id.iiv2);
-        mIiv3= (IconImageView) mView.findViewById(R.id.iiv3);
-        mIiv4= (IconImageView) mView.findViewById(R.id.iiv4);
     }
 
     @Override
@@ -73,10 +64,6 @@ public class ApplyFragment extends LazyLoadFragment implements View.OnClickListe
         if (!isVisible || isLoadedOnce)
             return;
 
-        mIiv1.setNum(0);
-        mIiv2.setNum(4);
-        mIiv3.setNum(44);
-        mIiv4.setNum(444);
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
+import com.hnsi.oa.hnsi_oa.database.ReadedNewsTableHelper;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
 import com.hnsi.oa.hnsi_oa.news.model.INewsModel;
 import com.hnsi.oa.hnsi_oa.news.model.INewsModelImpl;
@@ -25,7 +26,7 @@ public class NewsDetailPresenter {
         mModel= new INewsModelImpl();
     }
 
-    public void loadData(int id){
+    public void loadData(final int id){
         mView.showProgressBar();
         mModel.requestData(id, new OnRequestDataListener<NewsDetailEntity>() {
 

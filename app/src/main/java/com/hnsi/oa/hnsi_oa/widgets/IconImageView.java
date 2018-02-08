@@ -37,6 +37,7 @@ public class IconImageView extends View {
 
     private int dp_px_15;
     private int dp_px_10;
+    private int dp_px_4;
     private int dp_px_2;
 
     public IconImageView(Context context) {
@@ -68,6 +69,7 @@ public class IconImageView extends View {
 
         dp_px_10= Tool.dp2px(getContext(), 10);
         dp_px_15= Tool.dp2px(getContext(), 15);
+        dp_px_4= Tool.dp2px(getContext(), 4);
         dp_px_2= Tool.dp2px(getContext(), 2);
     }
 
@@ -118,8 +120,8 @@ public class IconImageView extends View {
         if (num> 0){
             mPaint.setColor(Color.RED);
             canvas.drawCircle(
-                    getWidth()/2+ iconImg.getWidth()/2- dp_px_2,
-                    dp_px_10+ dp_px_2,
+                    getWidth()/2+ iconImg.getWidth()/2- dp_px_4,
+                    dp_px_10+ dp_px_4,
                     dp_px_10,
                     mPaint);
         }
@@ -134,8 +136,8 @@ public class IconImageView extends View {
             mPaint.getTextBounds(mNum, 0, mNum.length(), rect);
             canvas.drawText(
                     mNum,
-                    getWidth()/2+ iconImg.getWidth()/2- rect.width()/2- dp_px_2,
-                    dp_px_10+ rect.height()/2+ dp_px_2,
+                    getWidth()/2+ iconImg.getWidth()/2- rect.width()/2- dp_px_4,
+                    dp_px_10+ rect.height()/2+ dp_px_4,
                     mPaint);
         }
     }

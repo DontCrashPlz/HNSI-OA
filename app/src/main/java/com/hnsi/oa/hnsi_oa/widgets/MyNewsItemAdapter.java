@@ -2,6 +2,7 @@ package com.hnsi.oa.hnsi_oa.widgets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.beans.NewsEntity;
+import com.hnsi.oa.hnsi_oa.database.ReadedNewsTableHelper;
 import com.hnsi.oa.hnsi_oa.news.widget.NewsDetailActivity;
 
 import java.text.DateFormat;
@@ -33,9 +35,12 @@ public class MyNewsItemAdapter extends RecyclerView.Adapter<MyNewsItemAdapter.Ne
 
     private List<NewsEntity> mData;
 
+    private ReadedNewsTableHelper mHelper;
+
     public MyNewsItemAdapter(Context context) {
         mContext= context;
         mData= new ArrayList<>();
+        mHelper= new ReadedNewsTableHelper(context);
     }
 
     @Override
@@ -44,6 +49,13 @@ public class MyNewsItemAdapter extends RecyclerView.Adapter<MyNewsItemAdapter.Ne
         holder.mKindTv.setText(mData.get(position).getClassname());
         holder.mTimeTv.setText(mData.get(position).getStartDate().substring(0,10));
         holder.mDepartmentTv.setText(mData.get(position).getOperationDeptName());
+        int newId= mData.get(position).getId();
+        if (mHelper.isNewsReaded(newId)){
+            holder.mTitleTv.setTextColor(Color.rgb(142,143,138));
+        }else {
+            holder.mTitleTv.setTextColor(Color.rgb(61,62,59));
+        }
+
         holder.skipNewsDetail(mData.get(position).getId());
     }
 
@@ -82,6 +94,8 @@ public class MyNewsItemAdapter extends RecyclerView.Adapter<MyNewsItemAdapter.Ne
                     intent.setClass(mContext,NewsDetailActivity.class);
                     intent.putExtra(NewsDetailActivity.NEWS_ID,id);
                     mContext.startActivity(intent);
+                    mHelper.insert(id);
+                    notifyDataSetChanged();
                 }
             });
         }

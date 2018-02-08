@@ -36,7 +36,7 @@ import java.util.HashMap;
 /**
  * Created by Zheng on 2018/1/19.
  */
-
+@Deprecated
 public class ApprovalDetailActivity extends BaseActivity {
 
     private LinearLayout mFormAreaLly;

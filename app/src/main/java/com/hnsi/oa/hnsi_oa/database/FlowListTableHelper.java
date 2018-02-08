@@ -10,7 +10,7 @@ import com.hnsi.oa.hnsi_oa.beans.FlowNameEntity;
 import java.util.List;
 
 /**
- * 联系人信息表数据库助手类
+ * 流程分类表数据库助手类
  * Created by Zheng on 2016/9/6.
  */
 public class FlowListTableHelper {

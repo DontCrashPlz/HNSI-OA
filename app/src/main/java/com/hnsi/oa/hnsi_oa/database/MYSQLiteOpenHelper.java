@@ -213,6 +213,33 @@ public class MYSQLiteOpenHelper extends SQLiteOpenHelper{
                     + TableFlowList.LABEL + "' TEXT  NOT NULL);";
 
 
+    /********************************************已读新闻公告表***************************************************/
+    /**
+     * 数据库表名,已读新闻公告表
+     */
+    public static final String DB_TABLE_READED_NEWS = "t_readed_news";
+
+    /**
+     * 部门信息表结构
+     */
+    public interface TableReadedNews {
+        /**
+         * 部门主键
+         */
+        String ID = "_id";
+        /**
+         * 部门ID
+         */
+        String NEWSID = "_newsid";
+    }
+
+    // 创建已读新闻公告表SQL语句
+    private static final String SQL_CREATE_TABLE_READED_NEWS =
+            "CREATE TABLE '" + DB_TABLE_READED_NEWS + "' ( '"
+                    + TableReadedNews.ID + "' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, '"
+                    + TableReadedNews.NEWSID + "' INTEGER  NOT NULL);";
+
+
     public MYSQLiteOpenHelper(Context context){
         this(context, DB_NAME, null, DB_VERSION);
     }
@@ -235,6 +262,8 @@ public class MYSQLiteOpenHelper extends SQLiteOpenHelper{
         db.execSQL(SQL_CREATE_TABLE_DEPARTMENT_INFO);
         // 创建流程分类表
         db.execSQL(SQL_CREATE_TABLE_FLOW_LIST);
+        // 创建已读新闻公告表
+        db.execSQL(SQL_CREATE_TABLE_READED_NEWS);
     }
 
     /**

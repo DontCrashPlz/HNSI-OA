@@ -44,5 +44,21 @@ public class MessagePresenter {
                 Toast.makeText(mView.getFragmentContext(),throwable,Toast.LENGTH_SHORT).show();
             }
         });
+        mModel.requestData(1, 0, 2, new OnRequestDataListener<List<NewsEntity>>() {
+
+            @Override
+            public void onSuccessed(List<NewsEntity> newsEntities) {
+                mView.setData(newsEntities);
+                mView.dataLoaded();
+                mView.dismissProgressBar();
+            }
+
+            @SuppressLint("WrongConstant")
+            @Override
+            public void onFailed(String throwable) {
+                mView.dismissProgressBar();
+                Toast.makeText(mView.getFragmentContext(),throwable,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

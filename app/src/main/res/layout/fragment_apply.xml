@@ -31,172 +31,53 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:padding="14dp">
+                android:padding="14dp"
+                android:background="@android:color/white">
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <com.hnsi.oa.hnsi_oa.widgets.IconImageView
+                    android:id="@+id/apply_btn_new"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <RelativeLayout
-                        android:id="@+id/apply_btn_new"
-                        android:clickable="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/apply_icon_news"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_new"
-                            android:layout_centerHorizontal="true"
-                            android:paddingRight="6dp"
-                            android:paddingTop="4dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="新闻"
-                            android:textSize="13dp"
-                            android:textColor="@android:color/black"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/apply_icon_news"/>
-                        <TextView
-                            android:id="@+id/apply_tv_num_news"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:background="@drawable/circle_background_red"
-                            android:text="99+"
-                            android:textSize="10dp"
-                            android:textColor="@android:color/white"
-                            android:layout_alignRight="@+id/apply_icon_news"
-                            android:visibility="invisible"/>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                    android:gravity="center_horizontal"
+                    app:icon_image="@mipmap/apply_new"
+                    app:text="新闻"
+                    app:textSize="13sp"
+                    app:textColor="@android:color/black"
+                    android:clickable="true"/>
+                <com.hnsi.oa.hnsi_oa.widgets.IconImageView
+                    android:id="@+id/apply_btn_notice"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <RelativeLayout
-                        android:id="@+id/apply_btn_notice"
-                        android:clickable="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/apply_icon_notice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_notice"
-                            android:layout_centerHorizontal="true"
-                            android:paddingRight="6dp"
-                            android:paddingTop="4dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="公告"
-                            android:textSize="13dp"
-                            android:textColor="@android:color/black"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/apply_icon_notice"/>
-                        <TextView
-                            android:id="@+id/apply_tv_num_notice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:background="@drawable/circle_background_red"
-                            android:text="99+"
-                            android:textSize="9dp"
-                            android:textColor="@android:color/white"
-                            android:layout_alignRight="@+id/apply_icon_notice"
-                            android:visibility="invisible"/>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                    android:gravity="center_horizontal"
+                    app:icon_image="@mipmap/apply_notice"
+                    app:text="公告"
+                    app:textSize="13sp"
+                    app:textColor="@android:color/black"
+                    android:clickable="true"/>
+                <com.hnsi.oa.hnsi_oa.widgets.IconImageView
+                    android:id="@+id/apply_btn_msg"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <RelativeLayout
-                        android:id="@+id/apply_btn_msg"
-                        android:clickable="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/apply_icon_msg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_msg"
-                            android:layout_centerHorizontal="true"
-                            android:paddingRight="6dp"
-                            android:paddingTop="4dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="系统消息"
-                            android:textSize="13dp"
-                            android:textColor="@android:color/black"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/apply_icon_msg"/>
-                        <TextView
-                            android:id="@+id/apply_tv_num_msg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:background="@drawable/circle_background_red"
-                            android:text="99+"
-                            android:textSize="9dp"
-                            android:textColor="@android:color/white"
-                            android:layout_alignRight="@+id/apply_icon_msg"
-                            android:visibility="invisible"/>
-                    </RelativeLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                    android:gravity="center_horizontal"
+                    app:icon_image="@mipmap/apply_msg"
+                    app:text="系统消息"
+                    app:textSize="13sp"
+                    app:textColor="@android:color/black"
+                    android:clickable="true"/>
+                <com.hnsi.oa.hnsi_oa.widgets.IconImageView
+                    android:id="@+id/apply_btn_pass"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
-                    <RelativeLayout
-                        android:id="@+id/apply_btn_pass"
-                        android:clickable="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/apply_icon_pass"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_pass"
-                            android:layout_centerHorizontal="true"
-                            android:paddingRight="6dp"
-                            android:paddingTop="4dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="规章制度"
-                            android:textSize="13dp"
-                            android:textColor="@android:color/black"
-                            android:layout_centerHorizontal="true"
-                            android:layout_below="@+id/apply_icon_pass"/>
-                        <TextView
-                            android:id="@+id/apply_tv_num_pass"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:background="@drawable/circle_background_red"
-                            android:text="99+"
-                            android:textSize="9dp"
-                            android:textColor="@android:color/white"
-                            android:layout_alignRight="@+id/apply_icon_pass"
-                            android:visibility="invisible"/>
-                    </RelativeLayout>
-                </LinearLayout>
+                    android:gravity="center_horizontal"
+                    app:icon_image="@mipmap/apply_pass"
+                    app:text="规章制度"
+                    app:textSize="13sp"
+                    app:textColor="@android:color/black"
+                    android:clickable="true"/>
 
             </LinearLayout>
 
@@ -216,375 +97,53 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:paddingTop="14dp"
-                    android:paddingLeft="14dp"
-                    android:paddingRight="14dp"
-                    android:paddingBottom="7dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
-                        <RelativeLayout
-                            android:id="@+id/apply_btn_approval"
-                            android:clickable="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:id="@+id/apply_icon_approval"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/apply_approval"
-                                android:layout_centerHorizontal="true"
-                                android:paddingRight="6dp"
-                                android:paddingTop="4dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="审批"
-                                android:textSize="13dp"
-                                android:textColor="@android:color/black"
-                                android:layout_centerHorizontal="true"
-                                android:layout_below="@+id/apply_icon_approval"/>
-                            <TextView
-                                android:id="@+id/apply_tv_num_approval"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:background="@drawable/circle_background_red"
-                                android:text="99+"
-                                android:textSize="10dp"
-                                android:textColor="@android:color/white"
-                                android:layout_alignRight="@+id/apply_icon_approval"
-                                android:visibility="invisible"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
-                        <RelativeLayout
-                            android:id="@+id/apply_btn_office"
-                            android:clickable="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:id="@+id/apply_icon_office"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/apply_office"
-                                android:layout_centerHorizontal="true"
-                                android:paddingRight="6dp"
-                                android:paddingTop="4dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="办公"
-                                android:textSize="13dp"
-                                android:textColor="@color/gray"
-                                android:layout_centerHorizontal="true"
-                                android:layout_below="@+id/apply_icon_office"/>
-                            <TextView
-                                android:id="@+id/apply_tv_num_office"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:background="@drawable/circle_background_red"
-                                android:text="99+"
-                                android:textSize="10dp"
-                                android:textColor="@android:color/white"
-                                android:layout_alignRight="@+id/apply_icon_office"
-                                android:visibility="invisible"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
-                        <RelativeLayout
-                            android:id="@+id/apply_btn_presales"
-                            android:clickable="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:id="@+id/apply_icon_presales"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/apply_presales"
-                                android:layout_centerHorizontal="true"
-                                android:paddingRight="6dp"
-                                android:paddingTop="4dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="售前"
-                                android:textSize="13dp"
-                                android:textColor="@color/gray"
-                                android:layout_centerHorizontal="true"
-                                android:layout_below="@+id/apply_icon_presales"/>
-                            <TextView
-                                android:id="@+id/apply_tv_num_presales"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:background="@drawable/circle_background_red"
-                                android:text="99+"
-                                android:textSize="10dp"
-                                android:textColor="@android:color/white"
-                                android:layout_alignRight="@+id/apply_icon_presales"
-                                android:visibility="invisible"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
-                        <RelativeLayout
-                            android:id="@+id/apply_btn_production"
-                            android:clickable="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:id="@+id/apply_icon_production"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/apply_production"
-                                android:layout_centerHorizontal="true"
-                                android:paddingRight="6dp"
-                                android:paddingTop="4dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="生产"
-                                android:textSize="13dp"
-                                android:textColor="@color/gray"
-                                android:layout_centerHorizontal="true"
-                                android:layout_below="@+id/apply_icon_production"/>
-                            <TextView
-                                android:id="@+id/apply_tv_num_production"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:background="@drawable/circle_background_red"
-                                android:text="99+"
-                                android:textSize="10dp"
-                                android:textColor="@android:color/white"
-                                android:layout_alignRight="@+id/apply_icon_production"
-                                android:visibility="invisible"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:paddingBottom="14dp"
-                    android:paddingLeft="14dp"
-                    android:paddingRight="14dp"
-                    android:paddingTop="7dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
-                        <RelativeLayout
-                            android:id="@+id/apply_btn_contract"
-                            android:clickable="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:id="@+id/apply_icon_contract"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/apply_contract"
-                                android:layout_centerHorizontal="true"
-                                android:paddingRight="6dp"
-                                android:paddingTop="4dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="合同"
-                                android:textSize="13dp"
-                                android:textColor="@color/gray"
-                                android:layout_centerHorizontal="true"
-                                android:layout_below="@+id/apply_icon_contract"/>
-                            <TextView
-                                android:id="@+id/apply_tv_num_contract"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:background="@drawable/circle_background_red"
-                                android:text="99+"
-                                android:textSize="10dp"
-                                android:textColor="@android:color/white"
-                                android:layout_alignRight="@+id/apply_icon_contract"
-                                android:visibility="invisible"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
-                        <RelativeLayout
-                            android:id="@+id/apply_btn_business"
-                            android:clickable="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
-                            <ImageView
-                                android:id="@+id/apply_icon_business"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/apply_business"
-                                android:layout_centerHorizontal="true"
-                                android:paddingRight="6dp"
-                                android:paddingTop="4dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="事务"
-                                android:textSize="13dp"
-                                android:textColor="@color/gray"
-                                android:layout_centerHorizontal="true"
-                                android:layout_below="@+id/apply_icon_business"/>
-                            <TextView
-                                android:id="@+id/apply_tv_num_business"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:background="@drawable/circle_background_red"
-                                android:text="99+"
-                                android:textSize="10dp"
-                                android:textColor="@android:color/white"
-                                android:layout_alignRight="@+id/apply_icon_business"
-                                android:visibility="invisible"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/apply_btn_newapproval"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:visibility="invisible">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_approval"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="新的审批"
-                            android:textColor="@android:color/black" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:visibility="invisible">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/apply_new"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="新闻"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:background="#e6e6e6"
-                android:visibility="gone">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="应用中心"
-                    android:textSize="13dp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginLeft="20dp"
-                    android:layout_gravity="center_vertical"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:padding="14dp"
                 android:background="@android:color/white">
 
                 <com.hnsi.oa.hnsi_oa.widgets.IconImageView
-                    android:id="@+id/iiv1"
+                    android:id="@+id/apply_btn_approval"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    app:icon_image="@mipmap/apply_business"
+                    app:icon_image="@mipmap/apply_approval"
                     app:text="审批"
                     app:textSize="13sp"
-                    app:textColor="@color/gray"/>
+                    app:textColor="@android:color/black"
+                    android:clickable="true"/>
                 <com.hnsi.oa.hnsi_oa.widgets.IconImageView
-                    android:id="@+id/iiv2"
+                    android:id="@+id/apply_btn_office"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    app:icon_image="@mipmap/apply_business"
-                    app:text="审批"
+                    app:icon_image="@mipmap/apply_office"
+                    app:text="办公"
                     app:textSize="13sp"
-                    app:textColor="@android:color/black"/>
+                    app:textColor="@color/gray"
+                    android:clickable="true"/>
                 <com.hnsi.oa.hnsi_oa.widgets.IconImageView
-                    android:id="@+id/iiv3"
+                    android:id="@+id/apply_btn_presales"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    app:icon_image="@mipmap/apply_business"
-                    app:text="审批"
+                    app:icon_image="@mipmap/apply_presales"
+                    app:text="售前"
                     app:textSize="13sp"
-                    app:textColor="@color/gray"/>
+                    app:textColor="@color/gray"
+                    android:clickable="true"/>
                 <com.hnsi.oa.hnsi_oa.widgets.IconImageView
-                    android:id="@+id/iiv4"
+                    android:id="@+id/apply_btn_production"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    app:icon_image="@mipmap/apply_business"
-                    app:text="审批"
+                    app:icon_image="@mipmap/apply_production"
+                    app:text="生产"
                     app:textSize="13sp"
-                    app:textColor="@color/gray"/>
+                    app:textColor="@color/gray"
+                    android:clickable="true"/>
 
             </LinearLayout>
 

@@ -1,21 +1,15 @@
 package com.hnsi.oa.hnsi_oa.approval.widget;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.R;
@@ -26,16 +20,13 @@ import com.hnsi.oa.hnsi_oa.beans.ApprovalHistoryResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalWidgetEntity;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
-import com.hnsi.oa.hnsi_oa.utils.DensityUtil;
 import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
-import com.hnsi.oa.hnsi_oa.widgets.MyApprovalDetailAdapter;
 import com.hnsi.oa.hnsi_oa.widgets.MyApprovalDetailAdapter2;
 import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemDecoration;
 import com.hnsi.oa.hnsi_oa.widgets.MyPenddingFlowAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * Created by Zheng on 2018/1/19.
@@ -52,18 +43,25 @@ public class ApprovalDetailActivity2 extends BaseActivity {
 
     private static final String PEND_ITEM_TAG= "pend";
 
+    private String url= "";
+    private String workItemId= "";
+    private String activityDefId= "";
+    private String processInstId= "";
+
+    private int typeTag;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_approval_detail2);
 
         Intent intent= getIntent();
-        String url= intent.getStringExtra(MyPenddingFlowAdapter.DETAIL_PARAM_URL);
-        String workItemId= String.valueOf(intent.getIntExtra(MyPenddingFlowAdapter.DETAIL_PARAM_WORKITEMID, 0));
-        String activityDefId= intent.getStringExtra(MyPenddingFlowAdapter.DETAIL_PARAM_ACTIVITYDEFID);
-        String processInstId= String.valueOf(intent.getIntExtra(MyPenddingFlowAdapter.DETAIL_PARAM_PROCESSINSTID, 0));
+        url= intent.getStringExtra(MyPenddingFlowAdapter.DETAIL_PARAM_URL);
+        workItemId= String.valueOf(intent.getIntExtra(MyPenddingFlowAdapter.DETAIL_PARAM_WORKITEMID, 0));
+        activityDefId= intent.getStringExtra(MyPenddingFlowAdapter.DETAIL_PARAM_ACTIVITYDEFID);
+        processInstId= String.valueOf(intent.getIntExtra(MyPenddingFlowAdapter.DETAIL_PARAM_PROCESSINSTID, 0));
 
-        int typeTag= intent.getIntExtra(MyPenddingFlowAdapter.TYPE_TAG, 0);
+        typeTag= intent.getIntExtra(MyPenddingFlowAdapter.TYPE_TAG, 0);
 
         if (typeTag== 0){
             Toast.makeText(this, "流程异常，请重试！", Toast.LENGTH_LONG).show();
@@ -95,82 +93,15 @@ public class ApprovalDetailActivity2 extends BaseActivity {
         mFormRly= (RecyclerView) findViewById(R.id.form_rly);
         mFormRly.setLayoutManager(new LinearLayoutManager(ApprovalDetailActivity2.this));
         mFormRly.addItemDecoration(new MyNewsItemDecoration(15));
+        mFormRly.setNestedScrollingEnabled(false);
 
         mCommitBtn= (Button) findViewById(R.id.matter_btn_commit);
+
         if (typeTag== MyPenddingFlowAdapter.TYPE_FINISHED){
-            mCommitBtn.setVisibility(View.GONE);
+            handleFinished();
+        }else if (typeTag== MyPenddingFlowAdapter.TYPE_PENDDING){
+            handlePendding();
         }
-        mCommitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("commit--url", mCommitUrl);
-                Log.e("commitParamMap--commit", mCommitParamMap.toString());
-                if ( "".equals(mCommitUrl) || mCommitUrl.length()== 0 || "null".equals(mCommitUrl) ){
-                    return;
-                }
-                MyApplication.getInstance().commitApproval(
-                        mCommitUrl,
-                        mCommitParamMap,
-                        new OnRequestDataListener<ApprovalResponseEntity>() {
-                    @Override
-                    public void onSuccessed(ApprovalResponseEntity approvalResponseEntity) {
-                        Toast.makeText(ApprovalDetailActivity2.this, "提交成功！", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-
-                    @Override
-                    public void onFailed(String throwable) {
-                        Toast.makeText(ApprovalDetailActivity2.this, throwable, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        mCommitParamMap= new HashMap<>();
-
-        LinearLayout.LayoutParams params0=
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, 1);
-
-        View devideView= new View(ApprovalDetailActivity2.this);
-        devideView.setLayoutParams(params0);
-        devideView.setBackgroundColor(Color.rgb(173,173,173));
-
-        MyApplication.getInstance().getApprovalDetail(
-                url,
-                workItemId,
-                activityDefId,
-                processInstId,
-                new OnRequestDataListener<ApprovalEntity>() {
-
-                    @Override
-                    public void onSuccessed(ApprovalEntity approvalEntity) {
-                        mApprovalEntity= approvalEntity;
-                        formReady= true;
-                        initFormUI();
-                    }
-
-                    @Override
-                    public void onFailed(String throwable) {
-
-                    }
-                });
-
-        MyApplication.getInstance().getApprovalHistory(
-                Integer.valueOf(processInstId),
-                new OnRequestDataListener<ApprovalHistoryResponseEntity>() {
-            @Override
-            public void onSuccessed(ApprovalHistoryResponseEntity approvalHistoryResponseEntity) {
-                mHistoryEntity= approvalHistoryResponseEntity;
-                historyReady= true;
-                initFormUI();
-            }
-
-            @Override
-            public void onFailed(String throwable) {
-
-            }
-        });
 
 //        if (typeTag== MyPenddingFlowAdapter.TYPE_PENDDING){
 //            MyApplication.getInstance().getApprovalDetail(url, workItemId, activityDefId, processInstId, new OnRequestDataListener<ApprovalEntity>() {
@@ -329,6 +260,135 @@ public class ApprovalDetailActivity2 extends BaseActivity {
 //        }
     }
 
+    /**
+     * 处理待办页面
+     */
+    private void handlePendding(){
+        mCommitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("commit--url", mCommitUrl);
+                Log.e("commitParamMap--commit", mCommitParamMap.toString());
+                if ( "".equals(mCommitUrl) || mCommitUrl.length()== 0 || "null".equals(mCommitUrl) ){
+                    Toast.makeText(ApprovalDetailActivity2.this, "提交地址无效！", Toast.LENGTH_SHORT).show();
+                    finish();
+                    return;
+                }
+
+                //如果提交参数中有占位符，说明有必填项未处理
+                if (mCommitParamMap.containsValue(PEND_ITEM_TAG)){
+                    Toast.makeText(ApprovalDetailActivity2.this, "有未填的必填项！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                MyApplication.getInstance().commitApproval(
+                        mCommitUrl,
+                        mCommitParamMap,
+                        new OnRequestDataListener<ApprovalResponseEntity>() {
+                            @Override
+                            public void onSuccessed(ApprovalResponseEntity approvalResponseEntity) {
+                                Toast.makeText(ApprovalDetailActivity2.this, "提交成功！", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailed(String throwable) {
+                                Toast.makeText(ApprovalDetailActivity2.this, throwable, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+
+        //初始化提交参数
+        mCommitParamMap= new HashMap<>();
+
+        MyApplication.getInstance().getApprovalDetail(
+                url,
+                workItemId,
+                activityDefId,
+                processInstId,
+                new OnRequestDataListener<ApprovalEntity>() {
+
+                    @Override
+                    public void onSuccessed(ApprovalEntity approvalEntity) {
+                        //获取提交地址
+                        mCommitUrl= approvalEntity.getUrl();
+                        mApprovalEntity= approvalEntity;
+                        formReady= true;
+                        initFormUI();
+                    }
+
+                    @Override
+                    public void onFailed(String throwable) {
+                        Toast.makeText(ApprovalDetailActivity2.this, "Detail " + throwable, Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                });
+
+        MyApplication.getInstance().getApprovalHistory(
+                Integer.valueOf(processInstId),
+                new OnRequestDataListener<ApprovalHistoryResponseEntity>() {
+                    @Override
+                    public void onSuccessed(ApprovalHistoryResponseEntity approvalHistoryResponseEntity) {
+                        mHistoryEntity= approvalHistoryResponseEntity;
+                        historyReady= true;
+                        initFormUI();
+                    }
+
+                    @Override
+                    public void onFailed(String throwable) {
+                        Toast.makeText(ApprovalDetailActivity2.this, "History " + throwable, Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                });
+    }
+
+    /**
+     * 处理已办页面
+     */
+    private void handleFinished(){
+        mCommitBtn.setVisibility(View.GONE);
+
+        MyApplication.getInstance().getApprovalDetail(
+                url,
+                workItemId,
+                activityDefId,
+                processInstId,
+                new OnRequestDataListener<ApprovalEntity>() {
+
+                    @Override
+                    public void onSuccessed(ApprovalEntity approvalEntity) {
+                        mApprovalEntity= approvalEntity;
+                        formReady= true;
+                        initFormUI();
+                    }
+
+                    @Override
+                    public void onFailed(String throwable) {
+                        Toast.makeText(ApprovalDetailActivity2.this, "Detail " + throwable, Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                });
+
+        MyApplication.getInstance().getApprovalHistory(
+                Integer.valueOf(processInstId),
+                new OnRequestDataListener<ApprovalHistoryResponseEntity>() {
+                    @Override
+                    public void onSuccessed(ApprovalHistoryResponseEntity approvalHistoryResponseEntity) {
+                        mHistoryEntity= approvalHistoryResponseEntity;
+                        historyReady= true;
+                        initFormUI();
+                    }
+
+                    @Override
+                    public void onFailed(String throwable) {
+                        Toast.makeText(ApprovalDetailActivity2.this, "History " + throwable, Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                });
+
+    }
+
     public HashMap<String, String> getmCommitParamMap() {
         return mCommitParamMap;
     }
@@ -396,21 +456,6 @@ public class ApprovalDetailActivity2 extends BaseActivity {
         return mutualStatus;
     }
 
-    /**
-     * 显示groupKey的TextView的上下分割线
-     * @return
-     */
-    private View createDevideView(){
-        LinearLayout.LayoutParams params=
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, 1);
-        params.setMargins(15,0,15,0);
-
-        View devideView= new View(this);
-        devideView.setLayoutParams(params);
-        devideView.setBackgroundColor(Color.rgb(173,173,173));
-        return devideView;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -419,10 +464,14 @@ public class ApprovalDetailActivity2 extends BaseActivity {
         return true;
     }
 
-    private boolean formReady;
-    private boolean historyReady;
-    private ApprovalEntity mApprovalEntity;
-    private ApprovalHistoryResponseEntity mHistoryEntity;
+
+    private boolean formReady;//表格数据是否请求完成
+    private boolean historyReady;//历史记录是否请求完成
+    private ApprovalEntity mApprovalEntity;//表格数据实体
+    private ApprovalHistoryResponseEntity mHistoryEntity;//历史记录数据实体
+    /**
+     * 初始化表格
+     */
     private void initFormUI(){
         if (!formReady || !historyReady){
             return;
@@ -433,6 +482,7 @@ public class ApprovalDetailActivity2 extends BaseActivity {
         ArrayList<ApprovalGroupEntity> groups= mApprovalEntity.getGroupList();
         ArrayList<ApprovalWidgetEntity> widgets= mApprovalEntity.getCtlList();
 
+        //所有控件分组
         for ( ApprovalGroupEntity groupEntity : groups ){
 
             String groupKey= groupEntity.getGroupKey();
@@ -440,14 +490,30 @@ public class ApprovalDetailActivity2 extends BaseActivity {
 
             for ( ApprovalWidgetEntity widgetEntity : widgets ){
                 if (groupKey.equals(widgetEntity.getGroupKey())){
+
+                    //放在if中执行本操作，保证每个widget只执行一次此操作，并且仅待办审批中需要此操作
+                    if (typeTag== MyPenddingFlowAdapter.TYPE_PENDDING) {
+                        //把widget的key转换成标准模式
+                        widgetEntity.setKey(widgetEntity.getKey().replace(".","/"));
+                        //如果这个widget是必填项，向提交参数中添加占位符
+                        if (widgetEntity.isRequired()){
+                            mCommitParamMap.put(widgetEntity.getKey(), PEND_ITEM_TAG);
+                        }
+                    }
+
+                    //不显示type= hidden的控件
                     if ("hidden".equals(widgetEntity.getType())){
-                        mCommitParamMap.put(widgetEntity.getKey(), widgetEntity.getValue());
+                        //如果这是待办审批，添加hidden控件的key-value到提交参数中
+                        if (typeTag== MyPenddingFlowAdapter.TYPE_PENDDING) {
+                            mCommitParamMap.put(widgetEntity.getKey(), widgetEntity.getValue());
+                        }
                         continue;
                     }
                     gWidgets.add(widgetEntity);
                 }
             }
 
+            //不显示没有可显示子控件的组
             if (gWidgets.size()>0){
                 formList.add(groupEntity);
                 formList.addAll(gWidgets);
@@ -456,6 +522,7 @@ public class ApprovalDetailActivity2 extends BaseActivity {
 
         int historyIndex = 0;
 
+        //查找编辑组的索引，用于把历史记录组插入到编辑组前
         for (int i= 0; i<formList.size(); i++){
             Object object= formList.get(i);
             if ( object instanceof ApprovalGroupEntity && "audit".equals(((ApprovalGroupEntity) object).getGroupKey())){
@@ -471,10 +538,8 @@ public class ApprovalDetailActivity2 extends BaseActivity {
             formList.addAll( historyIndex + 1, mHistoryEntity.getList());
         }
 
-        for(Object object: formList){
-            Log.e("list", object.toString());
-        }
-        mFormRly.setAdapter(new MyApprovalDetailAdapter2(ApprovalDetailActivity2.this, formList));
+        MyApprovalDetailAdapter2 adapter2= new MyApprovalDetailAdapter2(this, formList);
+        mFormRly.setAdapter(adapter2);
 
     }
 

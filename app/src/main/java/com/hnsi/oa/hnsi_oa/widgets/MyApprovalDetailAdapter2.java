@@ -54,15 +54,15 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
     private static final int ITEM_TABLE_FILES= 0x09;
 
     /** 分组标题 */
-    private static final int ITEM_GROUP_TITLE= 0x10;
+    private static final int ITEM_GROUP_TITLE= 0x0A;
     /** 审批记录 */
-    private static final int ITEM_HISTORY_0= 0x11;
+    private static final int ITEM_HISTORY_0= 0x0B;
     /** 审批记录 */
-    private static final int ITEM_HISTORY_1= 0x12;
+    private static final int ITEM_HISTORY_1= 0x0C;
     /** 审批记录 */
-    private static final int ITEM_HISTORY_2= 0x13;
+    private static final int ITEM_HISTORY_2= 0x0D;
     /** 审批记录 */
-    private static final int ITEM_HISTORY_3= 0x14;
+    private static final int ITEM_HISTORY_3= 0x0E;
 
 
 
@@ -130,7 +130,7 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
     @Override
     public void onBindViewHolder(ApprovalDetailViewHolder holder, int position) {
         Object object= mData.get(position);
-        Log.e(""+position, object.toString());
+//        holder.drawView(object);
         switch (getItemViewType(position)){
             case ITEM_TEXT:
                 ApprovalWidgetEntity entity0= (ApprovalWidgetEntity) object;
@@ -384,28 +384,56 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
                 ApprovalHistoryEntity historyEntity0= (ApprovalHistoryEntity) object;
                 holder.mHistoryNameTv.setText(historyEntity0.getName());
                 holder.mHistoryTypeTv.setText(historyEntity0.getActivityName());
-                holder.mHistoryContentTv.setText(historyEntity0.getContent());
+                String content0= historyEntity0.getContent();
+                if(content0== null
+                        ||"null".equals(content0)
+                        ||"".equals(content0)){
+                    holder.mHistoryContentTv.setText("无处理意见");
+                }else{
+                    holder.mHistoryContentTv.setText(content0);
+                }
                 holder.mHistoryTimeTv.setText(historyEntity0.getEndTime().substring(0,19));
                 break;
             case ITEM_HISTORY_1:
                 ApprovalHistoryEntity historyEntity1= (ApprovalHistoryEntity) object;
                 holder.mHistoryNameTv.setText(historyEntity1.getName());
                 holder.mHistoryTypeTv.setText(historyEntity1.getActivityName());
-                holder.mHistoryContentTv.setText(historyEntity1.getContent());
+                String content1= historyEntity1.getContent();
+                if(content1== null
+                        ||"null".equals(content1)
+                        ||"".equals(content1)){
+                    holder.mHistoryContentTv.setText("无处理意见");
+                }else{
+                    holder.mHistoryContentTv.setText(content1);
+                }
                 holder.mHistoryTimeTv.setText(historyEntity1.getEndTime().substring(0,19));
                 break;
             case ITEM_HISTORY_2:
                 ApprovalHistoryEntity historyEntity2= (ApprovalHistoryEntity) object;
                 holder.mHistoryNameTv.setText(historyEntity2.getName());
                 holder.mHistoryTypeTv.setText(historyEntity2.getActivityName());
-                holder.mHistoryContentTv.setText(historyEntity2.getContent());
+                String content2= historyEntity2.getContent();
+                if(content2== null
+                        ||"null".equals(content2)
+                        ||"".equals(content2)){
+                    holder.mHistoryContentTv.setText("无处理意见");
+                }else{
+                    holder.mHistoryContentTv.setText(content2);
+                }
                 holder.mHistoryTimeTv.setText(historyEntity2.getEndTime().substring(0,19));
                 break;
             case ITEM_HISTORY_3:
                 ApprovalHistoryEntity historyEntity3= (ApprovalHistoryEntity) object;
                 holder.mHistoryNameTv.setText(historyEntity3.getName());
                 holder.mHistoryTypeTv.setText(historyEntity3.getActivityName());
-                holder.mHistoryContentTv.setText(historyEntity3.getContent());
+                String content3= historyEntity3.getContent();
+                if(content3== null
+                        ||"null".equals(content3)
+                        ||"".equals(content3)){
+                    holder.mHistoryContentTv.setText("无处理意见");
+                }else{
+                    holder.mHistoryContentTv.setText(content3);
+                }
                 holder.mHistoryTimeTv.setText(historyEntity3.getEndTime().substring(0,19));
                 break;
         }
@@ -423,12 +451,12 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
         Log.e("obj", object.toString());
 
         if (object instanceof ApprovalWidgetEntity){
-            discernWidget((ApprovalWidgetEntity) object);
+            return discernWidget((ApprovalWidgetEntity) object);
         }else if (object instanceof ApprovalGroupEntity){
             return ITEM_GROUP_TITLE;
         }else if (object instanceof ApprovalHistoryEntity){
-            Log.e("history", ""+discernHistory((ApprovalHistoryEntity) object));
-//            discernHistory((ApprovalHistoryEntity) object);
+//            Log.e("history", ""+discernHistory((ApprovalHistoryEntity) object));
+            return discernHistory((ApprovalHistoryEntity) object);
         }
 
         return super.getItemViewType(position);
@@ -486,7 +514,6 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
             default:
                 return ITEM_HISTORY_1;
         }
-
     }
 
     class ApprovalDetailViewHolder extends RecyclerView.ViewHolder{
@@ -585,6 +612,17 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
                     break;
             }
         }
+
+//        private void drawView(Object object){
+//            if (object instanceof ApprovalGroupEntity){
+//                ApprovalGroupEntity groupEntity= (ApprovalGroupEntity) object;
+//                mGroupTitleTv.setText(groupEntity.getLabel());
+//            }else if (object instanceof ApprovalWidgetEntity){
+//
+//            }else if (object instanceof ApprovalHistoryEntity){
+//
+//            }
+//        }
     }
 
 }

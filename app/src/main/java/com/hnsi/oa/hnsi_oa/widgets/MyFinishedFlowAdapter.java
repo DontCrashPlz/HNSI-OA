@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity;
+import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity2;
 import com.hnsi.oa.hnsi_oa.beans.FlowEntity;
 
 /**
@@ -29,7 +30,7 @@ public class MyFinishedFlowAdapter extends BaseQuickAdapter<FlowEntity, MyFinish
         helper.mPanelRly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(mContext, ApprovalDetailActivity.class);
+                Intent intent= new Intent(mContext, ApprovalDetailActivity2.class);
                 intent.putExtra(MyPenddingFlowAdapter.DETAIL_PARAM_URL, item.getFlowUrl());
                 intent.putExtra(MyPenddingFlowAdapter.DETAIL_PARAM_PROCESSINSTID, item.getProcessInstID());
                 intent.putExtra(MyPenddingFlowAdapter.TYPE_TAG, MyPenddingFlowAdapter.TYPE_FINISHED);
