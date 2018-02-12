@@ -41,7 +41,7 @@ public class ApprovalDetailActivity2 extends BaseActivity {
 
     private String mCommitUrl= "";
 
-    private static final String PEND_ITEM_TAG= "pend";
+    public static final String PEND_ITEM_TAG= "pend";
 
     private String url= "";
     private String workItemId= "";
@@ -49,6 +49,8 @@ public class ApprovalDetailActivity2 extends BaseActivity {
     private String processInstId= "";
 
     private int typeTag;
+
+    private MyApprovalDetailAdapter2 adapter2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class ApprovalDetailActivity2 extends BaseActivity {
 
         mFormRly= (RecyclerView) findViewById(R.id.form_rly);
         mFormRly.setLayoutManager(new LinearLayoutManager(ApprovalDetailActivity2.this));
-        mFormRly.addItemDecoration(new MyNewsItemDecoration(15));
+        mFormRly.addItemDecoration(new MyNewsItemDecoration());
         mFormRly.setNestedScrollingEnabled(false);
 
         mCommitBtn= (Button) findViewById(R.id.matter_btn_commit);
@@ -103,161 +105,6 @@ public class ApprovalDetailActivity2 extends BaseActivity {
             handlePendding();
         }
 
-//        if (typeTag== MyPenddingFlowAdapter.TYPE_PENDDING){
-//            MyApplication.getInstance().getApprovalDetail(url, workItemId, activityDefId, processInstId, new OnRequestDataListener<ApprovalEntity>() {
-//                @Override
-//                public void onSuccessed(ApprovalEntity approvalEntity) {
-//
-//                    mCommitUrl= approvalEntity.getUrl();
-//
-//                    //所有控件的集合
-//                    ArrayList<ApprovalWidgetEntity> allWidgets= approvalEntity.getCtlList();
-//                    //所有hidden控件的集合
-//                    ArrayList<ApprovalWidgetEntity> hiddenWidget= new ArrayList<>();
-//
-//                    for (ApprovalWidgetEntity entity : allWidgets){
-//
-//                        if ("hidden".equals(entity.getType())){
-//                            mCommitParamMap.put(entity.getKey(), entity.getValue());
-//                            hiddenWidget.add(entity);
-//                            continue;
-//                        }
-//
-//                        entity.setKey(entity.getKey().replace(".","/"));
-//
-//                        if (entity.isRequired()){
-//                            mCommitParamMap.put(entity.getKey(), PEND_ITEM_TAG);
-//                        }
-//
-//                    }
-//                    Log.e("commitParamMap--create", mCommitParamMap.toString());
-//                    //移除所有hidden类型的控件
-//                    allWidgets.removeAll(hiddenWidget);
-//                    Log.e("hiddenWidget", ""+hiddenWidget.size());
-//                    Log.e("allWidgets", ""+allWidgets.size());
-//
-//                    //根据groupKey进行分组，并逐组绘制界面
-//                    ArrayList<ApprovalGroupEntity> groups= approvalEntity.getGroupList();
-//                    for (ApprovalGroupEntity entity : groups){
-//                        ArrayList<ApprovalWidgetEntity> widgets= new ArrayList<>();
-//                        String groupKey= entity.getGroupKey();
-//                        for (ApprovalWidgetEntity widget : allWidgets){
-//                            if (widget.getGroupKey().equals(groupKey))
-//                                widgets.add(widget);
-//                        }
-//                        entity.setWidgets(widgets);
-//
-//                        if (entity.getWidgets().size()> 0){
-//
-//                            LinearLayout.LayoutParams params1=
-//                                    new LinearLayout.LayoutParams(
-//                                            ViewGroup.LayoutParams.MATCH_PARENT,
-//                                            DensityUtil.dp2px(ApprovalDetailActivity2.this, 50));
-//
-//                            TextView textView= new TextView(ApprovalDetailActivity2.this);
-//                            textView.setLayoutParams(params1);
-//                            textView.setText(entity.getLabel());
-//                            textView.setTextColor(Color.BLACK);
-//                            textView.setTextSize(18);
-//                            textView.setGravity(Gravity.CENTER);
-//
-//                            if (groups.indexOf(entity)> 0){
-//                                mFormAreaLly.addView(createDevideView());
-//                            }
-//                            mFormAreaLly.addView(textView);
-//                            mFormAreaLly.addView(createDevideView());
-//
-//                            LinearLayout.LayoutParams params2=
-//                                    new LinearLayout.LayoutParams(
-//                                            ViewGroup.LayoutParams.MATCH_PARENT,
-//                                            ViewGroup.LayoutParams.WRAP_CONTENT);
-//
-//                            RecyclerView recyclerView= new RecyclerView(ApprovalDetailActivity2.this);
-//                            recyclerView.setLayoutManager(new LinearLayoutManager(ApprovalDetailActivity2.this));
-//                            recyclerView.setLayoutParams(params2);
-//                            recyclerView.addItemDecoration(new MyNewsItemDecoration(15));
-//                            recyclerView.setAdapter(new MyApprovalDetailAdapter(ApprovalDetailActivity2.this, entity.getWidgets()));
-//                            mFormAreaLly.addView(recyclerView);
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailed(String throwable) {
-//
-//                }
-//            });
-//        }else if (typeTag== MyPenddingFlowAdapter.TYPE_FINISHED){
-//            MyApplication.getInstance().getApprovalDetail(url, "", "", processInstId, new OnRequestDataListener<ApprovalEntity>() {
-//                @Override
-//                public void onSuccessed(ApprovalEntity approvalEntity) {
-//                    //所有控件的集合
-//                    ArrayList<ApprovalWidgetEntity> allWidgets= approvalEntity.getCtlList();
-//                    //所有hidden控件的集合
-//                    ArrayList<ApprovalWidgetEntity> hiddenWidget= new ArrayList<>();
-//
-//                    for (ApprovalWidgetEntity entity : allWidgets){
-//                        if ("hidden".equals(entity.getType())){
-//                            mCommitParamMap.put(entity.getKey(), entity.getValue());
-//                            hiddenWidget.add(entity);
-//                            continue;
-//                        }
-//                    }
-//                    //移除所有hidden类型的控件
-//                    allWidgets.removeAll(hiddenWidget);
-//
-//                    //根据groupKey进行分组，并逐组绘制界面
-//                    ArrayList<ApprovalGroupEntity> groups= approvalEntity.getGroupList();
-//                    for (ApprovalGroupEntity entity : groups){
-//                        ArrayList<ApprovalWidgetEntity> widgets= new ArrayList<>();
-//                        String groupKey= entity.getGroupKey();
-//                        for (ApprovalWidgetEntity widget : allWidgets){
-//                            if (widget.getGroupKey().equals(groupKey))
-//                                widgets.add(widget);
-//                        }
-//                        entity.setWidgets(widgets);
-//
-//                        if (entity.getWidgets().size()> 0){
-//
-//                            LinearLayout.LayoutParams params1=
-//                                    new LinearLayout.LayoutParams(
-//                                            ViewGroup.LayoutParams.MATCH_PARENT,
-//                                            DensityUtil.dp2px(ApprovalDetailActivity2.this, 50));
-//
-//                            TextView textView= new TextView(ApprovalDetailActivity2.this);
-//                            textView.setLayoutParams(params1);
-//                            textView.setText(entity.getLabel());
-//                            textView.setTextColor(Color.BLACK);
-//                            textView.setTextSize(18);
-//                            textView.setGravity(Gravity.CENTER);
-//
-//                            if (groups.indexOf(entity)> 0){
-//                                mFormAreaLly.addView(createDevideView());
-//                            }
-//                            mFormAreaLly.addView(textView);
-//                            mFormAreaLly.addView(createDevideView());
-//
-//                            LinearLayout.LayoutParams params2=
-//                                    new LinearLayout.LayoutParams(
-//                                            ViewGroup.LayoutParams.MATCH_PARENT,
-//                                            ViewGroup.LayoutParams.WRAP_CONTENT);
-//
-//                            RecyclerView recyclerView= new RecyclerView(ApprovalDetailActivity2.this);
-//                            recyclerView.setLayoutManager(new LinearLayoutManager(ApprovalDetailActivity2.this));
-//                            recyclerView.setLayoutParams(params2);
-//                            recyclerView.addItemDecoration(new MyNewsItemDecoration(15));
-//                            recyclerView.setAdapter(new MyApprovalDetailAdapter(ApprovalDetailActivity2.this, entity.getWidgets()));
-//                            mFormAreaLly.addView(recyclerView);
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailed(String throwable) {
-//
-//                }
-//            });
-//        }
     }
 
     /**
@@ -273,6 +120,26 @@ public class ApprovalDetailActivity2 extends BaseActivity {
                     Toast.makeText(ApprovalDetailActivity2.this, "提交地址无效！", Toast.LENGTH_SHORT).show();
                     finish();
                     return;
+                }
+
+                if(!"".equals(getIsConnect())){//如果纪录的有switch状态，根据状态值做处理
+                    if("0".equals(getIsConnect())){//如果switch为关闭状态，从Map中删除与switch关联的key字段
+                        mCommitParamMap.remove(getConnectKey());
+                    }
+                }
+
+                if(!"".equals(getMutualStatus())){//如果纪录的有互斥开关的状态，根据状态值做处理
+                    if("0".equals(getMutualStatus())){
+                       mCommitParamMap.remove(getSecondMutualKey());
+                    }else if("1".equals(getMutualStatus())){
+                        mCommitParamMap.remove(getFristMutualKey());
+                    }
+                }
+
+                if (mCommitParamMap.containsKey("wfParam/content")
+                        && !(PEND_ITEM_TAG.equals(mCommitParamMap.get("wfParam/content")))
+                        && mCommitParamMap.containsKey("wfParam/changyong")){
+                    mCommitParamMap.remove("wfParam/changyong");
                 }
 
                 //如果提交参数中有占位符，说明有必填项未处理
@@ -411,6 +278,21 @@ public class ApprovalDetailActivity2 extends BaseActivity {
         return mJingBanRenId;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //从经办人选择界面返回时将选择的经办人姓名显示在mJingBanRenTv中，并将回传的empid拼接到提交时上传的参数中
+        if(data!=null){
+            setJingBanRenStr(data.getStringExtra("empname"));
+            int value=data.getIntExtra("empid", 0);
+            if(value!=0){
+                setJingBanRenId(""+ value);
+            }
+            adapter2.notifyDataSetChanged();
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     /** 与switch开关关联项的key */
     private String connectKey="";
     public void setConnectKey(String key){
@@ -505,7 +387,11 @@ public class ApprovalDetailActivity2 extends BaseActivity {
                     if ("hidden".equals(widgetEntity.getType())){
                         //如果这是待办审批，添加hidden控件的key-value到提交参数中
                         if (typeTag== MyPenddingFlowAdapter.TYPE_PENDDING) {
-                            mCommitParamMap.put(widgetEntity.getKey(), widgetEntity.getValue());
+                            if (widgetEntity.getValue()== null){
+                                mCommitParamMap.put(widgetEntity.getKey(), "null");
+                            }else {
+                                mCommitParamMap.put(widgetEntity.getKey(), widgetEntity.getValue());
+                            }
                         }
                         continue;
                     }
@@ -538,7 +424,7 @@ public class ApprovalDetailActivity2 extends BaseActivity {
             formList.addAll( historyIndex + 1, mHistoryEntity.getList());
         }
 
-        MyApprovalDetailAdapter2 adapter2= new MyApprovalDetailAdapter2(this, formList);
+        adapter2= new MyApprovalDetailAdapter2(this, formList);
         mFormRly.setAdapter(adapter2);
 
     }

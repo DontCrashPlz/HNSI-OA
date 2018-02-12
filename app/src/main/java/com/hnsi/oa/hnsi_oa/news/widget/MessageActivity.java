@@ -37,7 +37,7 @@ public class MessageActivity extends BaseActivity {
         }
 
         mAdapter= new MyMessageListAdapter(R.layout.item_message);
-        mFragment= new BaseRecyclerFragment(mAdapter, new MyNewsItemDecoration(16));
+        mFragment= new BaseRecyclerFragment(mAdapter, new MyNewsItemDecoration());
         mFragment.setPresenter(new MessageListPresenter(mFragment));
 
         FragmentManager manager= getSupportFragmentManager();

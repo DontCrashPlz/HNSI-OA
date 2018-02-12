@@ -5,5 +5,6 @@
     <string name="num_of_comment">评论（%1$s）</string>
 
     <string name="num_of_department">%1$s人</string>
+    <string name="num_of_tableview">(第%1$s张)</string>
 
 </resources>

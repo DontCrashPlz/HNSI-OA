@@ -1,5 +1,6 @@
 package com.hnsi.oa.hnsi_oa.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by Zheng on 2018/1/17.
  */
 
-public class ApprovalWidgetEntity {
+public class ApprovalWidgetEntity implements Serializable {
     /**
      * eventId :
      * groupKey : base
@@ -37,7 +38,7 @@ public class ApprovalWidgetEntity {
     private String type= "";
     private String value= "";
     private ArrayList<ListDataBean> listData;
-    private ArrayList<List<String>> tableData;
+    private ArrayList<ArrayList<String>> tableData;
     private ArrayList<String> tableTitle;
 
     public String getEventId() {
@@ -136,11 +137,11 @@ public class ApprovalWidgetEntity {
         this.listData = listData;
     }
 
-    public ArrayList<List<String>> getTableData() {
+    public ArrayList<ArrayList<String>> getTableData() {
         return tableData;
     }
 
-    public void setTableData(ArrayList<List<String>> tableData) {
+    public void setTableData(ArrayList<ArrayList<String>> tableData) {
         this.tableData = tableData;
     }
 

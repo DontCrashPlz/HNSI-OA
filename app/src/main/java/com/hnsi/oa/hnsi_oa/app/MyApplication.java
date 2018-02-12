@@ -66,8 +66,8 @@ public class MyApplication extends Application implements User {
         super.onCreate();
         mSingleInstance= this;
 
-        MyUncatchExceptionHandler myUncatchExceptionHandler= MyUncatchExceptionHandler.getInstance();
-        myUncatchExceptionHandler.init(this);
+//        MyUncatchExceptionHandler myUncatchExceptionHandler= MyUncatchExceptionHandler.getInstance();
+//        myUncatchExceptionHandler.init(this);
 
         initHttpInstance();
     }

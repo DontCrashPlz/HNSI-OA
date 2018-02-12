@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.app.MyApplication;
+import com.hnsi.oa.hnsi_oa.approval.widget.AllListActivity;
 import com.hnsi.oa.hnsi_oa.beans.PersonEntity;
 import com.hnsi.oa.hnsi_oa.main.widget.PersonDetailActivity;
 
@@ -75,6 +76,12 @@ public class MyContactsAdapter extends RecyclerView.Adapter<MyContactsAdapter.Co
         holder.mPanelRly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (mContext instanceof AllListActivity){
+                    ((AllListActivity)mContext).selectComplete(mData.get(position).getEmpid(), mData.get(position).getEmpname());
+                    return;
+                }
+
                 Intent intent= new Intent(mContext, PersonDetailActivity.class);
                 intent.putExtra(PERSON_ID_TAG, mData.get(position).getEmpid());
                 intent.putExtra(PERSON_NAME_TAG, mData.get(position).getEmpname());

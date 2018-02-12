@@ -3,8 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.hnsi.oa.hnsi_oa.widgets.NestedListView
-        android:id="@+id/item_tableview_lv"
+    <com.hnsi.oa.hnsi_oa.widgets.TableViewListView
+        android:id="@+id/tableview_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
 </RelativeLayout>

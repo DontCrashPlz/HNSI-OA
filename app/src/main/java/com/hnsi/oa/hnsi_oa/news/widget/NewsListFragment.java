@@ -93,7 +93,7 @@ public class NewsListFragment extends LazyLoadFragment implements
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter= new MyNewsListAdapter(R.layout.layout_news);
         mAdapter.setOnLoadMoreListener(this,mRecyclerView);
-        mDecoration= new MyNewsItemDecoration(DensityUtil.dp2px(getContext(),14));
+        mDecoration= new MyNewsItemDecoration();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(mDecoration);
 

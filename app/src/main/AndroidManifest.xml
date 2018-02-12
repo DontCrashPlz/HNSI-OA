@@ -77,6 +77,22 @@
 
         </activity>
 
+        <activity android:name=".approval.widget.TableFilesActivity">
+
+        </activity>
+
+        <activity android:name=".approval.widget.HtmlInfoActivity">
+
+        </activity>
+
+        <activity android:name=".approval.widget.TableViewsActivity">
+
+        </activity>
+
+        <activity android:name=".approval.widget.AllListActivity">
+
+        </activity>
+
         <activity android:name=".news.widget.MessageActivity">
 
         </activity>

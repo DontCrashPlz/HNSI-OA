@@ -1,6 +1,8 @@
 package com.hnsi.oa.hnsi_oa.widgets;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -17,8 +19,11 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.approval.widget.AllListActivity;
 import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity;
 import com.hnsi.oa.hnsi_oa.approval.widget.ApprovalDetailActivity2;
+import com.hnsi.oa.hnsi_oa.approval.widget.HtmlInfoActivity;
+import com.hnsi.oa.hnsi_oa.approval.widget.TableFilesActivity;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalGroupEntity;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalHistoryEntity;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalWidgetEntity;
@@ -135,25 +140,24 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
             case ITEM_TEXT:
                 ApprovalWidgetEntity entity0= (ApprovalWidgetEntity) object;
                 holder.mTextNameTv.setText(entity0.getLabel());
-                if("null".equals(entity0.getValue())){
+                if(entity0.getValue()== null
+                        ||"".equals(entity0.getValue())
+                        ||"null".equals(entity0.getValue())){
                     holder.mTextValueTv.setText("无");
                 }else{
                     holder.mTextValueTv.setText(entity0.getValue());
                 }
                 if (entity0.isRequired()){
-                    mContext.getmCommitParamMap().put(entity0.getKey(), entity0.getValue());
+                    if (entity0.getValue()== null){
+                        mContext.getmCommitParamMap().put(entity0.getKey(), "null");
+                    }else {
+                        mContext.getmCommitParamMap().put(entity0.getKey(), entity0.getValue());
+                    }
                 }
                 break;
             case ITEM_EDIT_TEXT:
                 final ApprovalWidgetEntity entity1= (ApprovalWidgetEntity) object;
-                if("wfParam/content".equals(entity1.getKey())){
-                    String content="" + mContext.getmCommitParamMap().get("wfParam/content");
-                    if("pend".equals(content)||"null".equals(content)){
-                        holder.mSuggestEt.setText("");
-                    }else{
-                        holder.mSuggestEt.setText(content);
-                    }
-                }
+
                 holder.mSuggestEt.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -168,22 +172,42 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
                     @Override
                     public void afterTextChanged(Editable s) {
                         if("".equals(s.toString())){
-                            mContext.getmCommitParamMap().put(entity1.getKey(), "pend");
+                            mContext.getmCommitParamMap().put(entity1.getKey(), ApprovalDetailActivity2.PEND_ITEM_TAG);
                         }else{
                             mContext.getmCommitParamMap().put(entity1.getKey(), s.toString());
                         }
                     }
                 });
+
+                //如果这一项是“处理意见”，目前这个类型只有这一种
+                if("wfParam/content".equals(entity1.getKey())){
+                    //处理意见这一项是必填的
+                    String content="" + mContext.getmCommitParamMap().get("wfParam/content");
+                    if(ApprovalDetailActivity2.PEND_ITEM_TAG.equals(content)||"null".equals(content)){
+                        holder.mSuggestEt.setText("");
+                    }else{
+                        holder.mSuggestEt.setText(content);
+                    }
+                }
+
                 break;
             case ITEM_TABLE_VIEW_LIST:
                 ApprovalWidgetEntity entity2= (ApprovalWidgetEntity) object;
+                holder.mTableViewList.setupTableView(entity2);
+
+                if (entity2.isRequired()){
+                    mContext.getmCommitParamMap().put(entity2.getKey(), entity2.getValue());
+                }
+
                 break;
             case ITEM_HTML:
-                ApprovalWidgetEntity entity3= (ApprovalWidgetEntity) object;
+                final ApprovalWidgetEntity entity3= (ApprovalWidgetEntity) object;
                 holder.mHtmlPanelRly.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext, "Html", Toast.LENGTH_SHORT).show();
+                        Intent intent= new Intent(mContext, HtmlInfoActivity.class);
+                        intent.putExtra("htmlInfo", entity3);
+                        mContext.startActivity(intent);
                     }
                 });
                 holder.mHtmlNameTv.setText(entity3.getLabel());
@@ -195,6 +219,10 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
                 break;
             case ITEM_LIST_AUDIT:
                 final ApprovalWidgetEntity entity4= (ApprovalWidgetEntity) object;
+
+                holder.mButtonNameTv.setTextColor(Color.rgb(68,68,68));
+                holder.mButtonButtonTv.setBackgroundColor(Color.rgb(73,119,231));
+
                 holder.mButtonNameTv.setText(entity4.getLabel());
 
                 //查找提交参数中是否已存有数据
@@ -256,6 +284,33 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
                     }
                 });
 
+                //判断此项是否是switch的关联项
+                if(mContext.getConnectKey().equals(entity4.getKey())){
+                    if(mContext.getIsConnect().equals("0")){//switch当前状态为off,把此项调为不可选状态
+                        holder.mButtonNameTv.setTextColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setBackgroundColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setClickable(false);
+                    }
+                }
+
+                //判断此项是否是互斥开关的第一个关联项
+                if(mContext.getFristMutualKey().equals(entity4.getKey())){
+                    if("1".equals(mContext.getMutualStatus())){
+                        holder.mButtonNameTv.setTextColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setBackgroundColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setClickable(false);
+                    }
+                }
+
+                //判断此项是否是互斥开关的第二个关联项
+                if(mContext.getSecondMutualKey().equals(entity4.getKey())){
+                    if("0".equals(mContext.getMutualStatus())){
+                        holder.mButtonNameTv.setTextColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setBackgroundColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setClickable(false);
+                    }
+                }
+
                 break;
             case ITEM_LIST_ELSE:
                 ApprovalWidgetEntity entity5= (ApprovalWidgetEntity) object;
@@ -263,7 +318,9 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
                 ArrayList<ListDataBean> listDatas= entity5.getListData();
                 String value= entity5.getValue();
                 String label = "无";
-                if("null".equals(value)){
+                if(value== null
+                        ||"".equals(value)
+                        ||"null".equals(value)){
                     holder.mTextValueTv.setText("无");
                 }else{
                     for (ListDataBean bean : listDatas){
@@ -279,13 +336,74 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
                 break;
             case ITEM_ALLLIST:
                 ApprovalWidgetEntity entity6= (ApprovalWidgetEntity) object;
+
+                holder.mButtonNameTv.setTextColor(Color.rgb(68,68,68));
+                holder.mButtonButtonTv.setBackgroundColor(Color.rgb(73,119,231));
+
                 holder.mButtonNameTv.setText(entity6.getLabel());
+
+                //默认value值
+                String allListValue=entity6.getValue();
+                //默认value值对应的名字
+                String defaultName=entity6.getPrompt();
+
+                //从Activity中拿到经办人姓名字符串，如果是有效字符串，从控件中显示出来
+                String mJingBanRenName=mContext.getJingBanRenStr();
+                if("".equals(mJingBanRenName)){
+                    if( allListValue!= null
+                            &&!("".equals(allListValue))
+                            &&!("null".equals(allListValue))
+                            &&defaultName!= null
+                            &&!("".equals(defaultName))
+                            &&!("null".equals(defaultName))){
+                        mContext.setJingBanRenStr(defaultName);
+                        mContext.setJingBanRenId(allListValue);
+                        mContext.getmCommitParamMap().put(entity6.getKey(), allListValue);
+                        holder.mButtonButtonTv.setText(defaultName);
+                    }else{
+                        holder.mButtonButtonTv.setText("请点击选择");
+                    }
+                }else{
+                    holder.mButtonButtonTv.setText(mJingBanRenName);
+                    mContext.getmCommitParamMap().put(entity6.getKey(), mContext.getJingBanRenId());
+                }
+
                 holder.mButtonButtonTv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext, "AllList", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, AllListActivity.class);
+                        mContext.startActivityForResult(intent, 110);
                     }
                 });
+
+                //判断此项是否是switch的关联项
+                if(mContext.getConnectKey().equals(entity6.getKey())){
+                    if(mContext.getIsConnect().equals("0")){//switch当前状态为off,把此项调为不可选状态
+                        holder.mButtonNameTv.setTextColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setBackgroundColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setClickable(false);
+                    }
+                }
+
+                //判断此项是否是互斥开关的第一个关联项
+                if(mContext.getFristMutualKey().equals(entity6.getKey())){
+                    if("1".equals(mContext.getMutualStatus())){
+                        holder.mButtonNameTv.setTextColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setBackgroundColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setClickable(false);
+                    }
+                }
+
+                //判断此项是否是互斥开关的第二个关联项
+                if(mContext.getSecondMutualKey().equals(entity6.getKey())){
+                    if("0".equals(mContext.getMutualStatus())){
+                        holder.mButtonNameTv.setTextColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setBackgroundColor(Color.rgb(177, 177, 177));
+                        holder.mButtonButtonTv.setClickable(false);
+                    }
+                }
+
                 break;
             case ITEM_SWITCH:
                 ApprovalWidgetEntity entity7= (ApprovalWidgetEntity) object;
@@ -367,11 +485,13 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
                 });
                 break;
             case ITEM_TABLE_FILES:
-                ApprovalWidgetEntity entity9= (ApprovalWidgetEntity) object;
+                final ApprovalWidgetEntity entity9= (ApprovalWidgetEntity) object;
                 holder.mFilesPanelRly.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext, "Files", Toast.LENGTH_SHORT).show();
+                        Intent intent= new Intent(mContext, TableFilesActivity.class);
+                        intent.putExtra("fileinfo", entity9);
+                        mContext.startActivity(intent);
                     }
                 });
                 holder.mFilesNameTv.setText(entity9.getLabel());
@@ -542,6 +662,8 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
         private TextView mHistoryContentTv;
         private TextView mHistoryTimeTv;
 
+        private TableViewListView mTableViewList;
+
         public ApprovalDetailViewHolder(View itemView) {
             super(itemView);
             int viewTag= (int) itemView.getTag();
@@ -554,6 +676,7 @@ public class MyApprovalDetailAdapter2 extends RecyclerView.Adapter<MyApprovalDet
                     mSuggestEt= (EditText) itemView.findViewById(R.id.item_audit_et_suggest);
                     break;
                 case ITEM_TABLE_VIEW_LIST:
+                    mTableViewList= (TableViewListView) itemView.findViewById(R.id.tableview_list);
                     break;
                 case ITEM_HTML:
                     mHtmlPanelRly= (RelativeLayout) itemView.findViewById(R.id.item_rly_html_panel);

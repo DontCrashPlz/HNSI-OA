@@ -71,7 +71,7 @@ public class MessageFragment extends LazyLoadFragment implements IMessageView {
             return;
 
         mAdapter= new MyNewsItemAdapter(getContext());
-        mDecoration= new MyNewsItemDecoration(DensityUtil.dp2px(getContext(),14));
+        mDecoration= new MyNewsItemDecoration();
 
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(mDecoration);

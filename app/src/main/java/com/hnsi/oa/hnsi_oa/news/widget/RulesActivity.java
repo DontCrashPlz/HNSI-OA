@@ -37,7 +37,7 @@ public class RulesActivity extends BaseActivity {
         }
 
         mAdapter= new MyRuleListAdapter(R.layout.item_rule);
-        mFragment= new BaseRecyclerFragment(mAdapter, new MyNewsItemDecoration(16));
+        mFragment= new BaseRecyclerFragment(mAdapter, new MyNewsItemDecoration());
         mFragment.setPresenter(new RuleListPresenter(mFragment));
 
         FragmentManager manager= getSupportFragmentManager();

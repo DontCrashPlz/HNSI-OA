@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.hnsi.oa.hnsi_oa.app.MyApplication;
+import com.hnsi.oa.hnsi_oa.widgets.CustomTabLayout.Tool;
+
 /**
  * Created by Zheng on 2017/10/27.
  */
@@ -18,11 +21,11 @@ public class MyNewsItemDecoration extends RecyclerView.ItemDecoration {
 
     private int mLinePadding;
 
-    public MyNewsItemDecoration(int linePadding) {
+    public MyNewsItemDecoration() {
         mPaint= new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setColor(Color.rgb(173,173,173));
-        mLinePadding= linePadding;
+        mLinePadding= Tool.dp2px(MyApplication.getInstance().getApplicationContext(), 14);
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.approval.widget.AllListActivity;
 import com.hnsi.oa.hnsi_oa.beans.RealDepartmentEntity;
 import com.hnsi.oa.hnsi_oa.main.widget.DepartmentActivity;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 public class MyDepartmentsAdapter extends RecyclerView.Adapter<MyDepartmentsAdapter.DepartmentHolder> {
 
+    public static final String ALL_LIST_TAG= "ALL_LIST_TAG";
     public static final String DEPARTMENT_ID= "DEPARTMENT_ID";
     public static final String DEPARTMENT_NAME= "DEPARTMENT_NAME";
 
@@ -62,6 +64,12 @@ public class MyDepartmentsAdapter extends RecyclerView.Adapter<MyDepartmentsAdap
                     Toast.makeText(mContext, "该部门暂无人员", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                if (mContext instanceof AllListActivity){
+                    ((AllListActivity)mContext).showDepartmentFragment(orgId);
+                    return;
+                }
+
                 Log.e("info", orgName+" "+ num+ " "+ orgId);
                 Intent intent= new Intent(mContext, DepartmentActivity.class);
                 intent.putExtra(DEPARTMENT_ID, orgId);

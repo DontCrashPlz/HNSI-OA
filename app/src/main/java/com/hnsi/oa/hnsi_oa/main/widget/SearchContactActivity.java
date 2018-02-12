@@ -105,7 +105,7 @@ public class SearchContactActivity extends BaseActivity {
 
                     MyContactsAdapter adapter= new MyContactsAdapter(SearchContactActivity.this, mSearchList);
                     mRecyclerView.setAdapter(adapter);
-                    mRecyclerView.addItemDecoration(new MyNewsItemDecoration(0));
+                    mRecyclerView.addItemDecoration(new MyNewsItemDecoration());
                 }else {
                     mRecyclerView.setVisibility(View.GONE);
                     mEmptyTv.setVisibility(View.VISIBLE);

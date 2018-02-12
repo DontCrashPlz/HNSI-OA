@@ -40,13 +40,11 @@ public class DepartmentActivity extends BaseActivity {
 
         orgId= getIntent().getIntExtra(MyDepartmentsAdapter.DEPARTMENT_ID, 0);
         if (orgId== 0){
-            Log.e("1","1");
             Toast.makeText(this, "获取数据出错，请重试！", Toast.LENGTH_LONG).show();
             finish();
         }
         orgName= getIntent().getStringExtra(MyDepartmentsAdapter.DEPARTMENT_NAME);
         if (orgName== null || "".equals(orgName)){
-            Log.e("2","2");
             Toast.makeText(this, "获取数据出错，请重试！", Toast.LENGTH_LONG).show();
             finish();
         }
@@ -71,7 +69,7 @@ public class DepartmentActivity extends BaseActivity {
 
         MyContactsAdapter adapter= new MyContactsAdapter(this, personEntities);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.addItemDecoration(new MyNewsItemDecoration(0));
+        mRecyclerView.addItemDecoration(new MyNewsItemDecoration());
 
     }
 

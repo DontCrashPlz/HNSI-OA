@@ -66,7 +66,7 @@ public class ApprovalActivity extends BaseActivity {
 
         pAdapter= new MyPenddingFlowAdapter();
         fAdapter= new MyFinishedFlowAdapter();
-        mItemDecoration= new MyNewsItemDecoration(14);
+        mItemDecoration= new MyNewsItemDecoration();
 
         fragment1= new UnFinishedFragment(pAdapter, mItemDecoration);
         fragment1.setPresenter(new UnFinishPresenter(fragment1));

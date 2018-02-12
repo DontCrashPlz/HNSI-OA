@@ -201,7 +201,7 @@ public class ApprovalDetailActivity extends BaseActivity {
                             RecyclerView recyclerView= new RecyclerView(ApprovalDetailActivity.this);
                             recyclerView.setLayoutManager(new LinearLayoutManager(ApprovalDetailActivity.this));
                             recyclerView.setLayoutParams(params2);
-                            recyclerView.addItemDecoration(new MyNewsItemDecoration(15));
+                            recyclerView.addItemDecoration(new MyNewsItemDecoration());
                             recyclerView.setAdapter(new MyApprovalDetailAdapter(ApprovalDetailActivity.this, entity.getWidgets()));
                             mFormAreaLly.addView(recyclerView);
                         }
@@ -271,7 +271,7 @@ public class ApprovalDetailActivity extends BaseActivity {
                             RecyclerView recyclerView= new RecyclerView(ApprovalDetailActivity.this);
                             recyclerView.setLayoutManager(new LinearLayoutManager(ApprovalDetailActivity.this));
                             recyclerView.setLayoutParams(params2);
-                            recyclerView.addItemDecoration(new MyNewsItemDecoration(15));
+                            recyclerView.addItemDecoration(new MyNewsItemDecoration());
                             recyclerView.setAdapter(new MyApprovalDetailAdapter(ApprovalDetailActivity.this, entity.getWidgets()));
                             mFormAreaLly.addView(recyclerView);
                         }
