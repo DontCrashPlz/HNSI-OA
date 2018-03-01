@@ -36,8 +36,6 @@ public class LoginEntity {
         this.userInfo = userInfo;
     }
 
-
-
     @Override
     public String toString() {
         return "LoginEntity{" +

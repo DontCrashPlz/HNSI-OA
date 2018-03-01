@@ -1,5 +1,6 @@
 package com.hnsi.oa.hnsi_oa.login.widget;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +9,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -45,6 +45,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
 
     private boolean isRemember;
     private boolean isAutoLogin;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,12 +91,20 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
 
     @Override
     public void showProgressDialog() {
-
+        if (progressDialog== null){
+            progressDialog= new ProgressDialog(this);
+        }
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("正在登录...");
+        progressDialog.show();
     }
 
     @Override
     public void dismissProgressDialog() {
-
+        if (progressDialog== null) return;
+        if (progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
     }
 
     @Override

@@ -33,6 +33,7 @@ import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataAndNumListener;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
 import com.hnsi.oa.hnsi_oa.utils.SharedPrefUtils;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -167,6 +168,7 @@ public class MyApplication extends Application implements User {
                     MyApplication.getInstance().setUserInfo(response.body().getUserInfo());
                     listener.onSuccessed();
                 }
+
             }
 
             @Override
