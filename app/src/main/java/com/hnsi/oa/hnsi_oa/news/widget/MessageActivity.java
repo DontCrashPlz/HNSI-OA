@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.news.presenter.MessageListPresenter;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.widgets.MyMessageListAdapter;
 import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemDecoration;
 import com.hnsi.oa.hnsi_oa.widgets.RecyclerFragment.BaseRecyclerFragment;

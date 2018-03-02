@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalWidgetEntity;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 
 /**
  * Created by Zheng on 2018/2/10.

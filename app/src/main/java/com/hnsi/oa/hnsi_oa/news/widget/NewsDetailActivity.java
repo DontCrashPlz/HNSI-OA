@@ -14,12 +14,10 @@ import android.widget.TextView;
 
 import com.hnsi.oa.hnsi_oa.BuildConfig;
 import com.hnsi.oa.hnsi_oa.R;
-import com.hnsi.oa.hnsi_oa.app.MyApplication;
 import com.hnsi.oa.hnsi_oa.beans.NewsDetailEntity;
 import com.hnsi.oa.hnsi_oa.news.presenter.NewsDetailPresenter;
 import com.hnsi.oa.hnsi_oa.news.view.INewsView;
-import com.hnsi.oa.hnsi_oa.utils.DensityUtil;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 
 /**
  * Created by Zheng on 2017/11/2.

@@ -1,26 +1,22 @@
 package com.hnsi.oa.hnsi_oa.main.widget;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.beans.PersonEntity;
 import com.hnsi.oa.hnsi_oa.database.ConstactsInfoTableHelper;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.widgets.MyContactsAdapter;
 import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemDecoration;
 

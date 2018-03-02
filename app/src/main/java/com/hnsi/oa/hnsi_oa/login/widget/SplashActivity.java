@@ -8,11 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.hnsi.oa.hnsi_oa.R;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.login.presenter.SplashPresenter;
 import com.hnsi.oa.hnsi_oa.login.view.ISplashView;
 

@@ -10,7 +10,7 @@ import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.app.MyApplication;
 import com.hnsi.oa.hnsi_oa.beans.MessageDetailEntity;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.widgets.MyMessageListAdapter;
 
 /**

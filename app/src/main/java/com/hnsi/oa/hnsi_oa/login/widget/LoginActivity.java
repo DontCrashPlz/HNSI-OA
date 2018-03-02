@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 import com.hnsi.oa.hnsi_oa.BuildConfig;
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.utils.SharedPrefUtils;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.login.presenter.LoginPresenter;
 import com.hnsi.oa.hnsi_oa.login.view.ILoginView;
 import com.hnsi.oa.hnsi_oa.main.widget.HomeActivity;

@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.news.presenter.RuleListPresenter;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemDecoration;
 import com.hnsi.oa.hnsi_oa.widgets.MyRuleListAdapter;
 import com.hnsi.oa.hnsi_oa.widgets.RecyclerFragment.BaseRecyclerFragment;

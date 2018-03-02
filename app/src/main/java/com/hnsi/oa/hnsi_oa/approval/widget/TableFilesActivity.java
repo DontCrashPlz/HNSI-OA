@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalWidgetEntity;
 import com.hnsi.oa.hnsi_oa.beans.TableFileEntity;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemDecoration;
 import com.hnsi.oa.hnsi_oa.widgets.MyTableFilesAdapter;
 

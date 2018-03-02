@@ -1,4 +1,4 @@
-package com.hnsi.oa.hnsi_oa.widgets;
+package com.hnsi.oa.hnsi_oa.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

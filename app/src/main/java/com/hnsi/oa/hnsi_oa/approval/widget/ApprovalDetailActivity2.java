@@ -20,7 +20,7 @@ import com.hnsi.oa.hnsi_oa.beans.ApprovalHistoryResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalResponseEntity;
 import com.hnsi.oa.hnsi_oa.beans.ApprovalWidgetEntity;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.widgets.MyApprovalDetailAdapter2;
 import com.hnsi.oa.hnsi_oa.widgets.MyNewsItemDecoration;
 import com.hnsi.oa.hnsi_oa.widgets.MyPenddingFlowAdapter;

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.app.MyApplication;
 import com.hnsi.oa.hnsi_oa.utils.SharedPrefUtils;
-import com.hnsi.oa.hnsi_oa.widgets.BaseActivity;
+import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.login.view.ISettingView;
 
 /**
