@@ -26,12 +26,17 @@ public class NewsDetailPresenter {
         mModel= new INewsModelImpl();
     }
 
+    public void dettachView(){
+        mView= null;
+    }
+
     public void loadData(final int id){
         mView.showProgressBar();
         mModel.requestData(id, new OnRequestDataListener<NewsDetailEntity>() {
 
             @Override
             public void onSuccessed(NewsDetailEntity newsDetailEntity) {
+                if (mView== null) return;
                 Log.e("newsDetail", newsDetailEntity.toString());
                 mView.loadData(newsDetailEntity);
                 mView.dismissProgressBar();
@@ -40,6 +45,7 @@ public class NewsDetailPresenter {
             @SuppressLint("WrongConstant")
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dismissProgressBar();
                 Toast.makeText((Context) mView,throwable,Toast.LENGTH_SHORT).show();
             }

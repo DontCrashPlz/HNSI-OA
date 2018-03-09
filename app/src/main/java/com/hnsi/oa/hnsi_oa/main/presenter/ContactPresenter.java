@@ -41,10 +41,16 @@ public class ContactPresenter {
         mDepartmentHelper= new DepartmentInfoTableHelper(mContext);
     }
 
+    public void dettachView(){
+        mView= null;
+    }
+
     public void loadData(){
         mModel.requestContacts(new OnRequestDataListener<ContactEntity>() {
             @Override
             public void onSuccessed(ContactEntity contactEntity) {
+
+                if (mView== null) return;
 
                 //清空数据库信息
                 mConstactsHelper.deleteAllContacts();
@@ -107,6 +113,7 @@ public class ContactPresenter {
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 Toast.makeText( mContext, throwable, Toast.LENGTH_SHORT).show();
             }
         });

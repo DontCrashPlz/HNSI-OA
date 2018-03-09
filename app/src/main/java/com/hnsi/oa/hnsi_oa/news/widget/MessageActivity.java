@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.hnsi.oa.hnsi_oa.R;
+import com.hnsi.oa.hnsi_oa.main.presenter.MessagePresenter;
 import com.hnsi.oa.hnsi_oa.news.presenter.MessageListPresenter;
 import com.hnsi.oa.hnsi_oa.app.BaseActivity;
 import com.hnsi.oa.hnsi_oa.widgets.MyMessageListAdapter;
@@ -22,6 +23,8 @@ public class MessageActivity extends BaseActivity {
 
     private BaseRecyclerFragment mFragment;
     private MyMessageListAdapter mAdapter;
+
+    private MessageListPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +41,8 @@ public class MessageActivity extends BaseActivity {
 
         mAdapter= new MyMessageListAdapter(R.layout.item_message);
         mFragment= new BaseRecyclerFragment(mAdapter, new MyNewsItemDecoration());
-        mFragment.setPresenter(new MessageListPresenter(mFragment));
+        mPresenter= new MessageListPresenter(mFragment);
+        mFragment.setPresenter(mPresenter);
 
         FragmentManager manager= getSupportFragmentManager();
         FragmentTransaction transaction= manager.beginTransaction();
@@ -53,4 +57,13 @@ public class MessageActivity extends BaseActivity {
             finish();
         return true;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter!= null){
+            mPresenter.dettachView();
+        }
+    }
+
 }

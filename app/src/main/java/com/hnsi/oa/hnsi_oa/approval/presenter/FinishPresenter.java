@@ -25,11 +25,18 @@ public class FinishPresenter implements BasePresenter {
         mView= view;
         mModel= new IApprovalModelImpl();
     }
+
+    public void detachView(){
+        mView= null;
+    }
+
     @Override
     public void refreshData() {
         mModel.requestFinishedList(1, new OnRequestDataListener<FinishEntity>() {
             @Override
             public void onSuccessed(FinishEntity finishEntity) {
+
+                if (mView== null) return;
 
                 ArrayList<FlowEntity> flowList= finishEntity.getList();
                 Map<String, String> urlMap= finishEntity.getUrlMap();
@@ -43,6 +50,7 @@ public class FinishPresenter implements BasePresenter {
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });
@@ -53,6 +61,8 @@ public class FinishPresenter implements BasePresenter {
         mModel.requestFinishedList(page, new OnRequestDataListener<FinishEntity>() {
             @Override
             public void onSuccessed(FinishEntity finishEntity) {
+
+                if (mView== null) return;
 
                 ArrayList<FlowEntity> flowList= finishEntity.getList();
                 Map<String, String> urlMap= finishEntity.getUrlMap();
@@ -65,6 +75,7 @@ public class FinishPresenter implements BasePresenter {
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });

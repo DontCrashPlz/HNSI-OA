@@ -26,11 +26,17 @@ public class UnFinishFlowPresenter implements BasePresenter {
         mModel= new IApprovalModelImpl();
         mProcessDefnames= processDefnames;
     }
+
+    public void detachView(){
+        mView= null;
+    }
+
     @Override
     public void refreshData() {
         mModel.requestUnFinishedFlowList(1, mProcessDefnames, new OnRequestDataListener<UnFinishEntity>() {
             @Override
             public void onSuccessed(UnFinishEntity unFinishEntity) {
+                if (mView== null) return;
                 ArrayList<FlowEntity> flowList= unFinishEntity.getTaskList();
                 Map<String, String> urlMap= unFinishEntity.getUrlMap();
                 for (FlowEntity entity : flowList){
@@ -42,6 +48,7 @@ public class UnFinishFlowPresenter implements BasePresenter {
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });
@@ -52,11 +59,13 @@ public class UnFinishFlowPresenter implements BasePresenter {
         mModel.requestUnFinishedFlowList(page, mProcessDefnames, new OnRequestDataListener<UnFinishEntity>() {
             @Override
             public void onSuccessed(UnFinishEntity unFinishEntity) {
+                if (mView== null) return;
                 mView.loadMoreData(unFinishEntity.getTaskList());
             }
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });

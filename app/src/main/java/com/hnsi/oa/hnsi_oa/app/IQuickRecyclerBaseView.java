@@ -1,7 +1,5 @@
 package com.hnsi.oa.hnsi_oa.app;
 
-import com.hnsi.oa.hnsi_oa.app.IBaseView;
-
 import java.util.ArrayList;
 
 /**

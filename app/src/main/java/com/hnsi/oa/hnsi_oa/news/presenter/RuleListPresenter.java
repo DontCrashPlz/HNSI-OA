@@ -19,16 +19,22 @@ public class RuleListPresenter implements BasePresenter {
         mView= view;
     }
 
+    public void dettachView(){
+        mView= null;
+    }
+
     @Override
     public void refreshData() {
         MyApplication.getInstance().getRuleList(1, new OnRequestDataListener<RuleListResponseEntity>() {
             @Override
             public void onSuccessed(RuleListResponseEntity ruleListResponseEntity) {
+                if (mView== null) return;
                 mView.refreshData(ruleListResponseEntity.getList(), ruleListResponseEntity.getTotalPage());
             }
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });
@@ -39,11 +45,13 @@ public class RuleListPresenter implements BasePresenter {
         MyApplication.getInstance().getRuleList(page, new OnRequestDataListener<RuleListResponseEntity>() {
             @Override
             public void onSuccessed(RuleListResponseEntity ruleListResponseEntity) {
+                if (mView== null) return;
                 mView.loadMoreData(ruleListResponseEntity.getList());
             }
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });

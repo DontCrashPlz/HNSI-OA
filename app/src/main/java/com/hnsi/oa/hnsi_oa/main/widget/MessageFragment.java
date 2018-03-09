@@ -106,4 +106,12 @@ public class MessageFragment extends LazyLoadFragment implements IMessageView {
     public Context getFragmentContext() {
         return this.getContext();
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mPresenter!= null){
+            mPresenter.dettachView();
+        }
+    }
 }

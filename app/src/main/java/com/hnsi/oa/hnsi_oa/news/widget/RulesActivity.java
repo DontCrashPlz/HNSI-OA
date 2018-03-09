@@ -23,6 +23,8 @@ public class RulesActivity extends BaseActivity {
     private BaseRecyclerFragment mFragment;
     private MyRuleListAdapter mAdapter;
 
+    private RuleListPresenter mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,8 @@ public class RulesActivity extends BaseActivity {
 
         mAdapter= new MyRuleListAdapter(R.layout.item_rule);
         mFragment= new BaseRecyclerFragment(mAdapter, new MyNewsItemDecoration());
-        mFragment.setPresenter(new RuleListPresenter(mFragment));
+        mPresenter= new RuleListPresenter(mFragment);
+        mFragment.setPresenter(mPresenter);
 
         FragmentManager manager= getSupportFragmentManager();
         FragmentTransaction transaction= manager.beginTransaction();
@@ -52,5 +55,13 @@ public class RulesActivity extends BaseActivity {
         if (item.getItemId()== android.R.id.home)
             finish();
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter!= null){
+            mPresenter.dettachView();
+        }
     }
 }

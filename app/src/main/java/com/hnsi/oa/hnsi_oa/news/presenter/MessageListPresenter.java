@@ -18,16 +18,22 @@ public class MessageListPresenter implements BasePresenter {
         mView= view;
     }
 
+    public void dettachView(){
+        mView= null;
+    }
+
     @Override
     public void refreshData() {
         MyApplication.getInstance().getMessageList(1, new OnRequestDataListener<MessageListResponseEntity>() {
             @Override
             public void onSuccessed(MessageListResponseEntity messageListResponseEntity) {
+                if (mView== null) return;
                 mView.refreshData(messageListResponseEntity.getList(), messageListResponseEntity.getTotalPage());
             }
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });
@@ -38,11 +44,13 @@ public class MessageListPresenter implements BasePresenter {
         MyApplication.getInstance().getMessageList(page, new OnRequestDataListener<MessageListResponseEntity>() {
             @Override
             public void onSuccessed(MessageListResponseEntity messageListResponseEntity) {
+                if (mView== null) return;
                 mView.loadMoreData(messageListResponseEntity.getList());
             }
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });

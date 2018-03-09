@@ -25,11 +25,17 @@ public class UnFinishPresenter implements BasePresenter {
         mView= view;
         mModel= new IApprovalModelImpl();
     }
+
+    public void detachView(){
+        mView= null;
+    }
+
     @Override
     public void refreshData() {
         mModel.requestPaddingList(1, new OnRequestDataListener<UnFinishEntity>() {
             @Override
             public void onSuccessed(UnFinishEntity unFinishEntity) {
+                if (mView== null) return;
                 ArrayList<FlowEntity> flowList= unFinishEntity.getTaskList();
                 Map<String, String> urlMap= unFinishEntity.getUrlMap();
                 for (FlowEntity entity : flowList){
@@ -41,6 +47,7 @@ public class UnFinishPresenter implements BasePresenter {
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });
@@ -51,6 +58,7 @@ public class UnFinishPresenter implements BasePresenter {
         mModel.requestPaddingList(page, new OnRequestDataListener<UnFinishEntity>() {
             @Override
             public void onSuccessed(UnFinishEntity unFinishEntity) {
+                if (mView== null) return;
                 ArrayList<FlowEntity> flowList= unFinishEntity.getTaskList();
                 Map<String, String> urlMap= unFinishEntity.getUrlMap();
                 for (FlowEntity entity : flowList){
@@ -61,6 +69,7 @@ public class UnFinishPresenter implements BasePresenter {
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });

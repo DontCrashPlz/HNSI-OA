@@ -141,4 +141,12 @@ public class NewsDetailActivity extends BaseActivity implements INewsView {
         mContentWv.loadDataWithBaseURL("", mHtmlStr, "text/html", "UTF-8",null);
 //        mContentWv.loadData(mHtmlStr, "text/html", "UTF-8");
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter!= null){
+            mPresenter.dettachView();
+        }
+    }
 }

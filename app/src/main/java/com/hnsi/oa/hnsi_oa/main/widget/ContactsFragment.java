@@ -108,4 +108,13 @@ public class ContactsFragment extends LazyLoadFragment implements IContactView, 
     public void onRefresh() {
 
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mPresenter!= null){
+            mPresenter.dettachView();
+        }
+    }
+
 }

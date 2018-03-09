@@ -19,7 +19,6 @@ import com.hnsi.oa.hnsi_oa.beans.FlowNameResponseEntity;
 import com.hnsi.oa.hnsi_oa.database.FlowListTableHelper;
 import com.hnsi.oa.hnsi_oa.interfaces.OnRequestDataListener;
 import com.hnsi.oa.hnsi_oa.app.BaseActivity;
-import com.hnsi.oa.hnsi_oa.main.view.IHomeView;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ import java.util.ArrayList;
  * Created by Zheng on 2017/10/23.
  */
 
-public class HomeActivity extends BaseActivity implements IHomeView,View.OnClickListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private ViewPager mContentVp;
     private RadioButton mMsgBtn;
@@ -49,6 +48,7 @@ public class HomeActivity extends BaseActivity implements IHomeView,View.OnClick
 
         onClick(mMsgBtn);
 
+        //here should to start a Service to request FlowName data.
         MyApplication.getInstance().getFlowNames(new OnRequestDataListener<FlowNameResponseEntity>() {
             @Override
             public void onSuccessed(FlowNameResponseEntity flowNameResponseEntity) {

@@ -197,4 +197,13 @@ public class NewsListFragment extends LazyLoadFragment implements
         mPageIndex= 1;
         mPresenter.initData();
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mPresenter!= null){
+            mPresenter.dettachView();
+        }
+    }
+
 }

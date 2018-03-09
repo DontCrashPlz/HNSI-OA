@@ -26,12 +26,17 @@ public class MessagePresenter {
         mModel= new IMessageModelImpl();
     }
 
+    public void dettachView(){
+        mView= null;
+    }
+
     public void loadData(){
         mView.showProgressBar();
         mModel.requestData(1, 0, 1, new OnRequestDataListener<List<NewsEntity>>() {
 
             @Override
             public void onSuccessed(List<NewsEntity> newsEntities) {
+                if (mView== null) return;
                 mView.setData(newsEntities);
                 mView.dataLoaded();
                 mView.dismissProgressBar();
@@ -40,6 +45,7 @@ public class MessagePresenter {
             @SuppressLint("WrongConstant")
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dismissProgressBar();
                 Toast.makeText(mView.getFragmentContext(),throwable,Toast.LENGTH_SHORT).show();
             }
@@ -48,6 +54,7 @@ public class MessagePresenter {
 
             @Override
             public void onSuccessed(List<NewsEntity> newsEntities) {
+                if (mView== null) return;
                 mView.setData(newsEntities);
                 mView.dataLoaded();
                 mView.dismissProgressBar();
@@ -56,6 +63,7 @@ public class MessagePresenter {
             @SuppressLint("WrongConstant")
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dismissProgressBar();
                 Toast.makeText(mView.getFragmentContext(),throwable,Toast.LENGTH_SHORT).show();
             }

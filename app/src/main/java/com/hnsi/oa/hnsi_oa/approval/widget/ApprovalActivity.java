@@ -52,6 +52,10 @@ public class ApprovalActivity extends BaseActivity {
     private MyFinishedFlowAdapter fAdapter;
     private MyNewsItemDecoration mItemDecoration;
 
+    private UnFinishPresenter mPresenter1;
+    private FinishPresenter mPresenter2;
+    private UnFinishFlowPresenter mPresenter3;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +71,12 @@ public class ApprovalActivity extends BaseActivity {
         mItemDecoration= new MyNewsItemDecoration();
 
         fragment1= new UnFinishedFragment(pAdapter, mItemDecoration);
-        fragment1.setPresenter(new UnFinishPresenter(fragment1));
+        mPresenter1= new UnFinishPresenter(fragment1);
+        fragment1.setPresenter(mPresenter1);
 
         fragment2= new BaseRecyclerFragment(true, fAdapter, mItemDecoration);
-        fragment2.setPresenter(new FinishPresenter(fragment2));
+        mPresenter2= new FinishPresenter(fragment2);
+        fragment2.setPresenter(mPresenter2);
 
         mViewPagerTitle= (ViewPagerTitle) findViewById(R.id.viewpagertitle);
         mViewPager= (ViewPager) findViewById(R.id.viewpager);
@@ -156,7 +162,8 @@ public class ApprovalActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     if (fragment1.isVisible){
-                        fragment1.setNewPresenter(new UnFinishFlowPresenter(fragment1, datas.get(position).getLabel()));
+                        mPresenter3= new UnFinishFlowPresenter(fragment1, datas.get(position).getLabel());
+                        fragment1.setNewPresenter(mPresenter3);
                         fragment1.onRefresh();
                         drawerLayout.closeDrawers();
                     }else{
@@ -169,4 +176,17 @@ public class ApprovalActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter1!= null){
+            mPresenter1.detachView();
+        }
+        if (mPresenter2!= null){
+            mPresenter2.detachView();
+        }
+        if (mPresenter3!= null){
+            mPresenter3.detachView();
+        }
+    }
 }

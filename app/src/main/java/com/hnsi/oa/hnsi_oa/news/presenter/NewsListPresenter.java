@@ -58,15 +58,21 @@ public class NewsListPresenter {
         }
     }
 
+    public void dettachView(){
+        mView= null;
+    }
+
     public void initData(){
         mModel.requestDataAndNum(1, classId, type, new OnRequestDataAndNumListener<List<NewsEntity>>() {
             @Override
             public void onSuccessed(List<NewsEntity> newsEntities , int pageNum) {
+                if (mView== null) return;
                 mView.refreshData(newsEntities, pageNum);
             }
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });
@@ -76,11 +82,13 @@ public class NewsListPresenter {
         mModel.requestData(pageIndex, classId, type, new OnRequestDataListener<List<NewsEntity>>() {
             @Override
             public void onSuccessed(List<NewsEntity> newsEntities) {
+                if (mView== null) return;
                 mView.loadMoreData(newsEntities);
             }
 
             @Override
             public void onFailed(String throwable) {
+                if (mView== null) return;
                 mView.dataLoadFailed(throwable);
             }
         });
