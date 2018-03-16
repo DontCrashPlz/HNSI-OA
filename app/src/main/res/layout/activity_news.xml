@@ -7,7 +7,7 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <com.hnsi.oa.hnsi_oa.widgets.CustomTabLayout.ViewPagerTitle
+    <library.widgets.CustomTabLayout.ViewPagerTitle
         android:id="@+id/viewpagertitle"
         android:layout_width="match_parent"
         android:layout_height="40dp"

@@ -9,7 +9,7 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <com.hnsi.oa.hnsi_oa.widgets.CircleImageView
+    <library.widgets.CircleImageView
         android:id="@+id/personinfo_civ_user_icon"
         android:layout_width="112dp"
         android:layout_height="112dp"

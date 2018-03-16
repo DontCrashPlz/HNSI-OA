@@ -11,14 +11,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".app.MyApplication"
+        android:name=".application.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".login.widget.SplashActivity"
+            android:name=".application.login.widget.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppLauncher">
             <intent-filter>
@@ -28,86 +28,107 @@
         </activity>
 
         <activity
-            android:name=".login.widget.LoginActivity">
+            android:name=".application.login.widget.LoginActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".login.widget.SettingActivity">
+            android:name=".application.login.widget.SettingActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".main.widget.HomeActivity">
+            android:name=".application.main.widget.HomeActivity"
+            android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".news.widget.NewsDetailActivity">
-
-        </activity>
-
-        <activity android:name=".news.widget.NewsActivity">
-
-        </activity>
-
-        <activity android:name=".news.widget.NoticeActivity">
+        <activity android:name=".application.news.widget.NewsDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".approval.widget.ApprovalActivity">
+        <activity android:name=".application.news.widget.NewsActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".main.widget.ChangePasswordActivity">
+        <activity android:name=".application.news.widget.NoticeActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".main.widget.DepartmentActivity">
+        <activity android:name=".application.approval.widget.ApprovalActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".main.widget.PersonDetailActivity">
+        <activity android:name=".application.main.widget.ChangePasswordActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".main.widget.SearchContactActivity">
+        <activity android:name=".application.main.widget.DepartmentActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".approval.widget.ApprovalDetailActivity">
+        <activity android:name=".application.main.widget.PersonDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".approval.widget.ApprovalDetailActivity2">
+        <activity android:name=".application.main.widget.SearchContactActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".approval.widget.TableFilesActivity">
+        <activity android:name=".application.approval.widget.ApprovalDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".approval.widget.HtmlInfoActivity">
+        <activity android:name=".application.approval.widget.ApprovalDetailActivity2"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".approval.widget.TableViewsActivity">
+        <activity android:name=".application.approval.widget.TableFilesActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".approval.widget.AllListActivity">
+        <activity android:name=".application.approval.widget.HtmlInfoActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".news.widget.MessageActivity">
+        <activity android:name=".application.approval.widget.TableViewsActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".news.widget.MessageDetailActivity">
+        <activity android:name=".application.approval.widget.AllListActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".news.widget.RulesActivity">
+        <activity android:name=".application.news.widget.MessageActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".news.widget.RulesDetailActivity">
+        <activity android:name=".application.news.widget.MessageDetailActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".application.news.widget.RulesActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".application.news.widget.RulesDetailActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
