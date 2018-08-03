@@ -29,7 +29,7 @@ public class MineFragment extends LazyLoadFragment implements View.OnClickListen
     private TextView mUserNameTv;
 
     private RelativeLayout mChangePasswordBtn;
-
+    private RelativeLayout mAboutBtn;
     private RelativeLayout mLogoutBtn;
 
     private boolean isLoadedOnce;
@@ -56,6 +56,9 @@ public class MineFragment extends LazyLoadFragment implements View.OnClickListen
 
         mChangePasswordBtn= (RelativeLayout) mView.findViewById(R.id.mine_rly_change_password);
         mChangePasswordBtn.setOnClickListener(this);
+
+        mAboutBtn= (RelativeLayout) mView.findViewById(R.id.mine_rly_about_us);
+        mAboutBtn.setOnClickListener(this);
 
         mLogoutBtn= (RelativeLayout) mView.findViewById(R.id.mine_rly_logout);
         mLogoutBtn.setOnClickListener(this);
@@ -98,6 +101,9 @@ public class MineFragment extends LazyLoadFragment implements View.OnClickListen
                 break;
             case R.id.mine_rly_change_password:
                 startActivity(new Intent(getContext(),ChangePasswordActivity.class));
+                break;
+            case R.id.mine_rly_about_us:
+                startActivity(new Intent(getContext(),AboutActivity.class));
                 break;
             case R.id.mine_rly_logout:
                 MyApplication.getInstance().userLogout(new OnLoginListener() {

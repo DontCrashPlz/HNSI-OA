@@ -103,6 +103,7 @@ public class MyNewsItemAdapter extends RecyclerView.Adapter<MyNewsItemAdapter.Ne
 
     public void addData(List datas){
         mData.addAll(datas);
+
         Collections.sort(mData, new Comparator<NewsEntity>() {
             @Override
             public int compare(NewsEntity lhs, NewsEntity rhs) {
@@ -118,13 +119,11 @@ public class MyNewsItemAdapter extends RecyclerView.Adapter<MyNewsItemAdapter.Ne
                 return (int) (date2.getTime()/100000-date1.getTime()/100000);
             }
         });
-        Log.e("addData",mData.toString());
         notifyDataSetChanged();
     }
 
     public void clearData(){
         mData.clear();
-        Log.e("clear",mData.toString());
         notifyDataSetChanged();
     }
 

@@ -1,8 +1,7 @@
 package com.hnsi.oa.hnsi_oa.application.main.presenter;
 
+
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.application.beans.ContactEntity;
 import com.hnsi.oa.hnsi_oa.application.beans.DepartmentEntity;
@@ -11,39 +10,28 @@ import com.hnsi.oa.hnsi_oa.application.database.ConstactsInfoTableHelper;
 import com.hnsi.oa.hnsi_oa.application.database.DepartmentInfoTableHelper;
 import com.hnsi.oa.hnsi_oa.application.interfaces.OnRequestDataListener;
 import com.hnsi.oa.hnsi_oa.application.main.model.IContactModelImpl;
-import com.hnsi.oa.hnsi_oa.application.main.view.IContactView;
 import com.hnsi.oa.hnsi_oa.application.main.widget.ContactsFragment;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import library.apps.BasePresenter;
+
 /**
  * Created by Zheng on 2017/12/29.
  */
 
-@Deprecated
-public class ContactPresenter {
+public class ContactPresenter2 extends BasePresenter<ContactsFragment> {
 
-    private IContactView mView;
     private IContactModelImpl mModel;
 
     private ConstactsInfoTableHelper mConstactsHelper;
     private DepartmentInfoTableHelper mDepartmentHelper;
 
-    private Context mContext;
-
-    public ContactPresenter(IContactView view){
-        mView= view;
+    public ContactPresenter2(Context context){
         mModel= new IContactModelImpl();
-
-        mContext=((ContactsFragment)mView).getContext();
-
-        mConstactsHelper= new ConstactsInfoTableHelper(mContext);
-        mDepartmentHelper= new DepartmentInfoTableHelper(mContext);
-    }
-
-    public void dettachView(){
-        mView= null;
+        mConstactsHelper= new ConstactsInfoTableHelper(context);
+        mDepartmentHelper= new DepartmentInfoTableHelper(context);
     }
 
     public void loadData(){
@@ -51,7 +39,7 @@ public class ContactPresenter {
             @Override
             public void onSuccessed(ContactEntity contactEntity) {
 
-                if (mView== null) return;
+                if (!isViewAttached()) return;
 
                 //清空数据库信息
                 mConstactsHelper.deleteAllContacts();
@@ -90,12 +78,7 @@ public class ContactPresenter {
                 ArrayList<RealDepartmentEntity> realDepartmentEntities= new ArrayList<>();
                 for (RealDepartmentEntity entity : parentDepartments){
                     realDepartmentEntities.add(entity);
-//                    for (RealDepartmentEntity entity1 : childDepartments){
-//                        if (entity1.getParentorgid() == entity.getOrgid()){
-//                            realDepartmentEntities.add(entity1);
-//                            childDepartments.remove(entity1);
-//                        }
-//                    }
+
                     for (Iterator<RealDepartmentEntity> it= childDepartments.iterator(); it.hasNext();){
                         RealDepartmentEntity entity1= it.next();
                         if (entity1.getParentorgid() == entity.getOrgid()){
@@ -108,14 +91,14 @@ public class ContactPresenter {
                 mDepartmentHelper.insertAll(realDepartmentEntities);
 
                 //通知通讯录界面加载数据
-                Log.e("contact" , "successed");
-                mView.initData();
+                getView().initData();
             }
 
             @Override
             public void onFailed(String throwable) {
-                if (mView== null) return;
-                Toast.makeText( mContext, throwable, Toast.LENGTH_SHORT).show();
+                if (isViewAttached()) {
+                    getView().showToast(throwable);
+                }
             }
         });
     }

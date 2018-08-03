@@ -1,8 +1,10 @@
 package library.apps;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import library.utils.LogUtil;
 
@@ -10,7 +12,7 @@ import library.utils.LogUtil;
  * Created by Zheng on 2017/10/16.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements IBaseView {
 
     private final String ACTIVITY_TAG= this.getClass().getSimpleName();
 
@@ -26,5 +28,15 @@ public class BaseActivity extends AppCompatActivity {
         ActivityManager.getInstance().removeActivity(this);
         LogUtil.e(ACTIVITY_TAG, ACTIVITY_TAG + " was Destroyed.");
         super.onDestroy();
+    }
+
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public Context getRealContext() {
+        return this;
     }
 }

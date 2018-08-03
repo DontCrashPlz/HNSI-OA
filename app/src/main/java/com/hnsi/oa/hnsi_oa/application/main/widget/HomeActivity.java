@@ -52,13 +52,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         MyApplication.getInstance().getFlowNames(new OnRequestDataListener<FlowNameResponseEntity>() {
             @Override
             public void onSuccessed(FlowNameResponseEntity flowNameResponseEntity) {
-                FlowListTableHelper helper= new FlowListTableHelper(HomeActivity.this);
+                FlowListTableHelper helper= new FlowListTableHelper(getRealContext());
                 helper.insertAll(flowNameResponseEntity.getProcess());
             }
 
             @Override
             public void onFailed(String throwable) {
-                Toast.makeText(HomeActivity.this, throwable, Toast.LENGTH_SHORT).show();
+                showToast(throwable);
             }
         });
     }

@@ -14,6 +14,7 @@ import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.application.beans.RealDepartmentEntity;
 import com.hnsi.oa.hnsi_oa.application.database.DepartmentInfoTableHelper;
 import com.hnsi.oa.hnsi_oa.application.main.presenter.ContactPresenter;
+import com.hnsi.oa.hnsi_oa.application.main.presenter.ContactPresenter2;
 import com.hnsi.oa.hnsi_oa.application.main.view.IContactView;
 import library.widgets.LazyLoadFragment;
 import com.hnsi.oa.hnsi_oa.application.adapters.MyDepartmentsAdapter;
@@ -29,7 +30,7 @@ public class ContactsFragment extends LazyLoadFragment implements IContactView, 
 
     private View mView;
 
-    private ContactPresenter mPresenter;
+    private ContactPresenter2 mPresenter;
 
     private boolean isLoadedOnce;
     private boolean isPrepared;
@@ -56,7 +57,8 @@ public class ContactsFragment extends LazyLoadFragment implements IContactView, 
 
         mProgressBar= (ProgressBar) mView.findViewById(R.id.progressBar);
 
-        mPresenter= new ContactPresenter(this);
+        mPresenter= new ContactPresenter2(getRealContext());
+        mPresenter.attachView(this);
 
         isPrepared= true;
 
@@ -106,14 +108,14 @@ public class ContactsFragment extends LazyLoadFragment implements IContactView, 
 
     @Override
     public void onRefresh() {
-
+        mPresenter.loadData();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         if (mPresenter!= null){
-            mPresenter.dettachView();
+            mPresenter.detachView();
         }
     }
 

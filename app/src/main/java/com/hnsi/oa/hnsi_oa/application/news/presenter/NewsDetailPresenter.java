@@ -1,6 +1,5 @@
 package com.hnsi.oa.hnsi_oa.application.news.presenter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -41,7 +40,6 @@ public class NewsDetailPresenter {
                 mView.dismissProgressBar();
             }
 
-            @SuppressLint("WrongConstant")
             @Override
             public void onFailed(String throwable) {
                 if (mView== null) return;

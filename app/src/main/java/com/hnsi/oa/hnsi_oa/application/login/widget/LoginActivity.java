@@ -18,17 +18,17 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hnsi.oa.hnsi_oa.BuildConfig;
 import com.hnsi.oa.hnsi_oa.R;
 import com.hnsi.oa.hnsi_oa.application.app.MyApplication;
 import com.hnsi.oa.hnsi_oa.application.beans.UpdateInfoEntity;
-import com.hnsi.oa.hnsi_oa.application.login.presenter.SplashPresenter;
+import com.hnsi.oa.hnsi_oa.application.login.presenter.LoginPresenter2;
+
 import library.utils.DownloadManager;
 import library.utils.SharedPrefUtils;
 import library.apps.BaseActivity;
-import com.hnsi.oa.hnsi_oa.application.login.presenter.LoginPresenter;
+import com.hnsi.oa.hnsi_oa.application.login.presenter.SplashPresenter2;
 import com.hnsi.oa.hnsi_oa.application.login.view.ILoginView;
 import com.hnsi.oa.hnsi_oa.application.main.widget.HomeActivity;
 
@@ -55,7 +55,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
     private CheckBox mRememberCb;
     private CheckBox mAutoLoginCb;
 
-    private LoginPresenter mPresenter;
+    private LoginPresenter2 mPresenter;
 
     private boolean isRemember;
     private boolean isAutoLogin;
@@ -76,14 +76,14 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
         if (BuildConfig.DEBUG)
             Log.e("UPDATE_CODE",""+intent.getIntExtra(SplashActivity.UPDATE_CODE,0));
         switch (mUpdateCode){
-            case SplashPresenter.NEED_UPDATE:
+            case SplashPresenter2.NEED_UPDATE:
                 if (MyApplication.getInstance().updateInfoEntity!= null){
                     showUpdateDialog(MyApplication.getInstance().updateInfoEntity);
                 }
                 break;
-            case SplashPresenter.UNNEED_UPDATE:
+            case SplashPresenter2.UNNEED_UPDATE:
                 break;
-            case SplashPresenter.UPDATE_EXCEPTION:
+            case SplashPresenter2.UPDATE_EXCEPTION:
                 break;
             default:
                 break;
@@ -94,7 +94,8 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
 
         findViews();
 
-        mPresenter= new LoginPresenter(this);
+        mPresenter= new LoginPresenter2();
+        mPresenter.attachView(this);
 
         if (isAutoLogin) mPresenter.loginApp();
 
@@ -207,6 +208,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
         // 设置style 控制默认dialog带来的边距问题
         final Dialog dialog = new Dialog(LoginActivity.this, R.style.simple_dialog);
         dialog.setContentView(view);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
         ((TextView)(view.findViewById(R.id.update_info_tv))).setText(info.getDescription());
@@ -236,6 +238,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
         window.setAttributes(params);
     }
 
+
     protected void downLoadApk(final UpdateInfoEntity info) {
         //进度条对话框
         final android.app.ProgressDialog progressDialog = new  android.app.ProgressDialog(this);
@@ -253,7 +256,7 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
                 } catch (Exception e) {
                     progressDialog.dismiss(); //结束掉进度条对话框
                     Looper.prepare();
-                    Toast.makeText(LoginActivity.this,"安装包下载失败",Toast.LENGTH_SHORT).show();
+                    showToast("安装包下载失败");
                     Looper.loop();
                     e.printStackTrace();
                 }
@@ -269,4 +272,11 @@ public class LoginActivity extends BaseActivity implements ILoginView,View.OnCli
         startActivity(intent);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter!= null){
+            mPresenter.detachView();
+        }
+    }
 }

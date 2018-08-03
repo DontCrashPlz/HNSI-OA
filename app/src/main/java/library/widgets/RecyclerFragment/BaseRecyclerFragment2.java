@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.hnsi.oa.hnsi_oa.R;
 import java.util.ArrayList;
 
 import library.apps.IQuickRecyclerBaseView;
+import library.utils.LogUtil;
 import library.widgets.LazyLoadFragment;
 
 /**
@@ -103,10 +103,10 @@ public class BaseRecyclerFragment2<T> extends LazyLoadFragment implements
     @Override
     public void lazyLoad() {
 
-        Log.e("test", "run");
-        Log.e("isLoadedOnce", ""+isLoadedOnce);
-        Log.e("isPrepared", ""+isPrepared);
-        Log.e("isVisible", ""+isVisible);
+        LogUtil.e("test", "run");
+        LogUtil.e("isLoadedOnce", ""+isLoadedOnce);
+        LogUtil.e("isPrepared", ""+isPrepared);
+        LogUtil.e("isVisible", ""+isVisible);
 
         if (isLoadedOnce || !isPrepared || !isVisible)
             return;
@@ -229,4 +229,5 @@ public class BaseRecyclerFragment2<T> extends LazyLoadFragment implements
     public void noMoreData() {
         mAdapter.loadMoreEnd();
     }
+
 }

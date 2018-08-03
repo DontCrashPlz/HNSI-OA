@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/backgroundGrey">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/ibtn_hnti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/hnti_icon"
+            android:layout_marginTop="40dp"/>
+        <TextView
+            android:id="@+id/about_tv_hnti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_app_title"
+            android:textColor="@color/gray"
+            android:textSize="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ibtn_hnti"
+            android:layout_marginTop="14dp"/>
+        <TextView
+            android:id="@+id/about_tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_version"
+            android:textColor="@color/gray"
+            android:textSize="14dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/about_tv_hnti"/>
+
+
+
+        <TextView
+            android:id="@+id/about_tv_remarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/about_remarks"
+            android:textColor="@color/gray"
+            android:textSize="12dp"
+            android:layout_marginBottom="16dp"/>
+        <TextView
+            android:id="@+id/about_tv_copyright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_copyright"
+            android:textColor="@color/gray"
+            android:textSize="13dp"
+            android:layout_marginBottom="4dp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/about_tv_remarks"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -84,8 +84,8 @@ public class NewsListFragment extends LazyLoadFragment implements
 
     private void findViews(View mView) {
         mRefreshLayout= (SwipeRefreshLayout) mView.findViewById(R.id.swiperefresh);
-        mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark),
-                getResources().getColor(R.color.colorPrimary));
+        mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark, null),
+                getResources().getColor(R.color.colorPrimary, null));
         mRefreshLayout.setOnRefreshListener(this);
 
         mRecyclerView= (RecyclerView) mView.findViewById(R.id.recyclerview);

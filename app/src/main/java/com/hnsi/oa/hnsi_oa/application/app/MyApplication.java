@@ -32,6 +32,9 @@ import com.hnsi.oa.hnsi_oa.application.http.NovateCookieManger;
 import com.hnsi.oa.hnsi_oa.application.interfaces.OnLoginListener;
 import com.hnsi.oa.hnsi_oa.application.interfaces.OnRequestDataAndNumListener;
 import com.hnsi.oa.hnsi_oa.application.interfaces.OnRequestDataListener;
+
+import library.apps.MyUncatchExceptionHandler;
+import library.utils.LogUtil;
 import library.utils.SharedPrefUtils;
 
 import java.util.List;
@@ -69,8 +72,8 @@ public class MyApplication extends Application implements User {
         super.onCreate();
         mSingleInstance= this;
 
-//        MyUncatchExceptionHandler myUncatchExceptionHandler= MyUncatchExceptionHandler.getInstance();
-//        myUncatchExceptionHandler.init(this);
+        MyUncatchExceptionHandler myUncatchExceptionHandler= MyUncatchExceptionHandler.getInstance();
+        myUncatchExceptionHandler.init(this);
 
         initHttpInstance();
     }
@@ -159,8 +162,12 @@ public class MyApplication extends Application implements User {
         loginCall.enqueue(new Callback<LoginEntity>() {
             @Override
             public void onResponse(Call<LoginEntity> call, Response<LoginEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("LoginEntity",response.toString());
+                LogUtil.e("LoginEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("LoginEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("LoginEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -186,8 +193,12 @@ public class MyApplication extends Application implements User {
         logoutCall.enqueue(new Callback<LogoutEntity>() {
             @Override
             public void onResponse(Call<LogoutEntity> call, Response<LogoutEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("LoginEntity",response.toString());
+                LogUtil.e("LogoutEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("LogoutEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("LogoutEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -211,8 +222,12 @@ public class MyApplication extends Application implements User {
         changePasswordCall.enqueue(new Callback<ChangePasswordEntity>() {
             @Override
             public void onResponse(Call<ChangePasswordEntity> call, Response<ChangePasswordEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("UnFinishEntity",response.toString());
+                LogUtil.e("ChangePasswordEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("ChangePasswordEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("ChangePasswordEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -236,8 +251,12 @@ public class MyApplication extends Application implements User {
         pendingListCall.enqueue(new Callback<UnFinishEntity>() {
             @Override
             public void onResponse(Call<UnFinishEntity> call, Response<UnFinishEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("UnFinishEntity",response.toString());
+                LogUtil.e("UnFinishEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("UnFinishEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("UnFinishEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -261,8 +280,12 @@ public class MyApplication extends Application implements User {
         pendingFlowListCall.enqueue(new Callback<UnFinishEntity>() {
             @Override
             public void onResponse(Call<UnFinishEntity> call, Response<UnFinishEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("UnFinishEntity",response.toString());
+                LogUtil.e("UnFinishEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("UnFinishEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("UnFinishEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -286,8 +309,12 @@ public class MyApplication extends Application implements User {
         finishedListCall.enqueue(new Callback<FinishEntity>() {
             @Override
             public void onResponse(Call<FinishEntity> call, Response<FinishEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("FinishEntity",response.toString());
+                LogUtil.e("FinishEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("FinishEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("FinishEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -316,8 +343,12 @@ public class MyApplication extends Application implements User {
         approvalCall.enqueue(new Callback<ApprovalEntity>() {
             @Override
             public void onResponse(Call<ApprovalEntity> call, Response<ApprovalEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("FinishEntity",response.toString());
+                LogUtil.e("ApprovalEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("ApprovalEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("ApprovalEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -341,8 +372,12 @@ public class MyApplication extends Application implements User {
         historyCall.enqueue(new Callback<ApprovalHistoryResponseEntity>() {
             @Override
             public void onResponse(Call<ApprovalHistoryResponseEntity> call, Response<ApprovalHistoryResponseEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("FinishEntity",response.toString());
+                LogUtil.e("ApprovalHistoryResponseEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("ApprovalHistoryResponseEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("ApprovalHistoryResponseEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -369,8 +404,12 @@ public class MyApplication extends Application implements User {
         approvalCall.enqueue(new Callback<ApprovalResponseEntity>() {
             @Override
             public void onResponse(Call<ApprovalResponseEntity> call, Response<ApprovalResponseEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("FinishEntity",response.toString());
+                LogUtil.e("ApprovalResponseEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("ApprovalResponseEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("ApprovalResponseEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -404,8 +443,12 @@ public class MyApplication extends Application implements User {
         messageListCall.enqueue(new Callback<MessageListResponseEntity>() {
             @Override
             public void onResponse(Call<MessageListResponseEntity> call, Response<MessageListResponseEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("FinishEntity",response.toString());
+                LogUtil.e("MessageListResponseEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("MessageListResponseEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("MessageListResponseEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -429,8 +472,12 @@ public class MyApplication extends Application implements User {
         messageCall.enqueue(new Callback<MessageDetailEntity>() {
             @Override
             public void onResponse(Call<MessageDetailEntity> call, Response<MessageDetailEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("FinishEntity",response.toString());
+                LogUtil.e("MessageDetailEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("MessageDetailEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("MessageDetailEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -459,6 +506,13 @@ public class MyApplication extends Application implements User {
         flowNameCall.enqueue(new Callback<FlowNameResponseEntity>() {
             @Override
             public void onResponse(Call<FlowNameResponseEntity> call, Response<FlowNameResponseEntity> response) {
+                LogUtil.e("FlowNameResponseEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("FlowNameResponseEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("FlowNameResponseEntity error body", response.errorBody().toString());
+                }
+
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
                 }else {
@@ -481,6 +535,13 @@ public class MyApplication extends Application implements User {
         contactCall.enqueue(new Callback<ContactEntity>() {
             @Override
             public void onResponse(Call<ContactEntity> call, Response<ContactEntity> response) {
+                LogUtil.e("ContactEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("ContactEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("ContactEntity error body", response.errorBody().toString());
+                }
+
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
                 }else if (! response.body().isSuccess()){
@@ -506,8 +567,12 @@ public class MyApplication extends Application implements User {
         newsCall.enqueue(new Callback<NewsListEntity>() {
             @Override
             public void onResponse(Call<NewsListEntity> call, Response<NewsListEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("NewsListEntity",response.toString());
+                LogUtil.e("NewsListEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("NewsListEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("NewsListEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -530,8 +595,12 @@ public class MyApplication extends Application implements User {
         newsCall.enqueue(new Callback<NewsListEntity>() {
             @Override
             public void onResponse(Call<NewsListEntity> call, Response<NewsListEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("NewsListEntity",response.toString());
+                LogUtil.e("NewsListEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("NewsListEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("NewsListEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -554,8 +623,12 @@ public class MyApplication extends Application implements User {
         newsDetailCall.enqueue(new Callback<NewsDetailResponseEntity>() {
             @Override
             public void onResponse(Call<NewsDetailResponseEntity> call, Response<NewsDetailResponseEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("NewsDetailEntity",response.toString());
+                LogUtil.e("NewsDetailResponseEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("NewsDetailResponseEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("NewsDetailResponseEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -577,8 +650,12 @@ public class MyApplication extends Application implements User {
         ruleListCall.enqueue(new Callback<RuleListResponseEntity>() {
             @Override
             public void onResponse(Call<RuleListResponseEntity> call, Response<RuleListResponseEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("FinishEntity",response.toString());
+                LogUtil.e("RuleListResponseEntity onResponse", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("RuleListResponseEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("RuleListResponseEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());
@@ -601,8 +678,12 @@ public class MyApplication extends Application implements User {
         ruleDetailCall.enqueue(new Callback<RuleDetailResponseEntity>() {
             @Override
             public void onResponse(Call<RuleDetailResponseEntity> call, Response<RuleDetailResponseEntity> response) {
-                if (BuildConfig.DEBUG)
-                    Log.e("FinishEntity",response.toString());
+                LogUtil.e("RuleDetailResponseEntity", response.toString());
+                if (response.isSuccessful()){
+                    LogUtil.e("RuleDetailResponseEntity body", response.body().toString());
+                }else {
+                    LogUtil.e("RuleDetailResponseEntity error body", response.errorBody().toString());
+                }
 
                 if (response.code()!= 200){
                     listener.onFailed("ErrorCode:"+response.code()+" ErrorMessage:"+response.message());

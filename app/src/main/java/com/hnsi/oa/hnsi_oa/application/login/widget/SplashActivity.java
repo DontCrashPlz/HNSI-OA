@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import library.apps.BaseActivity;
 import com.hnsi.oa.hnsi_oa.application.login.presenter.SplashPresenter;
+import com.hnsi.oa.hnsi_oa.application.login.presenter.SplashPresenter2;
 import com.hnsi.oa.hnsi_oa.application.login.view.ISplashView;
 
 /**
@@ -24,7 +25,7 @@ public class SplashActivity extends BaseActivity implements ISplashView {
 
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE= 1;
 
-    private SplashPresenter mPresenter;
+    private SplashPresenter2 mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +34,8 @@ public class SplashActivity extends BaseActivity implements ISplashView {
 //                FLAG_FULLSCREEN);
 //        getWindow().setBackgroundDrawableResource(R.mipmap.splash);
 
-        mPresenter= new SplashPresenter(this);
+        mPresenter= new SplashPresenter2();
+        mPresenter.attachView(this);
 
         //是否有写入文件的权限
         if (ContextCompat.checkSelfPermission(this,
@@ -75,5 +77,13 @@ public class SplashActivity extends BaseActivity implements ISplashView {
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter!= null){
+            mPresenter.detachView();
+        }
     }
 }

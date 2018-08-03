@@ -16,6 +16,7 @@ import java.util.List;
  * Created by Zheng on 2017/10/26.
  */
 
+@Deprecated
 public class MessagePresenter {
     private IMessageView mView;
     private IMessageModel mModel;
@@ -46,7 +47,7 @@ public class MessagePresenter {
             public void onFailed(String throwable) {
                 if (mView== null) return;
                 mView.dismissProgressBar();
-                Toast.makeText(mView.getFragmentContext(),throwable,Toast.LENGTH_SHORT).show();
+                Toast.makeText(mView.getRealContext(),throwable,Toast.LENGTH_SHORT).show();
             }
         });
         mModel.requestData(1, 0, 2, new OnRequestDataListener<List<NewsEntity>>() {
@@ -64,7 +65,7 @@ public class MessagePresenter {
             public void onFailed(String throwable) {
                 if (mView== null) return;
                 mView.dismissProgressBar();
-                Toast.makeText(mView.getFragmentContext(),throwable,Toast.LENGTH_SHORT).show();
+                Toast.makeText(mView.getRealContext(),throwable,Toast.LENGTH_SHORT).show();
             }
         });
     }

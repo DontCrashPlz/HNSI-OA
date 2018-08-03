@@ -16,6 +16,7 @@ import library.utils.SharedPrefUtils;
  * Created by Zheng on 2017/10/23.
  */
 
+@Deprecated
 public class LoginPresenter {
     private ILoginView mView;
     private ILoginModel mModel;

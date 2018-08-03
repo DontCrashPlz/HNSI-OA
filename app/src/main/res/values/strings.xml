@@ -7,4 +7,12 @@
     <string name="num_of_department">%1$s人</string>
     <string name="num_of_tableview">(第%1$s张)</string>
 
+    <string name="about_version">for Android Version %1$s</string>
+    <string name="about_hnti">河南省信息咨询设计研究有限公司</string>
+    <string name="about_app_title">YICR综合信息管理系统</string>
+    <string name="about_remarks">Copyright2009-2016 All Rights Reserved</string>
+    <string name="about_copyright">技术支持：河南软信科技有限公司</string>
+    <string name="about_termsOfService">服务条款</string>
+    <string name="about_NDA">保密协议</string>
+
 </resources>
